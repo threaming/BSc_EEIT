@@ -1,0 +1,65 @@
+---
+title: "Digitale Signalverarbeitung"
+subtitle: "Zusammenfassung"
+
+author: "Andreas Ming"
+date: now
+lang: de-ch # set the language here (unfortunatley this introduces some issues with hypenation)
+
+# [RENDER CONFIGURATION] ==============================
+format:
+  pdf:
+    pdf-engine: pdflatex
+    include-in-header:
+      - config/config.tex
+    template: config/template.tex # moves the title.tex include up 
+    template-partials:
+      - config/title.tex
+      - config/before-body.tex # for custom title page
+
+source:
+  github:
+    title: "Quelldateien" 
+    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+
+# [DOCUMENT CONFIGURATION] ============================
+geometry: 
+- "top=25mm"
+- "bottom=25mm"
+- "left=25mm"
+- "right=25mm"
+papersize: a4
+fontsize: 10pt
+
+# tries to place the picture where you define it and center it
+fig-pos: H
+fig-align: center
+
+# this configures code blocks to have a coloured background and no border
+code-block-border-left: false
+code-block-bg: "#f7f7f7"
+
+toc: true
+toc-depth: 3
+number-sections: false
+
+pagenumbering: none # since a selfmade solution is used
+
+highlight-style: github
+---
+\pagebreak
+
+<!-- [Chapters] -->
+{{< include 01_SignalsInTime.qmd >}}
+
+{{< include 02_AD_Conversion.qmd >}}
+
+{{< include 03_SignalsInFrequency.qmd >}}
+
+{{< include 04_DigitalLTI.qmd >}}
+
+{{< include 05_DigitalFilters.qmd >}}
+
+{{< include 06_FourierAnalysis.qmd >}}
+
+{{< include 07_Z_Transform.qmd >}}

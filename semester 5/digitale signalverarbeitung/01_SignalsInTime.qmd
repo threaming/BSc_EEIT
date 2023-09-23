@@ -1,0 +1,99 @@
+# Digital Signals in the Time Domain
+
+## Signal Analysis
+
+### Sampling of Analog Signals
+
+By sampling $x(t)$ in the interval of $T_S$ we get the sequence of signal values $x[n]$ with $-\infty\leq n\leq +\infty$
+
+$$
+x(n\cdot T_S)=x[n]
+$$
+
+![](images/paste-1.png)
+
+| Signal  | Property                     |
+|---------|------------------------------|
+| causal  | $x[n]=0$ for $n<0$           |
+| real    | $x[n]$ Real                  |
+| complex | Re & Im or Amplitude & Phase |
+
+### Basic Digital Signals
+
++-------------------------+---------------------------+-------------------------+
+| unit impulse            | unit step                 | periodical signal       |
++=========================+===========================+=========================+
+| $$                      | $$                        | $$                      |
+| \delta[n]=\begin{cases} | u[n]=\begin{cases}0:n<0\\ | x[n]=x\left[n+          |
+| 0:n\neq 0 \\            | 1:n\geq 0\end{cases}      | \frac{T_0}{T_S}\right]  |
+| 1:n=0                   | $$                        | $$                      |
+| \end{cases}             |                           |                         |
+| $$                      |                           | with $$                 |
+|                         |                           | \frac{T_0}{T_S}=k       |
+|                         |                           | $$                      |
++-------------------------+---------------------------+-------------------------+
+| ![](images/paste-2.png) | ![](images/paste-3.png)   | ![](images/paste-4.png) |
++-------------------------+---------------------------+-------------------------+
+
+There is also a **complex hamonic** sequence with the period duration of $T_0=\frac{1}{f_0}$
+
+$$
+x[n]=\hat{X}\cdot e^{j2\pi f_0nT_S}
+$$
+
+![Complex hamronic sequence with period duration $T_0=16\cdot T_S$](images/paste-5.png){width="941"}
+
+### Statistical Signal Parameters
+
+*Stochastic signals* must be qualified by *statistical signal parameters* within the **observation interval** $T=N\cdot T_S$.
+
++--------------------------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
+| expected / mean                      | quadratic mean                                                                          | variance                                                                                                                                            |
++======================================+=========================================================================================+=====================================================================================================================================================+
+| DC-component                         | average power *(w/ DC)*                                                                 | average power *(w/o DC)*                                                                                                                            |
++--------------------------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
+| $$                                   | $$                                                                                      | $$                                                                                                                                                  |
+|  \mu_x=\frac1N\sum_{i=0}^{N-1}{x[i]} |                                        \rho_x^2=\frac1N\sum_{i=0}^{N-1}{x[i]^2}=P_{avg} |                                                                                           \sigma_x^2=\frac1N\sum_{i=0}^{N-1}{(x[i]-\mu_x)^2}=P_{AC} |
+|  $$                                  |                                        $$                                               |                                                                                           $$                                                        |
++--------------------------------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
+
+## Signal Operations
+
+### Correlation
+
++--------+-----------------------------------------------+--------------------------------------------------------------------------+
+|        | cross-correlation                             | auto-correlation                                                         |
++========+===============================================+==========================================================================+
+| Static | $$                                            | $$                                                                       |
+|        |  R=\frac1N\sum_{i=0}^{N-1}x[i]y[i]            |                                      R=\frac1N\sum_{i=0}^{N-1}x[i]x[i]   |
+|        |  $$                                           |                                      $$                                  |
++--------+-----------------------------------------------+--------------------------------------------------------------------------+
+| Linear | $$                                            | $$                                                                       |
+|        | r_{xy}[n]=\sum_{i=-\infty}^{\infty}x[i]y[i+n] | r_{xx}[n]=\sum_{i=-\infty}^{\infty}x[i]x[i+n]                            |
+|        | $$                                            | =P_{avg}                                                                 |
+|        |                                               | $$                                                                       |
++--------+-----------------------------------------------+--------------------------------------------------------------------------+
+
+For **linear correlation** the resulting length of $r_{xy}$ equals
+
+$$
+N_{xy}=N_x+N_y-1
+$$
+
+and the highest amount of shifts for the computation is given by
+
+$$
+-N_x+1\leq n\leq N_y-1
+$$
+
+For signals differing in length, zero-padding can be applied.
+
+### Convolution
+
+The *Convolution* involves folding the time-displaces signal around the point $n=0$
+
+$$
+z[n]=\sum_{i=-\infty}^{\infty}x[i]y[-i+n]
+$$
+
+A convolution equals a polynomial multiplication
