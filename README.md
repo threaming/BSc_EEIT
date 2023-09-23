@@ -1,6 +1,6 @@
 # Bachelor Electrical Engineering :zap:
 
-All my most important summaries and notes of my bachelor in electrical engineering. The summaries are a mix between English and German, but are mostly written in German.
+Summaries and notes of my bachelor of electrical engineering and information technology at [HSLU](https://www.hslu.ch/de-ch/technik-architektur/ueber-uns/organisation/institute/technik/elektrotechnik/). The summaries are a mix between English and German, but are mostly written in German.
 
 ## Tools used
 
@@ -27,9 +27,8 @@ fontenc: T1
 
 It does give a nicer text body (using *CM Bright Light*) and feels nice to look at.
 
-# Lovely Contributors
+# Credits
 
-Some of the peeps helping me out with writing some of the summaries:
+Alot of the hard work (e.g. setting up the templates) has been done by
 
-- [@AndreasMing](https://github.com/AndreasMing/)
-- [@manuelfanger](https://github.com/manuelfanger)
+- [@joelvonrotz](https://github.com/joelvonrotz)
