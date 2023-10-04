@@ -41,7 +41,7 @@ $$
 x[n]=\hat{X}\cdot e^{j2\pi f_0nT_S}
 $$
 
-![Complex hamronic sequence with period duration $T_0=16\cdot T_S$](images/paste-5.png){width="941"}
+![Complex hamronic sequence with period duration $T_0=16\cdot T_S$](images/paste-5.png){#cpmplexHarmonic width="567"}
 
 ### Statistical Signal Parameters
 
@@ -61,18 +61,18 @@ $$
 
 ### Correlation
 
-+--------+-----------------------------------------------+--------------------------------------------------------------------------+
-|        | cross-correlation                             | auto-correlation                                                         |
-+========+===============================================+==========================================================================+
-| Static | $$                                            | $$                                                                       |
-|        |  R=\frac1N\sum_{i=0}^{N-1}x[i]y[i]            |                                      R=\frac1N\sum_{i=0}^{N-1}x[i]x[i]   |
-|        |  $$                                           |                                      $$                                  |
-+--------+-----------------------------------------------+--------------------------------------------------------------------------+
-| Linear | $$                                            | $$                                                                       |
-|        | r_{xy}[n]=\sum_{i=-\infty}^{\infty}x[i]y[i+n] | r_{xx}[n]=\sum_{i=-\infty}^{\infty}x[i]x[i+n]                            |
-|        | $$                                            | =P_{avg}                                                                 |
-|        |                                               | $$                                                                       |
-+--------+-----------------------------------------------+--------------------------------------------------------------------------+
++-------------+-----------------------------------------------+------------------------------------------------------------------------+
+|             | cross-correlation                             | auto-correlation                                                       |
++=============+===============================================+========================================================================+
+| Static      | $$                                            | $$                                                                     |
+|             |  R=\frac1N\sum_{i=0}^{N-1}x[i]y[i]            |                                      R=\frac1N\sum_{i=0}^{N-1}x[i]x[i] |
+|             |  $$                                           |                                      $$                                |
++-------------+-----------------------------------------------+------------------------------------------------------------------------+
+| Linear      | $$                                            | $$                                                                     |
+|             | r_{xy}[n]=\sum_{i=-\infty}^{\infty}x[i]y[i+n] | r_{xx}[n]=\sum_{i=-\infty}^{\infty}x[i]x[i+n]                          |
+|             | $$                                            | =P_{avg}                                                               |
+|             |                                               | $$                                                                     |
++-------------+-----------------------------------------------+------------------------------------------------------------------------+
 
 For **linear correlation** the resulting length of $r_{xy}$ equals
 
@@ -80,7 +80,7 @@ $$
 N_{xy}=N_x+N_y-1
 $$
 
-and the highest amount of shifts for the computation is given by
+and the range of shifts for the computation is given by
 
 $$
 -N_x+1\leq n\leq N_y-1
@@ -94,6 +94,46 @@ The *Convolution* involves folding the time-displaces signal around the point $n
 
 $$
 z[n]=\sum_{i=-\infty}^{\infty}x[i]y[-i+n]
+$$ {#eq-linearConv}
+
+A convolution equals a polynomial multiplication.
+
+The range of shifts for the computation is given by
+
+$$
+0\leq n\leq N_x+N_y-2
 $$
 
-A convolution equals a polynomial multiplication
+The Convolution described in @eq-linearConv is called a **linear convolution** and can be applied to two signals of different length
+
+$$
+z[n]=x[n]*y[n]=y[n]*x[n]
+$$
+
+``` matlab
+z = conv(x, y)
+```
+
+There is also the **circular convolution** which requires both signals to be of equal length $N$. If necessary, *zero padding* can be applied. The resulting signal then also is of length $N$.
+
+$$
+z[n]=x[n]\circledast_N y[n]=y[n]\circledast_N x[n]
+$$
+
+The circular convolution corresponds to matrix multiplication In order to compute $x[n] \circledast_N y[n]$, the $N × N$-matrix constructed from circular shifting $y$ must be multiplied with vector $x$.
+
+``` matlab
+z = convmtx(x,y)
+```
+
+### Anwendung: Radar
+
+![](images/paste-6.png)
+
+Um bei einem Radar nur auf das gewünschte Signal zu reagieren, also auf das eigene, wird vom Radar ein [Barker-Code](https://de.wikipedia.org/wiki/Barker-Code) ausgesendet. Über Korrelation kann so die Laufzeit eindeutig zugeordnet werden.
+
+::: callout-note
+## Barker-Code
+
+Es können auch andere Codes ausgesendet werden, die verwendeten Signale müssen jedoch sehr gute Autokorrelationseigenschaften aufweisen.
+:::

@@ -22,9 +22,15 @@
 
 % Font Configuration
 \usepackage{lmodern}
-% \renewcommand{\familydefault}{\sfdefault}
-%\usepackage{cmbright}
+\usepackage{cmbright}
 \usepackage[scaled=0.85]{beramono} % monospaced font (for code blocks)
+\renewcommand\familydefault{\rmdefault}
+\usepackage{sectsty}
+
+\allsectionsfont{\normalfont\sffamily\bfseries}
+
+% Transformation things
+\usepackage{trfsigns}
 
 % Heading
 \usepackage{fancyhdr}

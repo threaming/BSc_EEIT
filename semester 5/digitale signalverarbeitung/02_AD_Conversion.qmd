@@ -1,1 +1,147 @@
 # Analog-to-Digital & Digital-to-Analog Conversion
+
+## Steps of A/D- and D/A-Conversion
+
+![Signal classification in a/d- and d/a-conversion](images/paste-7.png)
+
+### A/D
+
+**Sample**: Signal values are recorded at sampling rate $f_S$. This yields a train of pulses.
+
+**Quantize**: The discrete signal values are mapped to a given number of quantization levels.
+
+**Code**: The quantified values can be stored in a coded way. DSPs most often store the quantified values.
+
+### D/A
+
+**Decode**: The coded samples are converted back into a suitable representation for the digital-to-analog conversion method used.
+
+**Hold**: A momentary discrete signal value is constant over the sample period $T_S$.
+
+**Interpolate**: The continuous staircase signal form is smoothed by a low-pass-filter.
+
+## Sampling and Aliasing
+
+Sampling a time-continuous signal $x(t)$ corresponds to a multiplication with a Dirac impulse series. The resulting signal $x_S(t)$ can be regarded as a train of weighted Dirac impulses.
+
+$$
+x_S(t)=\sum_{n=-\infty}^\infty x(t)\cdot\delta(t-nT_S)
+$$
+
+![](images/paste-8.png)
+
+Through the application of the Fourier property $x(t)e^{j2\pi f_0t}\laplace X(f-f_0)$ we obtain the frequency spectrum of the sampled signal as
+
+$$
+X_S(f)=\frac{1}{T_S}\sum_{k=-\infty}^\infty X(f-kf_S)
+$$
+
+::: callout-important
+## Observation
+
+The frequency of the analog signal $x(t)$ consists of the original spectrum $X(f)$ superimposed (*überlagert*) by mirror images of the spectrum
+
+$$
+f_k=k\cdot\frac{f_S}{N}
+$$
+
+![](images/paste-9.png)
+:::
+
+### Aliasing
+
+::: callout-note
+## Sampling Theorem
+
+An analog signal $x(t)$ with $X(f)=0$ for $|f|>|f_{max}|$ is uniquely defined by its sample values $x[n]=x(nT_S)$, if for the sampling frequency $F_S=\frac{1}{T_S}$ holds:
+
+$$
+f_s>2\cdot f_{max}
+$$
+:::
+
+![](images/paste-10.png)
+
+### Band-Pass Sampling
+
+$x(t)$ can be perfectly reconstructed if an integer $N\geq 0$ exists, such that $X(f)=0$ holds for all frequencies $f$ outside
+
+$$
+-\frac{N+1}{2}f_S\leq f\leq -\frac{N}{2}f_S\qquad\text{and}\qquad \frac{N}{2}f_S\leq f\leq \frac{N+1}{2}f_S
+$$
+
+For a given band-pass signal with given limits $f_{min}$ and $f_{max}$ it can be checked if the sampling frequency $f_S$ can be used ($N\geq1$)
+
+$$
+\frac{2\cdot f_{min}}{N}\geq f_S\geq\frac{2\cdot f_{max}}{N+1}
+$$
+
+For sampling with $N=$ **even** we get the mirror spectrums
+
+![Band-pass sampling for even $N$](images/paste-11.png)
+
+For sampling with $N =$ **odd** we get the mirror spectrums
+
+![Band-pass sampling for odd $N$](images/paste-12.png)
+
+::: callout-important
+## Spectrum Correction
+
+Note that for $N$ odd, the original spectrum appears "inverted" in the base band. The original structure of the spectrum can be re-obtained by changing the sign of every second sample of the time-domain sequence, i.e.
+
+$$
+\tilde{x}=(-1)^n\cdot x[n]
+$$
+:::
+
+## Reconstruction
+
+### Ideal Reconstruction
+
+Sampled signals w/o Aliasing can be *theoretically* reconstructed error-free. For this all mirror-spectra must be eliminated by a ideal low-pass filter. Because of the property $\text{rect}\left(\frac{t}{T}\right)\laplace |T|\cdot \text{si}(\pi Tf)$ the ideal interpolation equals
+
+$$
+x(t) = \sum_{n=-\infty}^\infty x(nT_S)\cdot\text{sinc}(\pi f_S(t-nT_S))
+$$
+
+![](images/paste-13.png)
+
+::: callout-note
+## Ideal values
+
+At the points $t=nT_S$ all values of except of $x(nT_S)$ equal $0$. Thus at every point of $x(nT_S)$ the signal reaches the right value.
+
+**Caution!** because of the infinit sum of sinc-pulses, the values between $x(nT_S)$ aren't particularly correct. Also the further to the "edge" of $x$ you get, the more inaccurate it gets.
+:::
+
+### Practical Reconstruction
+
+In practice Reconstruction is very often done with a simple *zero-order-holder* (ZHO). Such operation holds each sample value constant over a subsequent sample interval $T_S$. This results in a stair-case waveform, thus making a very poor low-pass filter. For this reason a analog low-pass filter is usually implemented.
+
+Without analog filtering the **SNR** can be approximated as
+
+$$
+\text{SNR}\approx 6dB\cdot \log_2\left(\frac{f_S}{f_0}\right)-11dB
+$$
+
+![](images/paste-14.png)
+
+## Quantization of Signals
+
+### Uniform Quantization
+
+When quantizing sample values with $W$ bits, the dynamic range $R$ of the sampled signal $x[n]$ can be divided into $2^W$ intervals of equal width. Thus, the width of one **quantization step** is given by
+
+$$
+\Delta=\frac{R}{2^W}
+$$
+
+| Mid-Tread                                                         | Mid-Rise                                          |
+|-------------------------------------------------------------------|---------------------------------------------------|
+| Decision levels at $\pm0.5\Delta,\pm1.5\Delta,\pm2.5\Delta,\dots$ | Decision levels at $0,\pm\Delta,\pm2\Delta,\dots$ |
+| ![](images/paste-15.png)                                          | ![](images/paste-16.png)                          |
+| $-\frac{\Delta}{2}<\epsilon\leq\frac{\Delta}{2}$                  | $-\Delta<\epsilon\leq0$                           |
+
+Furthermore **Clipping** occurs if the signal values of $x[n]$ are outside of the full-scale range $R$.
+
+### Quantization noise
