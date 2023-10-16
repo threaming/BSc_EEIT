@@ -47,13 +47,12 @@ Ein Pendel, welches die gesamte Rotationsachse ($360\degree$, rundherum) ausnüt
 \node at (1.25,1) {instabil};
 \end{tikzpicture}\end{center}
 ```
-
 Polstellen eines linearen Systems ($\frac{dx}{dt}=Ax$ & $x(0)=x_0$) können mit dem *charakteristischen Polynoms* berechnet werden.
 
 ::: callout-important
 ### charakteristisches Polynom
 
-Die Nullstellen von $\lambda$ werden mit der Dynamik-Matrix $A$ berechnet. Diese entsprechen dem Nennerpolynom $C(sI-A)^{-1}
+Die Nullstellen von $\lambda$ werden mit der Dynamik-Matrix $A$ berechnet. Diese entsprechen dem Nennerpolynom $C(sI-A)^{-1}$
 
 $$
 \lambda(A) := \{s \in \mathbb{C} :  \det(sI-A)=0\}
@@ -65,7 +64,7 @@ $$
 
 Stabilität linearer Systeme ist [nur von]{.underline} $A$ [abhängig]{.underline}, nicht vom Anfangswert $x_0$. Dies gilt Global!
 
-Ebenfalls sind stabile lineare Systeme **global** gültig. 
+Ebenfalls sind stabile lineare Systeme **global** gültig.
 :::
 
 ### Linearisierung
