@@ -137,7 +137,7 @@ $$
 $$
 
 | Mid-Tread                                                         | Mid-Rise                                          |
-|-------------------------------------------------------------------|---------------------------------------------------|
+|-----------------------------------------|-------------------------------|
 | Decision levels at $\pm0.5\Delta,\pm1.5\Delta,\pm2.5\Delta,\dots$ | Decision levels at $0,\pm\Delta,\pm2\Delta,\dots$ |
 | ![](images/paste-15.png)                                          | ![](images/paste-16.png)                          |
 | $-\frac{\Delta}{2}<\epsilon\leq\frac{\Delta}{2}$                  | $-\Delta<\epsilon\leq0$                           |
@@ -145,3 +145,59 @@ $$
 Furthermore **Clipping** occurs if the signal values of $x[n]$ are outside of the full-scale range $R$.
 
 ### Quantization noise
+
+The quantization error $\epsilon$ manifests itself as noise superimposed to the quantized signal
+
+$$
+\epsilon[n]=x_q[n]-x[n]
+$$
+
+::: {#fig-quantNoise layout-ncol="2"}
+![](images/paste-17.png){#fig-blockDia}
+
+![](images/paste-18.png){#fig-probDenseFunc}
+
+Model of quantization noise (@fig-blockDia) and probability density function (@fig-probDenseFunc)
+:::
+
+The power of the quantization noise signal is
+
+$$
+P_\epsilon=\frac{1}{\Delta}\int_{-\frac{\Delta}{2}}^{\frac{\Delta}{2}}\epsilon^2d\epsilon = \frac{\Delta^2}{12}
+$$
+
+The signal-to-noise ratio expressed in dB yields
+
+$$
+SNR_{dB}=6\cdot W+10\cdot\log_{10}\left(\frac{12\cdot P_x}{R^2}\right)
+$$
+
+::: callout-note
+## For Harmonic- & Full-Scale-Signals
+
+$$
+SNR_{dB}=6\cdot W+1.76\approx 6\cdot W
+$$
+
+For every additional Bit, the SNR can be sixfold in $[dB]$.
+:::
+
+### Logarithmic Quantization
+
+One way to increase the SNR associated with quantization, is to adapt the quantizer characteristics to the statistical properties of the signal being quantized. One kind of signal with these properties are voice signals were very small amplitude values are orders of magnitude more likely than large amplitude values ( @fig-probDistVoice ).
+
+::: {#fig-logQuant layout-ncol="2"}
+![](images/paste-19.png){#fig-probDistVoice}
+
+![](images/paste-20.png){#fig-LogWuantError}
+
+Comparison of uniform and logarithmic quantization
+:::
+
+There are several standards for implementing Logarithmic Quantization. One such standard is the $\mu$-law algorithm
+
+$$
+f_\mu(x)=\text{sgn}(x)\cdot\frac{\ln(1+\mu\cdot |x|)}{\ln(1+\mu)}\qquad-1\leq x\leq1
+$$
+
+With this applied the relative error can be significantly improved ( @fig-LogWuantError ).
