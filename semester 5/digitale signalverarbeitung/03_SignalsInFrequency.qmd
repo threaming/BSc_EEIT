@@ -1,1 +1,118 @@
 # Digital Signals in the Frequency Domain
+
+![Comparison of Fourier methods](images/paste-23.png){fig-align="center"}
+
+## Fourier in Discrete Time
+
+### Discrete Time
+
+Substituteing the continuous time $t$ and integration with the discrete sample points $nTs$ and summation, we get the frequency spectrum of the sampled signal $x_S(t)$. Thourgh the *normalized angular frequency*, we obtain the **Discrete-Time Fourier Transform (DTFT)**.
+
+$$
+\underbrace{X_S(f) = \sum_{n=-\infty}^{\infty}x(nT_S)e^{-j2\pi fnT_S}}_{\text{Continuous Fourier Transform}}
+\stackrel{\Omega=2\pi fT_S=2\pi \frac{f}{f_S}}{=}
+\underbrace{X(\Omega) = \sum_{n=-\infty}^{\infty}x[n]e^{-j\Omega n}}_{\text{Discrete Fourier Transform}}
+$$
+
+The **DTFT** produces a $2\pi$-periodic, continuous spectrum. This is due to the mapping of the linear frequency axis onto the unit circle at the sampling rate of $f_S$.
+
+![](images/paste-21.png)
+
+### Finite Measurement Interval
+
+The lowest frequency we can capture in the measurement interval $T$, with a finite amount of sample points $N$ is
+
+$$
+f_1 = \frac1T = \frac{1}{N\cdot T_S} = \frac{f_S}{N}
+$$
+
+::: callout-important
+## Resolvable frequencies
+
+From the equation we learn that we can resolve lower frequencies if we increase $N$, on the other hand the highest frequency we can cover is $f_S$. The following generally applies
+
+$$
+f_k = k\cdot\frac{f_S}{N}
+$$
+:::
+
+With this in mind we let the discrete-time-index $n$ only run from $0$ to $N-1$. We replace the $\frac{f}{f_S}$ in $\Omega$ with $\frac{k}{N}$ and get the **Discrete Fourier Transform (DFT)**
+
+$$
+X[k]=\sum_{n=0}^{N-1}x[n]e^{-j2\pi n\frac{k}{N}}    \qquad k=0,1,2,\dots, N-1
+$$
+
+::: callout-note
+## Observation
+
+We get exactly as many *Fourier coefficients* $X[k]$ back, as we provide *samples* $x[n]$.
+
+The DFT produces a discrete and periodic line spectrum. The frequency resolution is $\frac{f_S}{N}$, i.e. we get the spectral values at the frequency points
+
+$$
+0,\frac{f_S}{N},2\frac{f_S}{N},\dots,(N-1)\frac{f_S}{N}
+$$
+:::
+
+**Inverse Discrete Fourier Tranfsorm (IDFT)**
+
+$$
+x[n]=\frac1N\sum_{k=0}^{N-1}X[k]e^{j2\pi n\frac{k}{N}}   \qquad n=0,1,2,\dots,N-1
+$$
+
+![A intuitive approach to the DFT, also check chapter 4.2 of the main script by Wassner](images/paste-22.png){fig-align="center"}
+
+## Porperties of the DFT
+
+|                             |                                      |
+|:---------------------------:|:------------------------------------:|
+| The *DFT* is $f_S$-periodic | The *IDFT* is periodic with $T=NT_S$ |
+|        $X[k]=X[k+N]$        |            $x[n]=x[n+N]$             |
+
+: Periodicity
+
+|                                                                 |
+|:---------------------------------------------------------------:|
+| DFT of a *real-valued signal* is symmetric around $k=\frac{N}2$ |
+|     $X\left[\frac{N}2+m\right]=X^*\left[\frac{N}2+m\right]$     |
+
+: Symmetry
+
+|                                                                                                             |                                                                                                                          |
+|:--------------------------------:|:------------------------------------:|
+| Shifting by $n_0$ corresponds to a linear phase offset to all spectral values of the original time sequence | Multiplying the time sequence with a complex exponential, results in a constant frequency shift of the original spectrum |
+|                      $x[n+n_0]\qquad\laplace\qquad e^{j2\pi n_0\frac{k}{N}}\cdot X[k]$                      |                            $e^{j2\pi k_0\frac{n}{N}}\cdot x[n]\qquad\laplace\qquad X[k-k_0]$                             |
+
+: Time/Frequency Shifting
+
+|                                                                                     |
+|:----------------------------------------------------------------------:|
+|               A direct consequence of the frequency shifting property               |
+| $\cos(2\pi k_0\frac{n}{N}\cdot x[n]\qquad\laplace\qquad \frac12(X[k+k_0]+X[k-k_0])$ |
+
+: Modulation
+
+|                                                                                                        |
+|:----------------------------------------------------------------------:|
+|  Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists   |
+|  $$                                                                                                    
+   \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                           
+                                                    $$                                                   |
+
+: Parseval Theorem
+
+|                                                                                     |
+|:----------------------------------------------------------------------:|
+|  $$                                                                                 
+   x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)   
+                                          $$                                          |
+
+: Correspondence of Convolution and Multiplication
+
+## Range of Validity of the DFT
+
+The Discrete Fourier Transform (DFT) accurately represents the spectrum of periodic signals within a finite measurement interval but requires an infinite interval for aperiodic signals to approach the correct result of the Discrete-Time Fourier Transform (DTFT). In the case of aperiodic signals, the DFT provides an approximation of the DTFT spectrum, and windowing functions are commonly employed to minimize the associated approximation errors in practical applications. In this case the DFT samples the DTFT at discrete points of the noramlized angular frequency $\Omega$
+
+$$
+X[k]=X(\Omega)|_{\Omega=2\pi \frac{k}{N}}
+$$
