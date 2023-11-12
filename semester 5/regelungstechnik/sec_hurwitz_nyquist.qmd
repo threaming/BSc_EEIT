@@ -4,14 +4,6 @@
 **GESCHLOSSENER** KREIS VERWENDEN!
 :::
 
-::: callout-important
-### Hurwitz-Kriterium
-
-Die Polstellen-Gleichung $\lambda(s)$ mit $a_0>0$ hat dann, und nur dann, ausschliesslich Lösungen mit negativen reellen Teilen, falls alle Unterdeterminante der Hurwitz-Matrix positiv sind:
-
-$\det H_n > 0$
-:::
-
 $$
 G_{yr}=\frac{\textcolor{NavyBlue}{P}\textcolor{BrickRed}{C}}{1+\textcolor{NavyBlue}{P}\textcolor{BrickRed}{C}}=\frac{\textcolor{NavyBlue}{n_P}\cdot\textcolor{BrickRed}{n_C}}{\textcolor{NavyBlue}{d_P}\cdot\textcolor{BrickRed}{d_C}+\textcolor{NavyBlue}{n_P}\cdot\textcolor{BrickRed}{n_C}}
 $$
@@ -32,6 +24,14 @@ $$
 \lambda = {\textcolor{NavyBlue}{d_P}\cdot\textcolor{BrickRed}{d_C}+\textcolor{NavyBlue}{n_P}\cdot\textcolor{BrickRed}{n_C}} 
 $$
 
+::: callout-important
+### Hurwitz-Kriterium
+
+Die Polstellen-Gleichung $\lambda(s)$ mit $a_0>0$ hat dann, und nur dann, ausschliesslich Lösungen mit negativen reellen Teilen, falls alle *Nordwestlichen* Unterdeterminanten der Hurwitz-Matrix positiv sind:
+
+$\det H_n > 0$
+:::
+
 $$
 \lambda(s)=a_0\cdot s^n+a_1\cdot s^{n-1}+\cdots+a_{n-1}\cdot s+a_n
 $$
@@ -48,7 +48,7 @@ $$
 
 ::: callout-tip
 -   Bei $n\leq 2$ genügt die Bedingung, dass alle Koeffizienten positiv sein müssen.
--   $\det H_n = a_n \cdot \det H_{n-1}$ -- Wird nicht immer verwendet (nur bei Spalte Wert unten rechts, Rest der Spalte 0).
+-   $\det H_n = a_n \cdot \det H_{n-1}$ -- Wird nicht immer verwendet (nur bei letzter Determinante $n$).
 -   Fehlt ein Koeffizient oder ist dieser negativ, so ist die Bedingung nicht erfüllt
 
 $$
@@ -160,7 +160,6 @@ $$
 
 $\rightarrow P=2,U=1:\textcolor{BrickRed}{\text{instabil}}$
 
-
 ### Einfach -- Variante Links liegen
 
 Für Systeme mit maximal zwei instabilen Polen im Ursprung (aber keinen weiteren instabilen Polen) genügt die Bedingung, dass der Punkt $(-1,0)$ *links liegen gelassen* wird, wenn entlang der Ortskurve $\omega : 0 \rightarrow \infty$ verfahren wird.
@@ -175,7 +174,7 @@ Das System $G_{yr}$ ist stabil, wenn die Nyquist Kurve $L(j\omega)$ mit $\omega\
 
 ![](images/paste-8.png){width="6cm"}
 
-####  Phasenreserve $\varphi_m$
+#### Phasenreserve $\varphi_m$
 
 Eintritt in den Einheitskreis $\rightarrow$ *gain crossover*
 

@@ -37,7 +37,6 @@
   v & Störgrösse
 \end{conditions}
 ```
-
 ### Geschlossenes System
 
 ```{=latex}
@@ -59,7 +58,6 @@
   \end{tikzpicture}
 \end{center}
 ```
-
 ### Offenes System
 
 ```{=latex}
@@ -161,7 +159,6 @@ $$
 Bei Rampe: $e_0 = 0\qquad$ Bei Parabel $e_0 = e_1 = 0$
 :::
 
-
 ## Störverhalten
 
 $$
@@ -199,9 +196,7 @@ Das Störverhlaten verfügt ebenfalls über vier Merkmale, welche für jedes Sys
 
 ![](images/storverhalten\slow.png){width="6cm"}
 
-
 <!--=================================================-->
-
 
 # Darstellungsarten
 
@@ -320,16 +315,16 @@ $$
 
 [Beispiel]{.underline}
 
-![](images/paste-9.png)
+![](images/paste-65.png)
 
-![](images/paste-10.png)
+![](images/paste-66.png)
 
 $P_1 = ABCD \quad \Delta_1 = 1-0\quad P_2 = ABD \quad \Delta_2=1-0$
 
-$\Delta=A-((-BCF)+CDE+((-B)(-D)(CEF))$
+$\Delta=1-(-BCF+CDE+((-B)(-D)(CEF))$
 
 $$
-G_{uy}=\frac{ABD(1+C)}{A+BCF-CDE-BCDEF}
+G_{uy}=\frac{ABD(1+C)}{1+BCF-CDE-BCDEF}
 $$
 
 ## Zustandraumdarstellung
@@ -351,7 +346,6 @@ Die Zustandsraumdarstellung erlaubt ein Einblick in das Verhalten eines dynamisc
   \end{tikzpicture}
 \end{center}
 ```
-
 $$
 \frac{dx}{dt}=f(x)
 $$
@@ -430,7 +424,6 @@ $$
   D & beschreibt Durchgriff
 \end{conditions}
 ```
-
 ### Übertragungsfunktion
 
 Wird als Eingangssignal $u$
