@@ -4,7 +4,7 @@ subtitle: "Zusammenfassung"
 
 author: "Andreas Ming"
 date: now
-lang: de-ch # set the language here (unfortunatley this introduces some issues with hypenation)
+lang: en-us # set the language here (unfortunatley this introduces some issues with hypenation)
 
 # [RENDER CONFIGURATION] ==============================
 format:
@@ -16,6 +16,7 @@ format:
     template-partials:
       - config/title.tex
       - config/before-body.tex # for custom title page
+    output-file: "ZF_DSVB_Ming"
 
 source:
   github:

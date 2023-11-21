@@ -60,7 +60,7 @@ $$
 x[n]=\frac1N\sum_{k=0}^{N-1}X[k]e^{j2\pi n\frac{k}{N}}   \qquad n=0,1,2,\dots,N-1
 $$
 
-![A intuitive approach to the DFT, also check chapter 4.2 of the main script by Wassner](images/paste-22.png){fig-align="center"}
+![A intuitive approach to the DFT, also check chapter 4.2 of the main script by Wassner](images/paste-22.png){fig-align="center" width="75%"}
 
 ## Porperties of the DFT
 
@@ -92,27 +92,89 @@ $$
 
 : Modulation
 
-|                                                                                                        |
+|                                                                                                                       |
 |:----------------------------------------------------------------------:|
-|  Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists   |
-|  $$                                                                                                    
-   \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                           
-                                                    $$                                                   |
+|          Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists          |
+|   $$                                                                                                                  
+             \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                                
+                                                                                                                 $$     |
 
 : Parseval Theorem
 
-|                                                                                     |
+|                                                                                                    |
 |:----------------------------------------------------------------------:|
-|  $$                                                                                 
-   x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)   
-                                          $$                                          |
+|   $$                                                                                               
+             x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)        
+                                                                                              $$     |
 
 : Correspondence of Convolution and Multiplication
 
-## Range of Validity of the DFT
+### Range of Validity of the DFT
 
 The Discrete Fourier Transform (DFT) accurately represents the spectrum of periodic signals within a finite measurement interval but requires an infinite interval for aperiodic signals to approach the correct result of the Discrete-Time Fourier Transform (DTFT). In the case of aperiodic signals, the DFT provides an approximation of the DTFT spectrum, and windowing functions are commonly employed to minimize the associated approximation errors in practical applications. In this case the DFT samples the DTFT at discrete points of the noramlized angular frequency $\Omega$
 
 $$
 X[k]=X(\Omega)|_{\Omega=2\pi \frac{k}{N}}
 $$
+
+## Practical Application Aspects of the DFT
+
+### Choice of Measurement Interval
+
+::: {#fig-ChoiceOfMeasInterval layout-ncol="2"}
+![](images/paste-25.png){#fig-CorrectMeasInterval width="40%"}
+
+![](images/paste-27.png){#fig-IncorrectMeasInterval width="40%"}
+
+[-@fig-IncorrectMeasInterval] shows the DFT of a cosine with correct measurement interval ( $N=64$ ). [-@fig-IncorrectMeasInterval] shows the application of the DFT with incorrect measurement interval which yields jumps in the virtual periodic extension of the signal being analyzed and thus **leakage** in the frequency domain occures.
+:::
+
+::: callout-note
+## Leakage
+
+The *leakage-effect* manifests itself in the main frequency "leaking" into several frequency indexes surrounding the two true frequency points (see [@fig-ChoiceOfMeasInterval]).
+
+![](images/paste-28.png){width="75%"}
+:::
+
+### DFT and Zero-padding
+
+To "increase" spectral resolution zero padding is added.
+
+::: callout-warning
+## Zero-padding
+
+Zero-padding **won't** increase spectral resolution, it just corresponds to a better interpolation between the $N$ frequency points of the DFT spectrum.
+
+To increase spectral resolution, additional samples of the signal $x[n]$ must be sampled.
+:::
+
+![](images/paste-29.png){#fig-DFT_Zeropad width="50%"}
+
+The finite measurement interval of the DFT corresponds to multiplying the signal $x[n]$ with a $rect$-Window, which corresponds to a a convolution of $X(\Omega)$ with the $\frac{\sin(x)}{x}$-function, thus introducing the form of lobes. This lobe-structure is independent of the form of the signal waveform $x[n]$.
+
+### DFT and Windowing
+
+To overcome the problem of lobe-introduction, we apply **windowing**. A window can be any function, that is applied to the signal in the measurement interval.
+
+::: {#fig-DFT_Windowing layout-ncol="2"}
+![](images/paste-30.png){#fig-BlackmanWindow width="40%"}
+
+![](images/paste-31.png){#fig-WindowZeropad width="40%"}
+
+[-@fig-BlackmanWindow] shows the Blackman Window for $N=64$ in time and frequency. The Signal from [@fig-DFT_Zeropad] with a Blackman window applied before zero-padding shows much smaller lobes in frequency domain ([@fig-WindowZeropad])
+:::
+
+::: callout-caution
+## Effects introduced by Windowing
+
+-   Comparing the original signal [@fig-DFT_Zeropad] to the windowed in [@fig-WindowZeropad] that the first side lobe is significantly smaller ($12dB\rightarrow -60dB$), so the *leakage is minimized*
+
+-   The width of the main lobe on the other hand has become wider ($0.03\rightarrow 0.1$ cycles per sample), which equals to the *reduction of the frequency resolution*
+:::
+
+#### Windowing functions
+
+Different windowing functions will have different influence on the time and frequency domains of signals and should be chosen there for.
+
+![Comparison of windowing functions in the time and frequency domain](images/paste-32.png)
