@@ -168,9 +168,7 @@ $$
 
 `\small`{=latex}
 
-3.  Deltagrössendefinieren $\overline{h}^{\ (n>0)}=0$
-`\normalsize`{=latex}
-
+3.  Deltagrössendefinieren $\overline{h}^{\ (n>0)}=0$ `\normalsize`{=latex}
 
 $$
 \begin{array}{l}
@@ -192,12 +190,11 @@ $$
 
 `\small`{=latex}
 
-5. linearisierte Differentialgleichung aufbauen
+5.  linearisierte Differentialgleichung aufbauen
 
 `\normalsize`{=latex}
 
 $$
 M\Delta \ddot{h} + \alpha \Delta \dot{h} + 3 k\overline{h}^2=0
 $$
-
 :::

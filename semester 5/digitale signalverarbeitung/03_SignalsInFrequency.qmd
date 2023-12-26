@@ -36,7 +36,7 @@ f_k = k\cdot\frac{f_S}{N}
 $$
 :::
 
-With this in mind we let the discrete-time-index $n$ only run from $0$ to $N-1$. We replace the $\frac{f}{f_S}$ in $\Omega$ with $\frac{k}{N}$ and get the **Discrete Fourier Transform (DFT)**
+With this in mind we let the discrete-time-index $n$ only run from $0$ to $N-1$. We replace the $\frac{f}{f_S}$ in $\Omega$ with $\frac{k}{N}$ and get the **Discrete Fourier Transform (DFT)** where $k$ is the discrete frequency index
 
 $$
 X[k]=\sum_{n=0}^{N-1}x[n]e^{-j2\pi n\frac{k}{N}}    \qquad k=0,1,2,\dots, N-1
@@ -62,7 +62,7 @@ $$
 
 ![A intuitive approach to the DFT, also check chapter 4.2 of the main script by Wassner](images/paste-22.png){fig-align="center" width="75%"}
 
-## Porperties of the DFT
+### Porperties of the DFT
 
 |                             |                                      |
 |:---------------------------:|:------------------------------------:|
@@ -92,20 +92,20 @@ $$
 
 : Modulation
 
-|                                                                                                                       |
+|                                                                                                                                            |
 |:----------------------------------------------------------------------:|
-|          Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists          |
-|   $$                                                                                                                  
-             \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                                
-                                                                                                                 $$     |
+|                    Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists                     |
+|   $$                                                                                                                                       
+                           \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                                       
+                                                                                                                                       $$    |
 
 : Parseval Theorem
 
-|                                                                                                    |
+|                                                                                                                         |
 |:----------------------------------------------------------------------:|
-|   $$                                                                                               
-             x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)        
-                                                                                              $$     |
+|   $$                                                                                                                    
+                           x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)               
+                                                                                                                    $$    |
 
 : Correspondence of Convolution and Multiplication
 
@@ -117,9 +117,9 @@ $$
 X[k]=X(\Omega)|_{\Omega=2\pi \frac{k}{N}}
 $$
 
-## Practical Application Aspects of the DFT
+### Practical Application Aspects of the DFT
 
-### Choice of Measurement Interval
+#### Choice of Measurement Interval
 
 ::: {#fig-ChoiceOfMeasInterval layout-ncol="2"}
 ![](images/paste-25.png){#fig-CorrectMeasInterval width="40%"}
@@ -137,7 +137,7 @@ The *leakage-effect* manifests itself in the main frequency "leaking" into sever
 ![](images/paste-28.png){width="75%"}
 :::
 
-### DFT and Zero-padding
+#### DFT and Zero-padding
 
 To "increase" spectral resolution zero padding is added.
 
@@ -149,11 +149,11 @@ Zero-padding **won't** increase spectral resolution, it just corresponds to a be
 To increase spectral resolution, additional samples of the signal $x[n]$ must be sampled.
 :::
 
-![](images/paste-29.png){#fig-DFT_Zeropad width="50%"}
+![Zeropadded signal in time & frequency domain](images/paste-29.png){#fig-DFT_Zeropad width="50%"}
 
 The finite measurement interval of the DFT corresponds to multiplying the signal $x[n]$ with a $rect$-Window, which corresponds to a a convolution of $X(\Omega)$ with the $\frac{\sin(x)}{x}$-function, thus introducing the form of lobes. This lobe-structure is independent of the form of the signal waveform $x[n]$.
 
-### DFT and Windowing
+#### DFT and Windowing
 
 To overcome the problem of lobe-introduction, we apply **windowing**. A window can be any function, that is applied to the signal in the measurement interval.
 
@@ -173,8 +173,159 @@ To overcome the problem of lobe-introduction, we apply **windowing**. A window c
 -   The width of the main lobe on the other hand has become wider ($0.03\rightarrow 0.1$ cycles per sample), which equals to the *reduction of the frequency resolution*
 :::
 
-#### Windowing functions
+##### Windowing functions
 
 Different windowing functions will have different influence on the time and frequency domains of signals and should be chosen there for.
 
-![Comparison of windowing functions in the time and frequency domain](images/paste-32.png)
+![Comparison of windowing functions in the time and frequency domain](images/paste-32.png){width="70%"}
+
+## Short-Time DFT
+
+When assessing the development of the frequency spectrum over time a **continuous** evaluation of the frequency spectrum of short signal sections is required **(short-time DFT)**.
+
+::: callout-important
+## short-time DFT
+
+Since such signal sections are unlikely to fit a signal period perfectly, windowing is applied, which results in *less leakage* but a *convolution of the signal with the window spectrum*.
+
+When setting the length $N$ of the window, one compromises between:
+
+-   high spectral resolution *(* $N$ *large)*
+
+-   high time resolution *(* $N$ *small)*
+:::
+
+*(*For both **good spectral and time resolution** we have to overlap the DFT windows, see [@fig-short_time_DFT]. In the limit, we could overlap two consecutive DFT windows by $N-1$ sample values *if computationally feasible*.
+
+![**Overlapping of windows in the short-time DFT**](images/paste-33.png){#fig-short_time_DFT width="60%"}
+
+## Fast Fourier Transform **FFT**
+
+::: callout-note
+## Computational effort DFT vs. FFT
+
+To calculate a spectrum through *DFT* ( $x*y$ )
+
+$$[N^2]_{cpl.Mul.}+[N^2-N]_{cpl.Add.}$$
+
+To calculate a spectrum through *FFT* ( $ifft(fft(x)\cdot fft(y)$ )
+
+$$\left[\frac{N}{2}\cdot log_2(N)\right]_{cpl.Mul.}+[N\cdot log_2(N)]_{cpl.Add.}$$
+
+```{python}
+#| echo: false
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0.1,50)
+plt.figure(figsize=(5,2))
+plt.plot(x,(x**2+(x**2)-x), label='DFT: $[N^2]_{cpl.Mul.}+[N^2-N]_{cpl.Add.}$')
+plt.plot(x,x/2*np.log2(x)+x*np.log2(x), label='FFT: $\\left[\\frac{N}{2}\\cdot log_2(N)\\right]_{cpl.Mul.}+[N\\cdot log_2(N)]_{cpl.Add.}$')
+plt.legend()
+plt.xlabel("len of X[k] [N]")
+plt.ylabel("no of operations")
+plt.grid()
+```
+
+That gives us a speedup factor (assumption: real addition= real multiplication) of
+
+$$
+\frac{8N-2}{5\cdot log_2(N)}\approx 1.5\frac{N}{log_2(N)}
+$$
+:::
+
+### Twiddle Factors
+
+The **twiddle factors** are the building part of every complex harmonic sequence in a $N$-point DFT and are defined as
+
+$$
+W_N=e^{-j\frac{2\pi}{N}}
+$$
+
+**Periodicity**: $W_N^k$ can evaluate $N$ different numpery only $\rightarrow\space N$-periodic:
+
+$$
+W_N^{k+N}=W_N^k
+$$
+
+**Symmetry**: Apart from the sign, $W_N^k$ only holds $\frac{N}2$ numbers:
+
+$$
+W_N^{k+\frac{N}2}=-W_N^k
+$$
+
+![Example for $N=8$](images/paste-34.png){width="50%"}
+
+### Butterfly operation
+
+Using the twiddle factors we can process a FFT much faster. For this we obtain the **Radix-2 decimation-in-time.**
+
+![](images/paste-36.png){width="70%"}
+
+Through this we get a calculation architecture that is built by *2-point-FFTs*
+
+![](images/paste-37.png)
+
+Allgemein kann das Vorgehen so beschrieben werden:
+
+-   Werte in *bit-reversed*-Reihenfolge in Verarbeitung geben (Stufe 1), anschliessend linear im Speicher halten *(Endergebniss stimmt ohne weitere umsortierung)*
+-   Aus verarbeitungsstufen $s=1\dots \log_2(N)$ die Anzahl Blöcke $B=\frac{N}{2^s}$ und Distanz $D=2^{s-1}$ berechnen
+-   Inidizes $i_1=(b-1)\cdot (2^s)+d$ und $i_2=i_1+D$ berechnen
+-   Index für Drehfaktor $i_W=(d-1)\cdot B+1$ berechen
+-   Butterfly auf berechnete indizes anwenden
+
+``` matlab
+W = exp(-1j*2*pi*[0:N/2-1]/N);  % twiddle factors (only N/2 because of symmetry)
+
+x = bitrevorder(x); % bit-reversed order to allow in-place computation
+for s = 1:log2(N)   % for each stage to do ...
+    B = N/(2^s);        % get # of blocks in current stage
+    D = 2^(s-1);        % get # of butterflies per block in current stage
+    for b = 1:B         % for each block in current stage to do ...
+        for d = 1:D         % for each buttergly in current block to do ...
+            i1 = (b-1)*(2^s)+d;     % get 1st operand idx
+            i2 = i1+D;              % get 2nd operand idx
+            iW = (d-1)*B+1;         % get twiddle factor idx
+            [x(i1) x(i2)] = butfly(x(i1),x(i2),W(iW));      % compute butterfly in-place
+        end
+    end
+end
+```
+
+::: callout-note
+## Efficient FFT implementation
+
+The entire FFT can be performed **in-place**, this is because the memory place of the input-pair can be filled after a butterfly execution with its result. Thus only $2N$ memory locations ($N$ complex values) plus $N/2$ for the twiddle factors are needed. Additionally by the application of **bit-reversed addressing** the algorithm can work much faster and the result is correct without reordering.
+
+![Bit-reversed order for $N=8$. Indeces with symmetric binary representation remain unchanged.](images/paste-38.png){width="30%"}
+:::
+
+### Goertzel Algorithm
+
+If only individual $X[k]$ out of all $N$ spectral components are needed, the *Goertzel algorithm* can be applied. This is also a linear filtering technique. The IIR-system of difference equations is
+
+```{=tex}
+\begin{align}
+s[n]&=x[n]+a\cdot s[n-1]-s[n-2],\qquad a=2\cos\left(2\pi\frac{k}{N}\right)\\
+y_k[n]&=s[n]-W_N^k\cdot s[n-1]
+\end{align}
+```
+![](images/paste-39.png){width="60%"}
+
+::: callout-note
+## Parseval theorem
+
+Goertzel gives us the DFT spectral component at frequency
+
+$$
+f_k=k\frac{f_S}{N}
+$$
+
+Through Parsevals theorem we get the power content $P_k$ in a real-valued signal $x[n]$ around $f_k$
+
+$$
+P_k=2\left|\frac{X[k]}{N}\right|^2=\frac{2}{N^2}\left(\Re\{X[k]\}^2+\Im\{X[k]\}^2\right)
+$$
+
+![With $b_{re}=\Re\{-W_N^k\}$, $b_{im}=\Im\{-W_N^k\}$](images/paste-40.png){width="60%"}
+:::

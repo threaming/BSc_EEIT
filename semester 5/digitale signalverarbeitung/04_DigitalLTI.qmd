@@ -1,1 +1,169 @@
 # Digital LTI Systems
+
+::: {.callout-note appearance="simple"}
+## Definition
+
+**Linearity**:
+
+-   Multiplication of a signal with a constant $y[n]=a\cdot x[n]$
+
+-   Addition of two signals $y[n]=x_1[n]+x_2[n]$
+
+![](images/paste-41.png){width="50%"}
+
+**Time-Invariance**: Time delay of a signal by $d=k\cdot T_S$, $x[n]\rightarrow y[n] = x[n-d]\rightarrow y[n-d]$
+:::
+
+## Description of LTI systems
+
+::: {layout-ncol="2"}
+![](images/Drawboard-PDF-Annotation-Copy-2.png)
+
+![](images/paste-42.png)
+:::
+
+## System Descriptions in the Time Domain
+
+![](images/paste-47.png)
+
+### Impulse response
+
+``` matlab
+% plot impulse response of a system
+impz([b0 b1 ...],[a0 a1 ...], n) % a, b: transfer function coeff, n: no. of samples
+```
+
+![Impulse response (a) and step response (b)](images/paste-44.png){width="60%"}
+
+A *LTI*-System is reacts to each weighted unit impulses $x_S(i)\cdot \delta[n-i]$ with a weighted impuls response $x_S(i)\cdot h[n-i]$. Through superposition we obtain the systems reaction
+
+$$
+y[n]=\sum_{i=-\infty}^{\infty}x[i]\cdot h[n-i]=x[n]*h[n]
+$$
+
+*Dies entspricht der linearen Faltung.*
+
+### Difference Equation
+
+$$
+y[n]=\sum_{k=0}^Nb_kx[n-k]-\sum_{k=1}^Ma_ky[n-k]
+$$
+
+$max(N.M)$ is the **order** of the system. A system $M\geq1$ is **recursive**. Directly convertible into *Signal-Flow Diagram*.
+
+### Signal-Flow Diagram
+
+![Normalized forms of signal-flow diagrams for digital LTI-systems](images/paste-45.png){width="90%"}
+
+## System Description in the Frequency Domain
+
+![](images/paste-48.png)
+
+### Transfer Function
+
+$$
+y[n]=\sum_{k=0}^{N}b_kx[n-k]-\sum_{k=1}^Ma_ky[n-k] \laplace Y(z)=\sum_{k=0}^Nb_kz^{-k}X(z)-\sum_{k=1}^Ma_kz^{-k}Y(z)
+$$
+
+by reordering we obtain the **z-transfer-function** *(normalized if* $a_0=0$*)*
+
+$$
+H(z)=\frac{Y(z)}{X(z)}=\frac{b_0+b_1z^{-1}+b_2z^{-2}+\dots+b_Nz^{-N}}{1+a_1z^{-1}+a_2z^{-2}+\dots +a_Mz^{-M}}
+$$
+
+The transfer function $H(z)$ of a digital LTI system is the z-transform of its impulse response $h[n]$, thus we get
+
+$$
+y[n]=x[n]*h[n] \laplace Y(z)=X(z)\cdot H(z)
+$$
+
+![](images/paste-46.png){width="40%"}
+
+### Pole/Zero-Plot
+
+``` matlab
+% plot the zero-poles-diagram
+zplane(z,p) % with zeros and poles as in z=[z0 z1 ...], p=[p0 p1 ...]
+zplane(b,a) % with transferfunction coeffs
+```
+
+To analyze the system behavior we use the **pole/zero-form**
+
+$$
+H(z)=K_0\cdot\frac{(z-z_1)(z-z_2)\cdots(z-z_N)}{(z-p_1)(z-p_2)\cdots(z-p_M)}\cdot z^{M-N}
+$$
+
+::: callout-tip
+-   $N>M$: there are $N-M$ additional poles at $z=0$. If $b_0\neq0$, the inverse is true!
+
+-   $M>N$: there are $M-N$ additional zeros at $z=0$. In this case $K_0=b_0$ is true
+:::
+
+::: callout-important
+## Stability
+
+A causal digital LTI-system is stable if all poles $p_i$ are located within the unit circle.
+:::
+
+### Frequency Response
+
+``` matlab
+% Plot Bode-Diagram of a system
+freqz(b,a) % a,b: transferfunction coeffs
+```
+
+Systembehavior as a function of its input signal *(Bode-Plot)*. **Measure**: Frequency sweep over all frequencies, **Indirect Measurement**: obtain impulse response and transform into frequency response $h[n]\laplace H(\Omega)$. The frequency response turns out to be $f_S$ or $2\pi$ periodic and complex valued. We represent the frequency response in polar coordinates:
+
+$$
+H(\Omega)=|H(\Omega)|\cdot e^{j\varphi(H(\Omega))}
+$$
+
+Where the **amplitude response** is mostly written in $dB$
+
+$$
+|H(\Omega)|_{dB}=20\cdot\log_{10}(|H(\Omega)|
+$$
+
+For a *distortionfree* transmission a **linear phase response** $\varphi(H(\Omega))=-K\cdot\Omega$ is desirable, thus will make all frequencies undergo the sampe time delay. This delay is called the **group delay** and is defined as
+
+$$
+\tau_g=-\frac{d\space\varphi(H(\Omega))}{d\space\Omega}\cdot T_S=\frac{K}{2\pi}
+$$
+
+A LTI-System will react to a sinusoidal input with a sinusoidal output of the same frequency
+
+$$
+x[n]=\cos(2\pi f_0nT_S)\rightarrow y[n]=|H(\Omega_0)|\cdot\cos(2\pi f_0nT_S+\varphi(H(\Omega_0)))
+$$
+
+We can obtain the *amplitude* through (Attention: Add in dB!)
+
+$$
+|Y(\Omega)|=|X(\Omega)|\cdot|H(\Omega)|
+$$
+
+and the *phase*
+
+$$
+\varphi(Y(\Omega))=\varphi(X(\Omega))+\varphi(H(\Omega))
+$$
+
+### Relation between frequency response and transfer function
+
+In general: $z=re^{j\Omega}$, which gives us
+
+$$
+H(\Omega)=H(z)|_{z=e^{j\Omega}}
+$$
+
+We can obtain the bode plot from the pole/zero-form where the **amplitude** is
+
+$$
+|H(z)|=|K|\cdot\frac{|(z-z_1)||(z-z_2)|\cdots|(z-z_N)|}{|(z-p_1)||(z-p_2)|\cdots|(z-p_M)|}\cdot |z|^{M-N}
+$$
+
+and the **phase**
+
+$$
+\varphi(H(z))=\sum_{k=1}^N\varphi(z-z_k)-\sum_{k=1}^M\varphi(z-p_k)+\sum_{k=N+1}^M\varphi(z)
+$$
