@@ -1,3 +1,0 @@
-# Fourier Analysis of analog Signals
-
-# DFT Inside

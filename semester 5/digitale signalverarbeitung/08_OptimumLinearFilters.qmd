@@ -1,0 +1,199 @@
+\pagebreak
+
+# Optimum Linear Filters
+
+When we want to recover a distorted signal as good as possible we want to minimize the error (often mean squared error) as much as possible. One rather easy approach is the ussage of linear filters.
+
+## Wiener Filters *(stationary systems)*
+
+Filters that are optimal in the mean-squared error sense for stationray signals are known as **Wiener filters**. The system with a inputsignal $s[n]+v[n]$ must be tuned to optimal wiener coefficients $w_0,w_1,\dots w_M$ such that the filter output serves as a good estimate $\hat s[n+D]$
+
+![](images/paste-88.png){width="60%"}
+
+where the criterion is the *mean-squared error*
+
+$$
+\varepsilon_{MSE}(\underline w)= E\left\{|\underbrace{\hat{s}[n+D]-s[n+D]}_{\text{error signal}}|^2\right\}
+$$
+
+The optimal wiener-coefficients can be found at the point with the lowest mean-squared error
+
+![](images/paste-89.png){width="20%"}
+
+This can be achieved through the **Wiener-Hopf equations**
+
+$$
+\mathbf{R}_{yy}=\left(\begin{array}{cccc}\gamma_{yy}[0] & \gamma_{yy}[-1] & \cdots & \gamma_{yy}[-M] \\ \gamma_{yy}[1] & \gamma_{yy}[0] & \cdots & \gamma_{yy}[1\!-\!M] \\ \vdots & \vdots & & \vdots \\ \gamma_{yy}[M] & \gamma_{yy}[M\!-\!1] & \cdots & \gamma_{yy}[0] \end{array}\right)
+\qquad\text{with }
+\gamma_{yy}[m]=E\{y[n]\cdot y^*[n-m]\}\text{: autocorrelation of filter input}
+$$
+
+$$
+\mathbf{r}_{sy}=\left(\begin{array}{c}\gamma_{sy}[D] \\ \gamma_{sy}[D+1] \\ \vdots \\ \gamma_{sy}[D+M]\end{array}\right)\hspace{2mm}\mbox{and the vector }\widetilde{\mathbf{w}}=\left(\begin{array}{c}\widetilde w_0 \\ \widetilde w_1 \\ \vdots \\ \widetilde w_M\end{array}\right)
+\qquad\text{with } 
+\gamma_{sy}[m]=E\{s[n]\cdot y^*[n-m]\}
+\text{: crosscorr. of } s[n]\text{ and } y[n]
+$$
+
+The equation system can be written as $\mathbf{R}_{yy}\widetilde{\mathbf{w}}=\mathbf{r}_{sy}$ which leads to the optimal filter vector
+
+$$
+\widetilde{\mathbf{w}}=\mathbf{R}_{yy}^{-1}\mathbf{r}_{sy}
+$$
+
+## Unconstrained Wiener Filters
+
+Through the unconstrained filter one gets a different filter response, but is not suitable for practical applications. We, for this example, implement a non-causal IIR filter with the impuls response $\dots,\tilde{w}{-1},\tilde{w}_0,\tilde{w}_1,\dots$, setting $D=0$
+
+$$
+\sum_{i=-\infty}^\infty\widetilde w_i\cdot\gamma_{yy}[m-i]=\gamma_{sy}[m+D],\hspace{4mm}m=0,1,\dots,M
+$$
+
+In the frequency domain we get
+
+::: {layout="[50,-10,40]"}
+$$
+\widetilde W(\Omega)=\frac{\Gamma_{ss}(\Omega)}{\Gamma_{ss}(\Omega)+\Gamma_{vv}(\Omega)}
+$$
+
+![](images/paste-90.png){width="40%"}
+:::
+
+## Principle of Orthogonality
+
+Da das gewünschte Signal nicht im Unterraum der Beobachtungen $y[n]$ und $y[n-M]$ liegt, kann das gewünschte Signal $s[n+D]$ nicht direkt erreicht werden, man kann nur annähern
+
+![](images/dsp303img1.png){width="70%"}
+
+Since uncorrelated random variables with zero mean are said to be *orthogonal*, this interesting result is referred to as the *principle of orthogonality*. The estimate $\hat s_{MMSE}[n+D]$ is a linear combination of the observations and thus an element of the linear subspace spanned by the random vectors $y[n],y[n-1],\dots,y[n-M]$. Forming the linear combination in such a way that the distance to $s[n+D]$ becomes minimal results in the optimal estimate. Obviously, the vector $(\hat s_{MMSE}[n+D]-s[n+D])$, representing the estimation error, has minimal length when being orthogonal to the subspace spanned by the observations.
+
+## Implementation
+
+``` python
+def wiener(g, b, P, M, D):
+    # Wiener filter design
+    # g : impulse response of distorting system
+    # b : one-sided autocorrelation sequence of desired signal
+    # P : additive noise variance
+    # M : Wiener filter order
+    # D : filter delay
+    # return: impulse response of optimal filter
+    # compute autocorrelation of Wiener filter input signal
+    acy = np.convolve(np.convolve(g,np.concatenate((np.flip(b)[:-1],b))),np.flip(g))
+    # truncate/zero-pad acy such that center is at element M
+    if (len(acy)>2*M+1):
+        acy = acy[int((len(acy)-(2*M))/2):]
+    elif (len(acy)<2*M+1):
+        acy = np.concatenate((np.zeros(int(((2*M+2)-len(acy))/2)),acy,np.zeros(int(((2*M+2)-len(acy))/2))))
+    # add noise variance
+    acy[M] = acy[M]+P
+
+    # compute correlation matrix of random input signal
+    Ry = np.zeros((M+1,M+1))
+    for m in range(M+1):
+        Ry[m,:] = acy[M-m:2*M+1-m]
+
+    # input/output signal correlation vector
+    q = np.concatenate((np.flip(b)[:-1],b,np.zeros(len(g)+M+np.abs(D))))
+    # truncate/zero-pad q such that first element is autocorrelation of desired signal at m=D
+    if (len(b)+D<1):
+        q = np.concatenate((np.zeros(1-len(b)-D),q))
+    elif (len(b)+D>1):
+        q = q[len(b)+D-1:]
+
+    rsy = np.zeros(M+1)
+    for m in range(M+1):
+        rsy[m] = np.sum(g*q[m:m+len(g)])
+
+    # Wiener filter
+    h = np.matmul(np.linalg.inv(Ry),rsy)
+
+    return h
+```
+
+## Kalman Filter *(dynamic systems)*
+
+To increment the order of a Wiener filter, a **Kalman filter** can be applied. The Kalman filter takes every additional observation to enhance the filter without a limit on the filter order. Furthermore the Kalman filter can be applied into a *dynamic system*. It is built on a *state space representation* of a physical system, where the inner system state may be a coordinate of a vehicle
+
+![](images/dsp305img1.png){width="50%"}
+
+What is observable from the outside are the measurements $y_1,y_2,\dots$ which are linear maps of the internal state subject to measurement errors, Specifivally, the $k$th observation is given by
+
+$$
+y_k=H_kt_k+v_k
+$$
+
+Everey entity of the algorithm:
+
+![](images/dsp305tab1.png){width="60%"}
+
+And the Kamlan Algorithm holds:
+
+![](images/dsp305img2.png){width="60%"}
+
+**Example**: Lunar lander
+
+``` python
+# with Kalman filter
+h_undock = np.random.normal(loc=1000.0, scale=10.0)    # undock height
+dt = 0.1
+thrust = FperKg
+
+# initial altitude/speed
+h = h_undock
+v = 0.0
+
+t_est = np.array([0.0,0.0])    # state vector estimate
+R_t = np.array([[1.0e9,0.0],[0.0,0.0]])    # state vector covariance matrix
+B = np.array([[1,-1],[0,1]])    # state transition matrix
+P = np.array([[0,0],[0,(thrust/10)**2]])    # input error variance
+H = np.array([1,0])
+
+h_rec = np.array([h])
+v_rec = np.array([v])
+h_est_rec = np.array([t_est[0]])
+v_est_rec = np.array([t_est[1]])
+for i in range(1000):
+    if ((i%10)==0):
+        # noisy measurement
+        h_meas = np.random.normal(loc=h, scale=(h/10.0))
+
+        # correction step
+        W = (h_meas/10)**2
+        G = R_t[:,0]/(R_t[0,0]+W)
+        t_est = t_est + G*(h_meas-t_est[0])
+        R_t = np.matmul(np.array([[1-G[0],0],[-G[1],1]]),R_t)
+
+        # prediction of state one second ahead without thrust
+        t_pred = np.matmul(B,t_est) + np.array([-g_moon/2,g_moon])
+
+        # action: thrust on/off
+        h_1 = t_pred[0]
+        v_1 = t_pred[1]
+        if ((v_1>0) and (v_1*v_1>2.0*h_1*(thrust-g_moon))):
+            # full thrust
+            a_set = -thrust+g_moon
+            a_true = np.random.normal(loc=-thrust, scale=(thrust/10))+g_moon
+            Pi = P
+        else:
+            # no thrust
+            a_set = g_moon
+            a_true = g_moon
+            Pi = np.zeros((2,2))
+
+        # prediction step
+        t_est = np.matmul(B,t_est)+np.array([-a_set/2,a_set]).T
+        R_t = np.matmul(B,np.matmul(R_t,B.T))+Pi
+
+    # altitude/speed update
+    h -= ((v+a_true*dt/2)*dt)
+    v += (a_true*dt)
+    h_rec = np.append(h_rec, h)
+    v_rec = np.append(v_rec, v)
+    h_est_rec = np.append(h_est_rec, t_est[0])
+    v_est_rec = np.append(v_est_rec, t_est[1])
+    if (h<0.0):
+        break
+```
+
+![](images/paste-91.png){width="50%"}

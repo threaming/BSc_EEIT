@@ -10,7 +10,7 @@ $$
 x(n\cdot T_S)=x[n]
 $$
 
-![](images/paste-1.png)
+![](images/paste-1.png){width="60%"}
 
 | Signal  | Property                     |
 |---------|------------------------------|
@@ -41,7 +41,7 @@ $$
 x[n]=\hat{X}\cdot e^{j2\pi f_0nT_S}
 $$
 
-![Complex hamronic sequence with period duration $T_0=16\cdot T_S$](images/paste-5.png){#cpmplexHarmonic width="567"}
+![Complex hamronic sequence with period duration $T_0=16\cdot T_S$](images/paste-5.png){#cpmplexHarmonic width="50%"}
 
 ### Statistical Signal Parameters
 
@@ -128,7 +128,7 @@ z = convmtx(x,y)
 
 ### Anwendung: Radar
 
-![](images/paste-6.png)
+![](images/paste-6.png){width="60%"}
 
 Um bei einem Radar nur auf das gewünschte Signal zu reagieren, also auf das eigene, wird vom Radar ein [Barker-Code](https://de.wikipedia.org/wiki/Barker-Code) ausgesendet. Über Korrelation kann so die Laufzeit eindeutig zugeordnet werden.
 

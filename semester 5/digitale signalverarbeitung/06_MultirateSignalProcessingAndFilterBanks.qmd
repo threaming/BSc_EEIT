@@ -1,0 +1,267 @@
+\pagebreak
+
+# Multirate Signal Processing and Filter Banks
+
+## Decimation
+
+For reducing the sample rate of a signal downsample by selecting every $D$th sample. But the **Abtasttheorem** must not be harmed!
+
+![Downsampling by a factor of 3](images/paste-71.png){width="20%"}
+
+To be safe withing the sampling theorems boundaries we apply a low-pass filter first.
+
+![](images/paste-72.png){width="70%"}
+
+Where the low-pass filter ideally holds
+
+$$
+H(\Omega)=
+\begin{cases}
+1 & \text{if }\Omega\in\left[-\frac{\pi}{D},\frac{\pi}{D}\right]\\
+0 & \text{otherwise}
+\end{cases}
+$$
+
+In the frequency domain the downsampling has the effect of spreading the spectrum by a factor $D$. In the case of an ideally lowpass filtered signal $v[n]$ the spectral input-output relation of the downsampler is simply
+
+$$
+Y(\Omega)=\frac1DV\left(\frac{\Omega}{D}\right)\qquad\text{or for non-ideal lowpass filtering}\qquad  Y(\Omega)=\frac1D\sum_{d=0}^{D-1}V\left(\frac{\Omega}{D}-\frac{2\pi d}{D}\right)
+$$
+
+![](images/paste-73.png){width="60%"}
+
+The implementation can be done through a direct implementation of a FIR filter of order $M$ producing $v[n]$ where only every $D$th sample of $v[n]$ is used. More efficiently the downsamplers are placed before the multiplication with the filter coefficients, thus they only have to work at the speed of the lower sample rate.
+
+![](images/paste-74.png){width="70%"}
+
+## Interpolation
+
+For increasing the sampling rate by the factor of $I$ we simply insert $I-1$ zeros between any two samples of the discrete signal
+
+$$
+r[n]=
+\begin{cases}
+y[n/I] & \text{if }n\in\{0,\pm I,\pm 2I,\dots\} \\                
+0 & \text{otherwise}
+\end{cases}
+$$
+
+![](images/paste-75.png){width="20%"}
+
+The spectrum of the upsampled signal becomes
+
+$$
+R(\Omega) =  \sum_{n=-\infty}^\infty r[n]e^{-j\Omega n} = \sum_{m=-\infty}^\infty y[m]e^{-j\Omega Im} = Y(I\Omega)
+$$
+
+![](images/paste-77.png){width="60%"}
+
+We can see, that the spectrum of $r[n]$ is $\frac{2\pi}{I}$ periodic. This can be prevented by a low-pass filter
+
+![](images/paste-76.png){width="70%"}
+
+Where the low-pass ideally holds
+
+$$
+H(\Omega)=
+\begin{cases}
+I & \text{if }\Omega\in\left[-\frac{\pi}{I},\frac{\pi}{I}\right]\\
+0 & \text{otherwise}
+\end{cases}
+$$
+
+An FIR or IIR filter can be employed as lowpass filter. However, a direct implementation is again rather inefficient since $I-1$ out of every $I$ sample values at the filter input are zeros. THere is a more efficient implementation in addition to the direct implementation involving an FIR filter. Note that in the more efficient implementation the multipliers operate at the lower sampling rate $F_y$ rather than at $F_z$.
+
+![](images/dsp102img3.png){width="70%"}
+
+## Polyphase Filter Structures
+
+Polyphase structures are another concept towards more efficient filter implementations. First we define the impulse response of $h[k]$ by means of $M$ downsampled polyphase variants $p_i[k]$
+
+::: {layout-ncols="2"}
+```{=tex}
+\begin{equation}
+  p_i[k]=h[kM+i],\hspace{4mm}i=0,1,\dots,M-1
+\end{equation}
+```
+![](images/paste-78.png){width="30%"}
+:::
+
+The corresponding $z$-Transform is
+
+$$
+P_i(z)=\sum_{k=-\infty}^\infty p_i[k]z^{-k}=
+\sum_{k=-\infty}^\infty h[kM+i]z^{-k},\hspace{4mm}i=0,1,\dots,M-1
+$$
+
+We note further that the $z$-Transform $H(z)$ of $h[k]$ can be written in terms of $P_0(z),\dots,P_{M-1}(z)$ as
+
+$$
+H(z)=\sum_{i=0}^{M-1}z^{-i}P_i(z^M)
+$$
+
+::: callout-tip
+## Noble identities
+
+Note that for every term $P_i(z^M)$ holds
+
+![](images/paste-79.png){width="30%"}
+
+And that the *Noble identities* hold
+
+![](images/dsp103img3.png){width="50%"}
+:::
+
+### Implementation Interpolation
+
+Durch das Auftreten der Samplewerte nut noch an den Positionen $M=I$ kann über den Schalter eine gute Tiefpass-Charackteristik erzielt werden
+
+![](images/dsp103img4.png){width="60%"}
+
+### Implementation Decimation
+
+Die beiden Vorteile sind, (1) Filter müssen nur mit *geringer Abtastrate* arbeiten, (2) Prozess ist so gut *paralleisierbar*.
+
+![](images/dsp103img5.png){width="60%"}
+
+## Sampling Rate Conversion
+
+To convert the sampling rate by a non-integer factor use a **Up-** and **Downsampling** combination to convert the samplingrate by a factor of $\frac{I}{D}$. It is preferable to first upsample and downsample afterwards, the other way around information loss can occur, but the low-pass filter has to work at the higher samplingrate. Furthermore the low-pass filter of both conversions can be combined
+
+![](images/dsp104img1.png){width="70%"}
+
+Through the use of $I$ Polyphase filters a efficient implementation can be achieved. The trick is to let the "switch" always make $D$-steps.
+
+**Example**: $I=160$, $D=147$
+
+![](images/paste-80.png){width="50%"}
+
+Implementation in Python:
+
+``` python
+from scipy import signal
+import matplotlib.pyplot as plt
+
+# upsample by factor I=160 and downsample by a factor D=147
+I = 160
+D = 147
+
+# FIR lowpass filter (impulse response h) with order: 3840; wpass: 1/200; wstop: 1/160
+h = signal.firwin(3840, 1/200)
+
+# create Polyphase filter from FIR lowpass
+P = np.zeros((I, len(h)//I))
+for i in range(I):      # get each coeff P_i
+    P[i,:] = h[i::I]    # take every 160th sample
+
+# apply Polyphase filter to x
+y = np.zeros(((len(x)*160)//147))
+i = 0; m = 0
+for n in range(len(x)): # apply polyphase
+    i = (D*n)%I  # idx of filter P_i
+    m = (D*n)//I # idx of signal
+    y[n] = I*np.convolve(P[i,:],x[m:m+24],mode='valid')
+```
+
+## Quadrature Mirror Filters
+
+As one would lose information by downsampling because of the applied low-pass filter, we can low- and high-pass filter a signal and downsample both resulting signals
+
+![](images/dsp105img1.png){width="60%"}
+
+If the following is true
+
+```{=tex}
+\begin{align}
+H_0(\Omega) &= H(\Omega)\\
+H_1(\Omega) &= H(\Omega-\pi)\\
+G_0(\Omega) &= H(\Omega)\\
+G_1(\Omega) &= -H(\Omega-\pi)
+\end{align}
+```
+We gain theoretical **perfect reconstruction**
+
+![](images/dsp105img2.png){width="50%"}
+
+Because $H_1=H_0(\Omega-\pi)$, we speak of *power symmetric filters*.
+
+**Application**: **Subband Coding** can be used for audio and image compression, because different frequency bands can be assigned with different code rates and thus emphasize the regions with a higher power density. Speech for example holds the most power in the lower frequency bands, thus quadrature mirror filter banks can be applied
+
+![](images/dsp105img4.png){width="60%"}
+
+## DFT Filter Banks
+
+By applying more than just two filter banks, we get a $M$*-channel filter bank*. There are $M$ filters parallel in both the analysis and synthesis banks. As a result the subband signals have a far lower sampling rate than the original signal
+
+![](images/dsp106img1.png){width="60%"}
+
+::: callout-note
+## Over-/Undersampling
+
+The analysis bank employs the $M$ filters $H_0(z),H_1(z),\dots,H_{M-1}(z)$ and downsamples with the same factor $M$
+
+If we apply $N$ Filters $H_0(z),H_1(z),\dots,H_{N-1}(z)$ but downsample by a different factor $M$ we can achieve...
+
+-   ... undersampling when $N>M$
+
+-   ... oversampling when $M>N$
+:::
+
+The filters $H_\ell$ are generaly defined as
+
+$$
+H_\ell(z)=H(z\cdot e^{-j2\pi\ell/M}),\hspace{4mm}\ell=0,1,\dots,M-1
+$$
+
+![](images/dsp106img2.png){width="70%"}
+
+With the corresponding impulse response
+
+$$
+h_\ell[k]=h[k]\cdot e^{j2\pi\ell k/M},\hspace{4mm}\ell=0,1,\dots,M-1
+$$
+
+### Blockwise DFT
+
+::: callout-tip
+## Blockwise / Generalized
+
+![](images/paste-82.png){width="70%"}
+:::
+
+We can implement the same behaviour or exclude the rotation factor from the filters and apply them seperatly. This gives us a blockwise *DFT* on the analysis side and a *IDFT* on the synthesis side
+
+![](images/dsp106img3.png){width="60%"}
+
+The filters are now the same with every subband and can be definded as
+
+$$
+ h[k]=\left\{\begin{array}{ll} 1 & \mbox{if } k\in\{0,1,\dots,M-1\} \\ 0 & \mbox{otherwise}\end{array}\right.\hspace{2mm}\mbox{and}\hspace{2mm}g[k]=\left\{\begin{array}{ll}\frac1M & \mbox{if } k\in\{0,1,\dots,M-1\} \\ 0 &\text{otherwise}\end{array}\right.
+$$
+
+where they act as the **window function** and can be changed accordingly.
+
+### Blockwise Polyphase DFT
+
+A particularly efficient implementation of a non-rectangular window on a DFT can be achieved through a polyphase filter. Through this we get the $M$-component polyphase decomposition
+
+$$
+H_\ell(z) = \sum_{i=0}^{M-1}z^{-i}\cdot e^{j2\pi\ell i/M}\cdot P_i(z^M) = \sum_{i=0}^{M-1}e^{j2\pi\ell i/M}\cdot\left(z^{-i}\cdot P_i(z^M)\right)\qquad\text{with }\ell=0,1,\dots,M-1
+$$
+
+![](images/dsp106img4.png){width="60%"}
+
+There are two aspects that make the filter bank implementation in Fig. 4 very attractive:
+
+1.  The polyphase components are FIR filters, the impulse responses of which are downsampled versions of $h[k]$ or $g[k]$. These parallel filters normally have a very low complexity.
+2.  For the DFT computations efficient Fast Fourier Transform algorithms are available.
+
+### Working example
+
+![](images/paste-81.png)
+
+## Application Time Scale Modification
+
+There are in fact a number of methods for achieving the goal without affecting the signal frequencies, none of them trivial or perfect however. One approach is to make use of DFT filter banks and accomplish the time scaling in the time-frequency domain as sketched in the following illustration.
+
+![](images/paste-84.png){width="60%"}

@@ -27,12 +27,12 @@ source:
 geometry: 
 - "top=25mm"
 - "bottom=25mm"
-- "left=25mm"
-- "right=25mm"
+- "left=15mm"
+- "right=15mm"
 papersize: a4
 fontsize: 10pt
 
-# tries to place the picture where you define it and center it
+# tries to place the picture where you define it and center it$
 fig-pos: H
 fig-align: center
 
@@ -61,6 +61,10 @@ highlight-style: github
 
 {{< include 05_DigitalFilters.qmd >}}
 
-{{< include 06_FourierAnalysis.qmd >}}
+{{< include 06_MultirateSignalProcessingAndFilterBanks.qmd >}}
 
-{{< include 07_Z_Transform.qmd >}}
+{{< include 07_RandomSignals.qmd >}}
+
+{{< include 08_OptimumLinearFilters.qmd >}}
+
+{{< include 09_AdaptiveFilters.qmd >}}

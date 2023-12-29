@@ -1,8 +1,10 @@
+\pagebreak
+
 # Analog-to-Digital & Digital-to-Analog Conversion
 
 ## Steps of A/D- and D/A-Conversion
 
-![Signal classification in a/d- and d/a-conversion](images/paste-7.png)
+![Signal classification in a/d- and d/a-conversion](images/paste-7.png){width="80%"}
 
 ### A/D
 
@@ -28,7 +30,7 @@ $$
 x_S(t)=\sum_{n=-\infty}^\infty x(t)\cdot\delta(t-nT_S)
 $$
 
-![](images/paste-8.png)
+![](images/paste-8.png){width="60%"}
 
 Through the application of the Fourier property $x(t)e^{j2\pi f_0t}\laplace X(f-f_0)$ we obtain the frequency spectrum of the sampled signal as
 
@@ -45,7 +47,7 @@ $$
 f_k=k\cdot\frac{f_S}{N}
 $$
 
-![](images/paste-9.png)
+![](images/paste-9.png){width="80%"}
 :::
 
 ### Aliasing
@@ -60,7 +62,7 @@ f_s>2\cdot f_{max}
 $$
 :::
 
-![](images/paste-10.png)
+![](images/paste-10.png){width="70%"}
 
 ### Band-Pass Sampling
 
@@ -78,11 +80,13 @@ $$
 
 For sampling with $N=$ **even** we get the mirror spectrums
 
-![Band-pass sampling for even $N$](images/paste-11.png)
+![Band-pass sampling for even $N$](images/paste-11.png){width="70%"}
+
+\newpage
 
 For sampling with $N =$ **odd** we get the mirror spectrums
 
-![Band-pass sampling for odd $N$](images/paste-12.png)
+![Band-pass sampling for odd $N$](images/paste-12.png){width="70%"}
 
 ::: callout-important
 ## Spectrum Correction
@@ -104,7 +108,7 @@ $$
 x(t) = \sum_{n=-\infty}^\infty x(nT_S)\cdot\text{sinc}(\pi f_S(t-nT_S))
 $$
 
-![](images/paste-13.png)
+![](images/paste-13.png){width="80%"}
 
 ::: callout-note
 ## Ideal values
@@ -124,7 +128,9 @@ $$
 \text{SNR}\approx 6dB\cdot \log_2\left(\frac{f_S}{f_0}\right)-11dB
 $$
 
-![](images/paste-14.png)
+![](images/paste-14.png){width="70%"}
+
+\newpage
 
 ## Quantization of Signals
 
@@ -139,7 +145,7 @@ $$
 | Mid-Tread                                                         | Mid-Rise                                          |
 |-----------------------------------------|-------------------------------|
 | Decision levels at $\pm0.5\Delta,\pm1.5\Delta,\pm2.5\Delta,\dots$ | Decision levels at $0,\pm\Delta,\pm2\Delta,\dots$ |
-| ![](images/paste-15.png)                                          | ![](images/paste-16.png)                          |
+| ![](images/paste-15.png){width="30%"}                             | ![](images/paste-16.png){width="30%"}             |
 | $-\frac{\Delta}{2}<\epsilon\leq\frac{\Delta}{2}$                  | $-\Delta<\epsilon\leq0$                           |
 
 Furthermore **Clipping** occurs if the signal values of $x[n]$ are outside of the full-scale range $R$.

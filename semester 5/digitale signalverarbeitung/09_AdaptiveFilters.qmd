@@ -1,0 +1,103 @@
+\pagebreak
+
+# Adaptive Filters
+
+Wiener and Kalman filters are optimal filters under the assumption, that the statistics of the involved random processes are perfectly known. This is rarely the case, that's why we introduce **adaptive filters** which can adapt to unknown and possibly varying conditions.
+
+## Linear Predictive Coding *(LMS)*
+
+It has been found that rather than using *waveform coder* which aim at preserving signal waveform, *vocoders* build on a certain speech synthesis model and extract the parameters of the model. Transmitting the model parameters requires usually less bandwidth than transmitting the waveform.
+
+The human vocal tract can be modeled as an AR all-pole model with the system function
+
+$$
+H(z)=\frac{g}{1-\sum\limits_{k=1}^Pa_kz^{-k}}
+$$
+
+with $P$ the order. The **LPC-10e** standard implements this system with the order of $P=10$. Furthermore voice is split into voiced (vowels e.g. "a") and unvoiced (consonants e.g. "f").
+
+![](images/dsp401img1.png){width="50%"}
+
+On the synthesis side we are looking at a model which derives the voiced and unvoiced parts from white noise resp. an impuls train
+
+![](images/dsp401img2.png){width="50%"}
+
+To extract the coefficients $a_1,a_2,\dots,a_P$, they are chosen to reproduce the signal segment $s_{in}[n]$ as closely as possible through
+
+$$
+\hat s[n]=\sum_{k=1}^Pa_ks_{\rm in}[n-k]
+$$
+
+where the segment is a part of the sampled length
+
+![](images/paste-92.png){width="30%"}
+
+The Parameters can be defined through the Yule-Walker equation with the autocorrelation $\widehat\gamma_{ss}[m]=\frac1N\cdot\sum_{n=1}^{N-m}s_{in}[n]\cdot s_{in}[n+m]$ with
+
+$$
+\mathbf{R}_{ss}=\left(\begin{array}{cccc}\gamma_{ss}[0] & \gamma_{ss}[1] & \cdots & \gamma_{ss}[P\!-\!1] \\ \gamma_{ss}[1] & \gamma_{ss}[0] & \cdots & \gamma_{ss}[P\!-\!2] \\ \vdots & \vdots & & \vdots \\ \gamma_{ss}[P\!-\!1] & \gamma_{ss}[P\!-\!2] & \cdots & \gamma_{ss}[0]\end{array}\right)\qquad\mbox{ and }\qquad\mathbf{r}_{ss}=\left(\begin{array}{c}\gamma_{ss}[1] \\ \gamma_{ss}[2] \\ \vdots \\ \gamma_{ss}[P]\end{array}\right)
+$$
+
+and solving for $\mathbf a$
+
+$$
+\mathbf{R}_{ss}\mathbf{a}=\mathbf{r}_{ss}
+$$
+
+*Note that a Levinson-Durbin recursion can be applied, as* $\mathbf R_{ss}$ *is a Toeplitz matrix.*
+
+To determine the remaining parameters, consider the error signal
+
+$$
+d[n] = s_{\rm in}[n]-\hat s[n] = s_{\rm in}[n]-\sum_{k=1}^Pa_ks_{\rm in}[n-k]
+$$
+
+When defining the excitation $g\cdot v[n]$ through $v[n]$ as a signal with unit power, we get for $g$
+
+$$
+g=\sqrt{\frac{1}{N}\sum_{n=1}^{N}d^2[n]}
+$$
+
+To distinguish between voiced and unvoiced sound as well as for the pitch estimation, the *LPC-10e* algorithm relies on the *average magnitude difference function*
+
+::: {layout="[50,-10,30,-10]"}
+$$
+\bar\gamma_d[m]=\frac1{N-m}\sum_{n=1}^{N-m}\left|\frac{d[n]}{g}-\frac{d[n+m]}{g}\right|
+$$
+
+![](images/paste-95.png){width="40%"}
+:::
+
+If the value of $\bar\gamma_d$ falls under a certain threshold, the segment is declared **voiced** and the value $m=T$ sets the pitch.
+
+## The LMS Algorithm
+
+The **LMS Algorithm** works adaptively and can adjust its parameters through a update algorithm
+
+![](images/dsp402img1.png){width="50%"}
+
+When the desired signal $s[n]$ isn't available a so called *preamble* with a defined signal sequence is used to determine the channels behaviour
+
+::: {layout="[-5,40,-10,45]" layout-valign="center"}
+![](images/dsp402img2.png){width="50%"}
+
+![](images/dsp402img3.png){width="50%"}
+:::
+
+The LMS algorithm works through the continuous update of the parameters $\mathbf w$. First, the coefficient vector is initialized as $\mathbf{w}^{(0)}=\mathbf{0}_{M+1}$ (i.e., a vector with $M+1$ zeros). Any prior knowledge may of course be used to find a better starting vector $\mathbf w^{(0)}$. Subsequently, as $n=0,1,2,\dots$
+
+$$
+\mathbf{w}^{(n+1)}=\mathbf{w}^{(n)}+\underbrace{\mu\left(s[n]-\left(\mathbf{w}^{(n)}\right)^{\rm T}\mathbf{y}_n\right)\cdot\mathbf{y}_n}_{=\mathbf{w}_\Delta^{(n)}}
+$$
+
+The convergence speed can by changed by the stepsize $\mu$
+
+![](images/dsp402img4.png){width="60%"}
+
+::: callout-caution
+## RLS Algorithm
+
+A Algorithm which converges much faster is the **recursive least squares** (RLS) Algorithm. It is much more complex but can be used for echo cancellation with really fast changing echos
+
+![](images/dsp403img2.png){width="50%"}
+:::

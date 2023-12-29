@@ -1,1 +1,263 @@
+\pagebreak
+
 # Design of Digital Filters
+
+For a Filter we need to determine the following **filter parameters**:
+
+-   $b_k$ and $a_k$ *filtercoefficients*
+
+-   $N$ and $M$ *filter order*
+
+Filters can take the following forms:
+
+![](images/paste-49.png){width="70%"}
+
+![](images/paste-57.png){width="70%"}
+
+\newpage
+
+## FIR-Filter
+
+::: callout-note
+## Definition
+
+-   $M=0$, finite impulse response *(FIR)*
+
+-   $H(z)=b_0+b_1z{-1}+\dots+b_Nz{-N}$
+
+-   impulse response is $N+1$ time steps long
+
+-   impulse response corresponds to the coeffs $h[n]=\{b_0,b_1,\dots,b_N,0,0,\dots\}$
+
+-   **Stability**: all poles are $z=0$, FIR is stable by definition
+
+-   **Linear Phase**: Easy $\rightarrow$ constant group delay
+
+-   **Implementation**: Realization in HW or SW straightforward and noncritical
+
+-   ***Drawback***: High filter order $N$ needed for often desired output $\rightarrow$ computational effort / signal delay
+:::
+
+### Symmetric FIR Filters
+
+FIR Filter is called *symmetric* if the coefficients hold
+
+$$
+\underbrace{b_i=b_{N-i}}_{\text{symmetric}}\qquad\text{or}\qquad\underbrace{b_i=-b_{N-i}}_{\text{anti-symmetric}}\qquad\text{with } i=0,1,\dots,N
+$$
+
+The length of $N$ defines a filter further as *even* or *odd*.
+
+::: {#fig-somethingfilterish layout="[[50,50],[-25,50,-25]]" fig-pos="H" layout-valign="center"}
+![](images/paste-50.png){width="50%"}
+
+![](images/paste-51.png){width="50%"}
+
+![](images/paste-53.png){width="50%"}
+
+The four types of linear-phase FIR-filters. Type 3 and 4 feature a constant phase offset of 90°.
+:::
+
+Symmetric FIR filters have a constant group delay of $N/2$ sample times, all frequencies get delayed by the same amount
+
+$$
+\tau_g=\frac{N}2\cdot T_S
+$$
+
+::: callout-warning
+## 180°-Phase-Jumps
+
+In the stop bans of a symmetrical FIR filter, 180°-phase-jumps can occur. This is because of *complex-conjugate zeros at the unit circle*.
+
+The jumps can be eliminated by *duplicating the complex-nojugate pairs of zeros*, with the drawback of a higher filter order.
+
+![](images/paste-58.png){width="60%"}
+:::
+
+Symmetrical FIR filters can be implemented with $\frac{N}2+1$ ( $N$ even) or $\frac{N+1}2$ ( $N$ odd) multiplications
+
+![](images/paste-54.png){width="60%"}
+
+### Window Design Method
+
+``` matlab
+% design a FIR-filter with a Hamming Window
+b = fir1(n,Wn,ftype) % n: filter order, Wn: frequency between 0 an 1 (pi rad/sample)
+                     % ftype: 'low' | 'bandpass' | 'high' | 'stop' | 'DC-0' | 'DC-1'
+```
+
+::: {layout="[45,55]" fig-pos="H"}
+![](images/paste-55.png){width="50%"}
+
+![](images/paste-56.png){width="50%"}
+:::
+
+A ideal *lowpass* with a cut-off frequency $f_c$ has a sinc-function as an ideal impulse response (2)
+
+$$
+h_{d_{TP}}[n]=\frac{\sin(\Omega_cn)}{\pi n}
+$$
+
+This response is infinitly long, to realize it, a **window is applied** (1 $\rightarrow$ 3) and shifted by $\frac{N}2$ sample times (4).
+
+Any other filter characteristic can be achieved by sum and difference of low pass filters at different cut-off frequencies. A **high-pass** filter at $f_c$ can be realized with a low-pass at $f_c=\frac{f_S}2$ minus another low-pass with $f_c$.
+
+$$
+h_{d_{HP}}[n]=\frac{\sin(\pi n)}{\pi n}-\frac{\sin(\Omega_c n)}{\pi n}
+$$
+
+![](images/paste-59.png){width="40%"}
+
+The choice of the window can influence the resulting frequency-response greatly.
+
+## IIR Filter
+
+::: callout-note
+## Definition
+
+-   The order of the denominator polynomial in normalized form $M>0$
+
+-   At least one pole at $z\neq0$ , infinite impulse response
+
+-   **Stability**: Potentially unstable
+
+-   **Linear Phase**: Not possible
+
+-   ***Drawback***: high sensitivity on coefficient quantization
+:::
+
+### Design with Analog Prototype Filter
+
+A systematic approach of designing IIR-Filters is by deriving the needed filter from a prototype filter. So you have to choose first a filter from one of the four basic types and work on from there.
+
+::: {layout="[55,45]" valign="center"}
+![](images/paste-60.png){width="50%"}
+
+![](images/paste-61.png){width="50%"}
+:::
+
+### IIR Design by Approximation of the Differential Equation *(rare)*
+
+Approximating the differential equation through a difference equation
+
+$$
+\frac{dy(t)}{dt}\bigg|_{t=nT_S}=\frac{y[n]-y[n-1]}{T_S}\qquad\laplace\qquad
+\underbrace{p}_{\text{Laplace}}=\underbrace{\frac{1-z^{-1}}{T_S}}_{\text{z-Transform}}
+$$
+
+Thus, the analog differentiator corresponds to a 1st-order FIR system. For higher order derivatives the equation extends to
+
+$$
+p^k=\left(\frac{1-z^{-1}}{T_S}\right)^k
+$$
+
+We get the digital IIR filter from the analog transfer function through
+
+$H(z)=H_a(p)|_{p=\frac{1-z^{-1}}{T_S}}$
+
+Through $z=\frac{1}{1-pT_S}$ we get the always stable z-System
+
+![](images/paste-62.png){width="70%"}
+
+### IIR Design by Impulse-Invariant Transformation *(rare)*
+
+Transforming through sampling the impulse response of the continuous analog transfer function into the discrete impuls response of the IIR-Filter
+
+$$
+h[n]=h_a(nT_S)\qquad n=0,1,2,\dots
+$$
+
+::: callout-caution
+## Aliasing
+
+To stay clear of aliasing, the sampling frequency $f_S$ needs to be at least twice the highest pass-frequency of the analog prototype. Thus this method **can not transform *high-pass and band-stop* filter characteristics**.
+:::
+
+Mapping through $z=e^{pT_S}$ we obtain
+
+![](images/paste-63.png){width="60%"}
+
+### IIR Design by Bilinear Transformation *(standard)*
+
+A unique mapping of the left half of the $p$-plane into the unit circle of the $z$-plane through bilinear transformation
+
+$$
+z=\frac{2+pT_S}{2-pT_S}
+$$
+
+So ist eine eindeutige, aber nicht lineare Abbildung des gesamten $j\omega$ Bereiches auf den Einheitskreis möglich
+
+![](images/paste-65.png){width="60%"}
+
+::: callout-tip
+## Prewraping
+
+We see that the bilinear transformation maps the complete analog frequency range into $-\pi\dots+\pi$
+
+$$
+\Omega=2\arctan\left(\frac{\omega T_S}2\right)
+$$
+
+This can be prevented by prewraping the frequency response through
+
+$$
+\omega=\frac{2}{T_S}\cdot\tan\left(\frac{\Omega}2\right)
+$$
+
+![](images/paste-66.png){width="50%"}
+
+*(note the longer transition band)*
+:::
+
+## Filter Implementation Aspects
+
+### Choice of Sampling Frequency
+
+For a good system characteristic a sampling frequency $f_S$ double the highest frequency component of the signal is recommended. On the other hand, the higher the sampling frequency...
+
+-   ... the bigger the computational effort
+
+-   ... the higher the slope of the filter, which implies higher order filters
+
+-   ... the closer the poles and zeros in the $z$-plane, which gives higher sensitivity to coefficient quantization effects
+
+### IIR Filter Implementation
+
+To control the effects of coefficient quantization effects, higher-order IIR filters are usually implemented as **biquads** (secon-order sections or *SOS*)
+
+```{=tex}
+\begin{align}
+H(z) &=K\cdot H_1(z)\cdot H_2(z)\cdots H_L(z)
+     &=K\cdot\frac{(z-z_1)(z-z_1^*)}{(z-p_1)(z-p_1^*)}\cdot\frac{(z-z_2)(z-z_2^*)}{(z-p_2)(z-p_2^*)}\cdots\frac{(z-z_L)(z-z_L^*)}{(z-p_L)(z-p_L^*)}
+\end{align}
+```
+![](images/paste-67.png){width="60%"}
+
+Given the coefficients of $H(z)$, obtain the SOS coefficients through **Matlab**
+
+``` matlab
+% get second order sections
+[sos,g] = tf2sos(b,a) % a,b: filtercoeffs, g: overall gain
+```
+
+### Fix-Point Implementation
+
+Implementation by a fix-point number representation with the number of bits $W$ and the fractional bits $F$
+
+![](images/paste-68.png){width="60%"}
+
+Results in the *unsigned* and *signed* values
+
+$$
+D_{unsigned}=\sum_{k=0}^{W-1}b_k\cdot2^{k-F}\qquad D_{signed}=-b_{W-1}\cdot 2^{W-F-1}+\sum_{k=0}^{W-2}b_k\cdot2^{k-F}
+$$
+
+**Overflow**: Result gets larger than largest representable number $\rightarrow$ saturation (limit to highest value), wrap-around (re-count from lowest value)
+
+**Underflow**: lack of resolution, value to small to represent $\rightarrow$ trunctuation (neglect LSBs), rounding (round to nearest number representable)
+
+![](images/paste-69.png){width="70%"}
+
+The needed memory by a implementation largely depends on basic architectures. This can be seen if you compare the implementation of the direct form I *(32 bits to be stored)* and transposed direct form II *(47 bits to be stored)*
+
+![](images/paste-70.png){width="80%"}

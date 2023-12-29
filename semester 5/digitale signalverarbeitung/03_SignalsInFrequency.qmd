@@ -1,6 +1,8 @@
+\pagebreak
+
 # Digital Signals in the Frequency Domain
 
-![Comparison of Fourier methods](images/paste-23.png){fig-align="center"}
+![Comparison of Fourier methods](images/paste-23.png){fig-align="center" width="50%"}
 
 ## Fourier in Discrete Time
 
@@ -92,20 +94,20 @@ $$
 
 : Modulation
 
-|                                                                                                                                            |
+|                                                                                                                                                     |
 |:----------------------------------------------------------------------:|
-|                    Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists                     |
-|   $$                                                                                                                                       
-                           \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                                       
-                                                                                                                                       $$    |
+|                         Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists                         |
+|   $$                                                                                                                                                
+                                 \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                                          
+                                                                                                                                                $$    |
 
 : Parseval Theorem
 
-|                                                                                                                         |
+|                                                                                                                                  |
 |:----------------------------------------------------------------------:|
-|   $$                                                                                                                    
-                           x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)               
-                                                                                                                    $$    |
+|   $$                                                                                                                             
+                                 x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)                  
+                                                                                                                             $$    |
 
 : Correspondence of Convolution and Multiplication
 
@@ -177,7 +179,7 @@ To overcome the problem of lobe-introduction, we apply **windowing**. A window c
 
 Different windowing functions will have different influence on the time and frequency domains of signals and should be chosen there for.
 
-![Comparison of windowing functions in the time and frequency domain](images/paste-32.png){width="70%"}
+![Comparison of windowing functions in the time and frequency domain](images/paste-32.png){width="60%"}
 
 ## Short-Time DFT
 
@@ -311,6 +313,8 @@ y_k[n]&=s[n]-W_N^k\cdot s[n-1]
 \end{align}
 ```
 ![](images/paste-39.png){width="60%"}
+
+\newpage
 
 ::: callout-note
 ## Parseval theorem
