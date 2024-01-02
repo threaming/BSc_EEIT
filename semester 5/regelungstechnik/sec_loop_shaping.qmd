@@ -42,7 +42,7 @@ Verstärkung bei hohen Frequenzen + Phasenanhebung ($\max 90\degree$ pro Ordnung
 
 Verstärkung bei tiefen Frequenzen + Phasensenkung ($\max -90\degree$ pro Ordnung)
 
-## ![](images/paste-80.png){width="7cm"}
+![](images/paste-80.png){width="7cm"}
 
 ## Grenzen des Loop-Shapings
 
