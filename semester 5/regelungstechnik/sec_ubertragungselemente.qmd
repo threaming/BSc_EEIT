@@ -69,13 +69,15 @@ $$
 
 ## Bezeichnete Glieder
 
-### P-Glied7
+![](images/paste-85.png)
+
+### P-Glied
 
 $$
 G(s)=k\qquad \text{konstanter Faktor}
 $$
 
-![](images/paste-23.png)
+![](images/paste-23.png){width="7cm"}
 
 ### I-Glied
 
@@ -83,7 +85,7 @@ $$
 G(s)=\frac1{s}\qquad\text{Integrator}
 $$
 
-![](images/paste-22.png)
+![](images/paste-22.png){width="7cm"}
 
 ### PT1-Glied
 
@@ -93,7 +95,7 @@ $$
 
 Sprungantwort
 
-![](images/paste-20.png)
+![](images/paste-20.png){width="7cm"}
 
 ### PT2-Glied
 
@@ -103,7 +105,7 @@ $$
 
 Sprungantwort & $d\ \hat{=}\ \zeta$
 
-![](images/paste-19.png)
+![](images/paste-19.png){width="7cm"}
 
 ### IT-Glied
 
@@ -113,7 +115,7 @@ $$
 
 Sprungantwort
 
-![](images/paste-21.png)
+![](images/paste-21.png){width="7cm"}
 
 ### DT1-Glied
 
@@ -121,4 +123,6 @@ $$
 G(s)=\frac{s}{1+sT} \qquad \text{Gefilterter Differentiator}
 $$
 
-![](images/paste-24.png)
+![](images/paste-24.png){width="7cm"}
+
+\includegraphics[page=1]{append_Grundelemente.pdf} \includegraphics[page=2]{append_Grundelemente.pdf} \includegraphics[page=3]{append_Grundelemente.pdf} \includegraphics[page=4]{append_Grundelemente.pdf} \includegraphics[page=5]{append_Grundelemente.pdf} \includegraphics[page=6]{append_Grundelemente.pdf} \includegraphics[page=7]{append_Grundelemente.pdf} \includegraphics[page=8]{append_Grundelemente.pdf}

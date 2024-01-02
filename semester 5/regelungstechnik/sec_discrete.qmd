@@ -4,6 +4,14 @@
 
 Digitalrechner arbeiten zeitdiskret $\leftrightarrow$ Prozesse sind von zeitkontinuierlicher Natur
 
+::: callout-caution
+## Verzögerung
+
+Druch grosse Berechnungen kann es zu Verzögerungen kommen
+
+![](images/paste-82.png){width="8cm"}
+:::
+
 ### 1) kontinuierlicher Prozess
 
 kontinuierlicher Regler $s$ wird entworfen und dann diskretisiert.
@@ -28,8 +36,8 @@ $$
 $$
 \begin{array}{ll}
   \widetilde{s} = \frac{z-1}{h} & \text{Euler/Vorwärtsdifferenz} \\
-  z = \frac{z-1}{zh} & \text{Rücksdifferenz} \\
-  z = \frac{2}{h}\cdot\frac{z-1}{z+1} & \text{Trapezregel/Tustin} \\
+  \widetilde{s} = \frac{z-1}{zh} & \text{Rücksdifferenz} \\
+  \widetilde{s} = \frac{2}{h}\cdot\frac{z-1}{z+1} & \text{Trapezregel/Tustin} \\
 \end{array}
 $$
 
@@ -38,12 +46,12 @@ $$
 ::: callout-tip
 ## Stabilität
 
-Die [Stabilitätsaussage bezieht]{.underline} sich auf die [transformierte Funktion]{.underline}, *nicht aber zwingend* auch für den geschlossenen Regelkreis
+Die [Stabilitätsaussage bezieht]{.underline} sich auf die [transformierte Funktion]{.underline}, *nicht aber zwingend* auch für den geschlossenen Regelkreis. \*Pole innerhalb des Einheitskreises der $z$-Ebene sind stabil.
 :::
 
 ### 2) zeitdiskreter Regler
 
-![](images/paste-60.png)
+![](images/paste-83.png)
 
 ![](images/paste-62.png)
 
@@ -52,6 +60,8 @@ Die [Stabilitätsaussage bezieht]{.underline} sich auf die [transformierte Funkt
 ### Relation z & s Ebene
 
 ![](images/paste-61.png)
+
+Es kann lediglich ein Streifen der Breite $2\pi$ *eindeutig* abgebildet werden.
 
 # Unstetiger Regler
 

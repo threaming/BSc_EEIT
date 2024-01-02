@@ -116,7 +116,7 @@ sys = tf(numerator,denominator);
 Die Transferfunktion kann in anderen Funktion wiederverwendet werden, wie zum Beispiel `step` oder `bode`. Folgende Beispiele sind mit der `sys`-Transferfunktion (folgende Gleichung) gemacht.
 
 $$
-G_{\text{sys}}(s) = \frac{4}{s^2+s+10}
+G_{\text{sys}}(s) = \frac{4}{s^2+2s+10}
 $$
 
 ``` matlab
@@ -125,7 +125,21 @@ sys = tf(4,[1 2 10]);
 
 ### PID-Regler `pidstd`
 
+Filter design über SISO-Tool `controlSystemDesigner(sys)`, export des ausgelegten Reglers `C`
+
 ``` matlab
+pidstd(C) % retreival of standardform
+---
+ans =
+ 
+             1      1          
+  Kp * (1 + ---- * --- + Td * s)
+             Ti     s          
+
+  with Kp = 64.8, Ti = 0.482, Td = 0.121
+ 
+Continuous-time PID controller in standard form
+Model Properties
 ```
 
 ### Bode-Diagramm `bode`
@@ -209,14 +223,26 @@ Es kann ebenfalls `bode`, `nyquist`, `step`, etc. angewendet werden, da die ZRD 
 
 Mit `sisotool` kann ein Regler *C* basierend auf einem Prozess *P* ausgelegt werdne.
 
-```matlab
+``` matlab
 P = tf(...);
 sisotool(P); % Der Prozess wird angegeben
 ```
+
+## Linear system simulation `lsim(sys,t,x)`
+
+Simulation eines linearen Systems `sys` über eine dauer `t` mit der Eingangsgrösse `x`
+
+``` matlab
+y_sim = lsim(G,u_mat,t_mat);
+% offset for simulation adjustments
+plot(t_mat,y_mat,t_mat,y_sim-3)
+legend('measured','simulated')
+```
+
+![](images/paste-84.png){width="7cm"}
 
 ## Weitere Befehle
 
 ### `minreal`
 
-Kürzt doppelte Nullstellen heraus algebraisch -> reduzieren auf Minimalform
-
+Kürzt doppelte Nullstellen heraus algebraisch -\> reduzieren auf Minimalform

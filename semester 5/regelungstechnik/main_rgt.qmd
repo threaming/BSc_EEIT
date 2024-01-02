@@ -1,7 +1,7 @@
 ---
 title: "Regelungstechnik"
-author: "Joel von Rotz"
-date: "25.04.2023"
+author: "Andreas Ming"
+date: "17.1.2024"
 language: _language-de.yml
 
 # [RENDER CONFIGURATION] ==============================
@@ -16,7 +16,7 @@ format:
       - text: "\\usepackage[nswissgerman]{babel}"
     template-partials:
       - config/before-body.tex
-    output-file: "s4_regelungstechnik"
+    output-file: "ZF_RGT_Ming"
     fontenc: T1
 
 source:
@@ -45,28 +45,6 @@ fig-align: center
 ---
 
 \newpage
-
-::: callout-tip
-## Vorgehen MEP
-
--   Zuerst lösen, was man kann und nicht zu lange Zeit verlieren
--   10 Minuten pro Aufgabe
-    -   Gewisse Aufgaben brauchen mehr als 10 Minuten, andere weniger
--   Aufgaben sind meist einfacher als man denkt
-    -   Es gibt verschiedene Lösungsansätze
-    -   Annahmen treffen oder fragen, falls man unsicher ist
--   Wenn Zeit übrig, Lösung validieren
-:::
-
-
-![](images/EM8q5ItW4AEfbDo.jpg){width="8cm"}
-
-![](images/EFEPSgaWkAEiEG3.jpg){width="8cm"}
-
-![](images/rgt_meme.jpg)
-
-$\rightarrow$ [Project Pigeon](https://en.wikipedia.org/wiki/Project_Pigeon)
-
 
 ```{=latex}
 % keep this to have smaller code blocks

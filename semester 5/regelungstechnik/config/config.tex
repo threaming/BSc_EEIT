@@ -42,9 +42,14 @@ box/.default = 1cm, % size of the circle diameter
 % Package for enabling colors (colorful output)
 \usepackage[dvipsnames]{xcolor}
 \definecolor{darkgreen}{HTML}{014f32}
+\usepackage{soul} % for text highlighting
 
 % Icons - http://mirrors.ctan.org/fonts/fontawesome5/doc/fontawesome5.pdf
 \usepackage{fontawesome5}
+
+% for including documents
+\usepackage{graphicx}
+\usepackage{pdfpages}
 
 % removes spacing in display math
 \usepackage[nodisplayskipstretch]{setspace}
@@ -69,7 +74,7 @@ box/.default = 1cm, % size of the circle diameter
 \pagestyle{fancy}
 \fancyhead{} % clear all header fields
 \makeatletter
-\fancyhead[R]{\@title}
+\fancyhead[R]{\nouppercase{\leftmark}}%
 \makeatother
 \fancyhead[L]{HSLU T\&A}
 \fancyfoot{} % clear all footer fields

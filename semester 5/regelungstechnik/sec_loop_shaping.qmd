@@ -32,17 +32,17 @@ PI Regler $\rightarrow\ b = 0$
 D-Anteil mit Beschränkung $\rightarrow\ a = 0$
 :::
 
-### Lead ($a < b$)
+### Lead \hl{($a < b$)}
 
 Verstärkung bei hohen Frequenzen + Phasenanhebung ($\max 90\degree$ pro Ordnung)
 
-![](images/paste-40.png){width="7cm"}
+![](images/paste-79.png){width="7cm"}
 
-### Lag ($a > b$)
+### Lag \hl{($a > b$)}
 
 Verstärkung bei tiefen Frequenzen + Phasensenkung ($\max -90\degree$ pro Ordnung)
 
-![](images/paste-41.png){width="7cm"}
+## ![](images/paste-80.png){width="7cm"}
 
 ## Grenzen des Loop-Shapings
 
@@ -62,8 +62,8 @@ wobei $p_k$ die Pole in der [rechten]{.underline} Halbebene sind. Ist $L$ an sic
 $$
 \int_0^\infty\log\lvert S(j\omega)\rvert\ d\omega = 0
 $$
+
+***Alle Verbesserungen werden mit Verschlechterungen komplementiert.***
+
+![](images/paste-81.png)
 :::
-
-**Alle Verbesserungen werden mit Verschlechterungen komplementiert.**
-
-![](images/paste-42.png)

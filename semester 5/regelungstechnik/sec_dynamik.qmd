@@ -34,4 +34,4 @@ $$
 y(t)=\underbrace{CA^{-1}e^{At}B}_{\text{zeitabhängig}}\underbrace{-CA^{-1}B+D}_{\text{konstant}}\qquad t>0
 $$
 
-Das System strebt gegen Wert wenn A [asymptotisch stabil]{.underline} ist $\rightarrow$ der *zeitabhängige* Teil strebt, falls A asymptotisch stabil ist, der Gleichtgewichtslage $x=0$ zu. Der *konstante* Teil entspricht dem Wert bei $\omega\rightarrow 0$ und damit der *Gleichspannungsverstärkung*.
+Das System strebt gegen Wert $-CA^{-1}B+D$ wenn A [asymptotisch stabil]{.underline} ist $\rightarrow$ der *zeitabhängige* Teil strebt, falls A asymptotisch stabil ist, der Gleichtgewichtslage $x=0$ zu. Der *konstante* Teil entspricht dem Wert bei $\omega\rightarrow 0$ und damit der *Gleichspannungsverstärkung*.

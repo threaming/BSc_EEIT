@@ -196,6 +196,14 @@ Das Störverhlaten verfügt ebenfalls über vier Merkmale, welche für jedes Sys
 
 ![](images/storverhalten\slow.png){width="6cm"}
 
+::: callout-tip
+## Besseres Frequenzverhalten
+
+Um besseres Frequenzverhalten zu erreichen, sollte mit der Führungsgrösse anstelle einer Rampe eine s-Kurve gefahren werden
+
+![](images/paste-67.png)
+:::
+
 <!--=================================================-->
 
 # Darstellungsarten
@@ -319,13 +327,17 @@ $$
 
 ![](images/paste-66.png)
 
-$P_1 = ABCD \quad \Delta_1 = 1-0\quad P_2 = ABD \quad \Delta_2=1-0$
+$P_1 = ABCD \quad \Delta_1 = 1-0\quad P_2 = -ABD \quad \Delta_2=1-0$
 
-$\Delta=1-(-BCF+CDE+((-B)(-D)(CEF))$
+$\Delta=1+BCF-CDE-BCDEF$
+
+\small
 
 $$
-G_{uy}=\frac{ABD(1+C)}{1+BCF-CDE-BCDEF}
+G_{uy}=\frac{ABCD-ABD}{1+BCF-CDE-BCDEF}=\frac{ABD(C-1)}{1+DCF-CDE(1+BF)}
 $$
+
+\normalsize
 
 ## Zustandraumdarstellung
 

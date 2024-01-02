@@ -36,7 +36,6 @@ $$
 
 ## PD-Regler
 
-
 $$
 C_{PD} = k_p\cdot (1 + T_d\cdot s)\qquad u = k_d\frac{de}{dt}
 $$
@@ -63,7 +62,6 @@ Hochfrequente Änderungen (z.B. Sprungantworten) führt zu hohem D-Anteil $\righ
 \end{tikzpicture}
 \end{center}
 ```
-
 Für tiefe Frequenzen ($\lvert s\rvert\ll\frac1{T_d}$) wird $G_{ue}\approx k_p T_ds$ und hohe Frequenzen wird $G_{ue}\approx k_p$ (limitiert durch $k_p$)
 
 $$
@@ -99,7 +97,6 @@ $$
 \end{tikzpicture}
 \end{center}
 ```
-
 $$
 \begin{split}
 C(s) & =k_p\left(1+\frac1{T_i\cdot s}+T_d\cdot s\right)=k_p\cdot\frac{(1+sT_1)(1+sT_2)}{T_i\cdot s} \\
@@ -118,6 +115,8 @@ $$
 Diese Beschreibung ist nur eine [idealisierte]{.underline} Repräsentation, welche für das Verständnis des System hilfreich ist. Im [praktischen]{.underline} Einsatz sind Modifikationen notwendig.
 :::
 
+![](images/paste-78.png){width="6cm"}
+
 ### `\textcolor{BrickRed}{Proportional}`{=latex} $k_p$
 
 P-Anteil verstärkt den Regelfehler $e$ um die *Proportionalverstärkung* $k_p$.
@@ -125,8 +124,6 @@ P-Anteil verstärkt den Regelfehler $e$ um die *Proportionalverstärkung* $k_p$.
 $$
 C(s) = k_p \qquad u = k_p\cdot e
 $$
-
-
 
 ::: callout-important
 ## Proportionalband
@@ -152,7 +149,7 @@ $$
 
 Mit dem I-Anteil werden *vergangene* Fehler mitberechnet $\rightarrow$ stationäre Fehler des P-Anteils wird korrigiert.
 
-Die Stellgrösse wird dadurch solange geregelt, bis der Regelfehler $e=0$ wird.
+Die Stellgrösse wird dadurch solange geregelt, bis der Regelfehler $e=0$ wird. Der Integrator verstärkt tiefe Frequenzen und ergibt so die stationäre Genauigkeit ( $e=0$ bei $t\rightarrow\infty$).
 
 ### `\textcolor{OliveGreen}{Differential}`{=latex} $k_d,T_d$
 
@@ -167,7 +164,6 @@ Der D-Anteil reagiert auf *zukünftige* Fehler, indem die Steigung mit einem Ver
 #### Approximation 0-er Ordnung
 
 ![](images/paste-31.png){width="7cm"}
-
 
 Für einen statischen Prozess $K=P(0)$ und einen I-Regler wird $L=PC=K\cdot\frac{k_i}{s}$:
 
@@ -273,8 +269,8 @@ Verstärkung $k$ erhöhen, bis sich eine anhaltende Schwingung einstellt. Regelp
 
 | Typ |     $k_p$      |     $T_i$      |      $T_d$       |
 |:---:|:--------------:|:--------------:|:----------------:|
-|  P  | $0.5\cdot k_c$ |       $-$      |        $-$       |
-| PI  | $0.4\cdot k_c$ | $0.8\cdot T_c$ |        $-$       |
+|  P  | $0.5\cdot k_c$ |      $-$       |       $-$        |
+| PI  | $0.4\cdot k_c$ | $0.8\cdot T_c$ |       $-$        |
 | PID | $0.6\cdot k_c$ | $0.5\cdot T_c$ | $0.125\cdot T_c$ |
 
 ## Stellgrössen-Sättigung

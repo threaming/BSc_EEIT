@@ -4,6 +4,8 @@
 **GESCHLOSSENER** KREIS VERWENDEN!
 :::
 
+![](images/paste-76.png){width="6cm" height="1.7cm"}
+
 $$
 G_{yr}=\frac{\textcolor{NavyBlue}{P}\textcolor{BrickRed}{C}}{1+\textcolor{NavyBlue}{P}\textcolor{BrickRed}{C}}=\frac{\textcolor{NavyBlue}{n_P}\cdot\textcolor{BrickRed}{n_C}}{\textcolor{NavyBlue}{d_P}\cdot\textcolor{BrickRed}{d_C}+\textcolor{NavyBlue}{n_P}\cdot\textcolor{BrickRed}{n_C}}
 $$
@@ -15,9 +17,9 @@ $$
 ```{=latex}
 \begin{conditions}
   \textcolor{BrickRed}{n_C} & Zähler (\textit{numerator}) des Reglers $C$\\
-  \textcolor{BrickRed}{d_C} & Nenner (\textit{divider}) des Reglers $C$\\
+  \textcolor{BrickRed}{d_C} & Nenner (\textit{denominator}) des Reglers $C$\\
   \textcolor{NavyBlue}{n_P} & Zähler (\textit{numerator}) des Prozess $P$\\
-  \textcolor{NavyBlue}{d_P} & Nenner (\textit{divider}) des Prozess $P$
+  \textcolor{NavyBlue}{d_P} & Nenner (\textit{denominator}) des Prozess $P$
 \end{conditions}
 ```
 $$
@@ -85,18 +87,8 @@ $$
 
 Wenn $L(s)=-1$, so kann eine stationäre Schwingung eingestellt werden!
 
-```{=latex}
-\begin{center}
-  \begin{tikzpicture}
-    \node[box, minimum height=0.8cm, minimum width=0.8cm, inner sep=5pt] (procBox) at (0,2) {$-PC$};
+![](images/paste-77.png){width="6cm"}
 
-    \node(endB) at (-2.5,2) {B};
-    \node(startA) at (-1.5,2) {A};
-    \draw[->] (startA) -- (procBox);
-    \draw[->]  (procBox) -- (1,2) -- (1,1) -- (-3.5,1) -- (-3.5,2) -- (endB);
-\end{tikzpicture}
-\end{center}
-```
 $$
 B=-P(s)C(s)\cdot A\quad \Rightarrow\quad \underline{P(s)C(s) = -1}
 $$

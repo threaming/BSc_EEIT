@@ -10,6 +10,8 @@ Die Stabilität ist in drei Zustände eingeteilt.
 
 Stabilität ist im Allgemeinen eine *lokale* Eigenschaft innerhalb eines Bereiches des Zustandsraums!
 
+![](images/paste-70.png){width="6cm" height="4.2cm"}
+
 ::: callout-note
 ### Beispiel
 
@@ -19,6 +21,18 @@ Ein Pendel, welches die gesamte Rotationsachse ($360\degree$, rundherum) ausnüt
 -   **asymptotische stabile** Positionen, welche immer nach unten verlaufen.
 
 ![](images/dynamik\stationary_point.png){fig-align="center" width="6cm"}
+
+Das zugehörige Phasendiagramm
+
+![](images/paste-68.png)
+:::
+
+::: callout-warning
+## Zyklisches Verhalten
+
+Systeme mit zyklischen Verhalten *(Grenzzyklen)* weisen ein einschwingen auf. Dies meist unabhängig vom Startpunkt, jedoch gibt es meist einen Punkt an dem ein System nicht zu schwingen beginnt *(* $\rightarrow$ *rauschen nötig)*
+
+![](images/paste-69.png){width="6cm"}
 :::
 
 ## Linearer Systeme
@@ -57,6 +71,10 @@ Die Nullstellen von $\lambda$ werden mit der Dynamik-Matrix $A$ berechnet. Diese
 $$
 \lambda(A) := \{s \in \mathbb{C} :  \det(sI-A)=0\}
 $$
+
+![](images/paste-71.png){width="6cm" height="3.9cm"}
+
+![](images/paste-72.png){width="7cm"}
 :::
 
 ::: callout-caution

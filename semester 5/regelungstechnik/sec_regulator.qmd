@@ -237,7 +237,7 @@ In einem modularen System sind die einzelnen Module möglichst unabhängig vonei
 
 -   Wohldefinierte Ein-/Ausgänge, Beziehungen dazwischen $\rightarrow$ Verhalten unabhängig von äusseren Umständen $\rightarrow$ ebenfalls Ziel von Regler
 
-Mittels Regelulng lassen sich Komponenten unabhängiger und damit zusammengesetzte Systeme Modularer machen.
+Mittels Regelung lassen sich Komponenten unabhängiger und damit zusammengesetzte Systeme Modularer machen.
 
 ### Genauigkeit
 
