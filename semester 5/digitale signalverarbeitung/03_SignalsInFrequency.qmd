@@ -41,8 +41,14 @@ $$
 With this in mind we let the discrete-time-index $n$ only run from $0$ to $N-1$. We replace the $\frac{f}{f_S}$ in $\Omega$ with $\frac{k}{N}$ and get the **Discrete Fourier Transform (DFT)** where $k$ is the discrete frequency index
 
 $$
-X[k]=\sum_{n=0}^{N-1}x[n]e^{-j2\pi n\frac{k}{N}}    \qquad k=0,1,2,\dots, N-1
+\begin{split}
+X[k] & =\sum_{n=0}^{N-1}x[n]e^{-j2\pi n\frac{k}{N}}    \qquad k=0,1,2,\dots, N-1\\
+& = \underbrace{\sum_{n=0}^{N-1}x[n]\cos\left(2\pi n\frac{k}{N}\right)}_{\Re\{X[k]\}}
++j\cdot \underbrace{\sum_{n=0}^{N-1}x[n](-1)\sin\left(2\pi n\frac{k}{N}\right)}_{\Im\{X[k]\}}
+\end{split}
 $$
+
+![Construction of a DFT through **correlation**. Example for $\Re\{X[1]\}$ for $N=16$.](images/paste-96.png){width="50%"}
 
 ::: callout-note
 ## Observation
@@ -94,20 +100,20 @@ $$
 
 : Modulation
 
-|                                                                                                                                                     |
+|                                                                                                                                                           |
 |:----------------------------------------------------------------------:|
-|                         Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists                         |
-|   $$                                                                                                                                                
-                                 \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                                          
-                                                                                                                                                $$    |
+|                            Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists                            |
+|   $$                                                                                                                                                      
+                                     \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                                            
+                                                                                                                                                      $$    |
 
 : Parseval Theorem
 
-|                                                                                                                                  |
+|                                                                                                                                        |
 |:----------------------------------------------------------------------:|
-|   $$                                                                                                                             
-                                 x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)                  
-                                                                                                                             $$    |
+|   $$                                                                                                                                   
+                                     x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)                    
+                                                                                                                                   $$    |
 
 : Correspondence of Convolution and Multiplication
 
@@ -297,7 +303,7 @@ end
 ::: callout-note
 ## Efficient FFT implementation
 
-The entire FFT can be performed **in-place**, this is because the memory place of the input-pair can be filled after a butterfly execution with its result. Thus only $2N$ memory locations ($N$ complex values) plus $N/2$ for the twiddle factors are needed. Additionally by the application of **bit-reversed addressing** the algorithm can work much faster and the result is correct without reordering.
+The entire FFT can be performed **in-place**, this is because the memory place of the input-pair can be filled after a butterfly execution with its result. Thus \hl{only $2N$ memory locations ($N$ complex values) plus $N/2$ for the twiddle factors are needed}. Additionally by the application of **bit-reversed addressing** the algorithm can work much faster and the result is correct without reordering.
 
 ![Bit-reversed order for $N=8$. Indeces with symmetric binary representation remain unchanged.](images/paste-38.png){width="30%"}
 :::
