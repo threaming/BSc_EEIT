@@ -69,12 +69,18 @@ $$
 
 ## Bezeichnete Glieder
 
+[Weitere Glieder](https://wiki.ibkastl.de/view/Kategorie:Regelungstechnik)
+
 ![](images/paste-85.png)
 
 ### P-Glied
 
 $$
 G(s)=k\qquad \text{konstanter Faktor}
+$$
+
+$$
+\Laplace y(t)=K\cdot u(t)\qquad\text{Sprungantwort}
 $$
 
 ![](images/paste-23.png){width="7cm"}
@@ -93,9 +99,11 @@ $$
 G(s)=\frac{K}{1+\tau s}
 $$
 
-Sprungantwort
+$$
+\Laplace y(t) = K\left(1-e^{-\sfrac{t}{T}}\right)
+$$
 
-![](images/paste-20.png){width="7cm"}
+![](images/paste-20.png){width="6cm"}
 
 ### PT2-Glied
 
@@ -105,7 +113,7 @@ $$
 
 Sprungantwort & $d\ \hat{=}\ \zeta$
 
-![](images/paste-19.png){width="7cm"}
+![](images/paste-19.png){width="6cm" height="4.8cm"}
 
 ### IT-Glied
 
@@ -115,7 +123,7 @@ $$
 
 Sprungantwort
 
-![](images/paste-21.png){width="7cm"}
+![](images/paste-21.png){width="6cm"}
 
 ### DT1-Glied
 
