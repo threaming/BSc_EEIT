@@ -83,6 +83,18 @@ $$
 \end{array}
 $$
 
+::: callout-tip
+## Stabilisierender Regler
+
+Um ein instabiles System *(negative Koeffizienten)* zu stabilisieren, kann ein ein Regler der Struktur $C=\frac{n(s)}1$ verwendet werden, wobei der grad von polynom $n(s)$ mindestens dem Grad des negativen Koeffizienten beim höchsten grad in $n_P(s)$ aufweisen muss.
+
+**Bsp. :**
+
+$$
+\lambda=2s^3-s^2-2c(s)\qquad s^n\text{ in }c(s)\space\space n\geq2
+$$
+:::
+
 ## Nyquist
 
 Wenn $L(s)=-1$, so kann eine stationäre Schwingung eingestellt werden!

@@ -20,7 +20,7 @@ format:
     fontenc: T1
 
 source:
-  github: "https://github.com/joelvonrotz/bachelor-electrical-engineering/tree/main/semester%204/summary/regelungstechnik"
+  github: "https://github.com/threaming/BSc_EEIT"
 
 pdf-engine: pdflatex
 # [DOCUMENT CONFIGURATION] ============================

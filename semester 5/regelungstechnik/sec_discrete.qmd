@@ -91,7 +91,7 @@ Es kann lediglich ein Streifen der Breite $2\pi$ *eindeutig* abgebildet werden.
 Die Bedingung für eine anhaltende Schwingung lautet in erster Näherung:
 
 $$
-N(a)\cdot L(j\omega)=1
+N(a)\cdot L(j\omega)=-1
 $$
 :::
 

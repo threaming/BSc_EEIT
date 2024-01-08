@@ -131,6 +131,8 @@ Das Führungsverhalten verfügt über vier Merkmale, welche für jedes System be
 
 ![](images/fuhrungsverhalten\stationary.png){width="6cm"}
 
+\newpage
+
 **Überschwingen**
 
 ![](images/fuhrungsverhalten\uberschwingung.png){width="6cm"}
@@ -195,6 +197,8 @@ Das Störverhlaten verfügt ebenfalls über vier Merkmale, welche für jedes Sys
 **Langsames Erreichen des stationären Wertes**
 
 ![](images/storverhalten\slow.png){width="6cm"}
+
+\newpage
 
 ::: callout-tip
 ## Besseres Frequenzverhalten
@@ -338,6 +342,8 @@ G_{uy}=\frac{ABCD-ABD}{1+BCF-CDE-BCDEF}=\frac{ABD(C-1)}{1+DCF-CDE(1+BF)}
 $$
 
 \normalsize
+
+\newpage
 
 ## Zustandraumdarstellung
 

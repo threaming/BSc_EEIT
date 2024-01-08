@@ -72,6 +72,12 @@ $$
 \lambda(A) := \{s \in \mathbb{C} :  \det(sI-A)=0\}
 $$
 
+Für einfache Berechnung:
+
+$$
+det(\lambda I-A)\qquad\rightarrow\text{nach }\lambda\text{ auflösen}
+$$
+
 ![](images/paste-71.png){width="6cm" height="3.9cm"}
 
 ![](images/paste-72.png){width="7cm"}
