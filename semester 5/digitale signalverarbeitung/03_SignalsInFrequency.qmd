@@ -2,7 +2,7 @@
 
 # Digital Signals in the Frequency Domain
 
-![Comparison of Fourier methods](images/paste-23.png){fig-align="center" width="50%"}
+![Comparison of Fourier methods](images/paste-23.png){fig-align="center" width="40%"}
 
 ## Fourier in Discrete Time
 
@@ -18,7 +18,33 @@ $$
 
 The **DTFT** produces a $2\pi$-periodic, continuous spectrum. This is due to the mapping of the linear frequency axis onto the unit circle at the sampling rate of $f_S$.
 
-![](images/paste-21.png)
+![](images/paste-21.png){width="70%"}
+
+With this in mind we let the discrete-time-index $n$ only run from $0$ to $N-1$. We replace the $\frac{f}{f_S}$ in $\Omega$ with $\frac{k}{N}$ and get the **Discrete Fourier Transform (DFT)** where $k$ is the discrete frequency index
+
+$$
+\begin{split}
+X[k] & =\sum_{n=0}^{N-1}x[n]e^{-j2\pi n\frac{k}{N}}    \qquad k=0,1,2,\dots, N-1\\
+& = \underbrace{\sum_{n=0}^{N-1}x[n]\cos\left(2\pi n\frac{k}{N}\right)}_{\Re\{X[k]\}}
++j\cdot \underbrace{\sum_{n=0}^{N-1}x[n](-1)\sin\left(2\pi n\frac{k}{N}\right)}_{\Im\{X[k]\}}
+\end{split}
+$$
+
+![Construction of a DFT through **correlation**. Example for $\Re\{X[1]\}$ for $N=16$.](images/paste-96.png){width="40%"}
+
+::: callout-note
+## Observation
+
+We get exactly as many *Fourier coefficients* $X[k]$ back, as we provide *samples* $x[n]$.
+
+The DFT produces a discrete and periodic line spectrum. The frequency resolution is $\frac{f_S}{N}$, i.e. we get the spectral values at the frequency points
+
+$$
+0,\frac{f_S}{N},2\frac{f_S}{N},\dots,(N-1)\frac{f_S}{N}
+$$
+:::
+
+![A intuitive approach to the DFT, also check chapter 4.2 of the main script by Wassner](images/paste-22.png){fig-align="center" width="75%"}
 
 ### Finite Measurement Interval
 
@@ -38,37 +64,27 @@ f_k = k\cdot\frac{f_S}{N}
 $$
 :::
 
-With this in mind we let the discrete-time-index $n$ only run from $0$ to $N-1$. We replace the $\frac{f}{f_S}$ in $\Omega$ with $\frac{k}{N}$ and get the **Discrete Fourier Transform (DFT)** where $k$ is the discrete frequency index
+### FFT shift
 
-$$
-\begin{split}
-X[k] & =\sum_{n=0}^{N-1}x[n]e^{-j2\pi n\frac{k}{N}}    \qquad k=0,1,2,\dots, N-1\\
-& = \underbrace{\sum_{n=0}^{N-1}x[n]\cos\left(2\pi n\frac{k}{N}\right)}_{\Re\{X[k]\}}
-+j\cdot \underbrace{\sum_{n=0}^{N-1}x[n](-1)\sin\left(2\pi n\frac{k}{N}\right)}_{\Im\{X[k]\}}
-\end{split}
-$$
+For the correct representation of negative frequencies (complex conjugates), `fftshift` must be applied.
 
-![Construction of a DFT through **correlation**. Example for $\Re\{X[1]\}$ for $N=16$.](images/paste-96.png){width="50%"}
+``` matlab
+fftshift(abs(fft(x)))  % ffthift for correct presentation
+```
 
-::: callout-note
-## Observation
+![](images/paste-107.png){width="60%"}
 
-We get exactly as many *Fourier coefficients* $X[k]$ back, as we provide *samples* $x[n]$.
-
-The DFT produces a discrete and periodic line spectrum. The frequency resolution is $\frac{f_S}{N}$, i.e. we get the spectral values at the frequency points
-
-$$
-0,\frac{f_S}{N},2\frac{f_S}{N},\dots,(N-1)\frac{f_S}{N}
-$$
-:::
-
-**Inverse Discrete Fourier Tranfsorm (IDFT)**
+### Inverse Discrete Fourier Tranfsorm (IDFT)
 
 $$
 x[n]=\frac1N\sum_{k=0}^{N-1}X[k]e^{j2\pi n\frac{k}{N}}   \qquad n=0,1,2,\dots,N-1
 $$
 
-![A intuitive approach to the DFT, also check chapter 4.2 of the main script by Wassner](images/paste-22.png){fig-align="center" width="75%"}
+Für *reelle Signal* gilt, dass die Fourier-Koeffizienten Konjugiert komplex an die **IDFT** übergeben werden
+
+![](images/paste-106.png){width="60%"}
+
+\newpage
 
 ### Porperties of the DFT
 
@@ -100,20 +116,20 @@ $$
 
 : Modulation
 
-|                                                                                                                                                           |
+|                                                                                                                                                                          |
 |:----------------------------------------------------------------------:|
-|                            Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists                            |
-|   $$                                                                                                                                                      
-                                     \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                                            
-                                                                                                                                                      $$    |
+|                                   Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists                                    |
+|   $$                                                                                                                                                                     
+                                               \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                                                 
+                                                                                                                                                                     $$    |
 
 : Parseval Theorem
 
-|                                                                                                                                        |
+|                                                                                                                                                       |
 |:----------------------------------------------------------------------:|
-|   $$                                                                                                                                   
-                                     x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)                    
-                                                                                                                                   $$    |
+|   $$                                                                                                                                                  
+                                               x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)                         
+                                                                                                                                                  $$    |
 
 : Correspondence of Convolution and Multiplication
 
@@ -142,8 +158,16 @@ $$
 
 The *leakage-effect* manifests itself in the main frequency "leaking" into several frequency indexes surrounding the two true frequency points (see [@fig-ChoiceOfMeasInterval]).
 
+Leakage occurs when
+
+$$
+\frac{f_x\cdot N}{f_S}\notin \mathbb{Z}\qquad \text{(nicht ganzzahlig)}
+$$
+
 ![](images/paste-28.png){width="75%"}
 :::
+
+\newpage
 
 #### DFT and Zero-padding
 
@@ -157,7 +181,7 @@ Zero-padding **won't** increase spectral resolution, it just corresponds to a be
 To increase spectral resolution, additional samples of the signal $x[n]$ must be sampled.
 :::
 
-![Zeropadded signal in time & frequency domain](images/paste-29.png){#fig-DFT_Zeropad width="50%"}
+![Zeropadded signal in time & frequency domain](images/paste-29.png){#fig-DFT_Zeropad width="45%"}
 
 The finite measurement interval of the DFT corresponds to multiplying the signal $x[n]$ with a $rect$-Window, which corresponds to a a convolution of $X(\Omega)$ with the $\frac{\sin(x)}{x}$-function, thus introducing the form of lobes. This lobe-structure is independent of the form of the signal waveform $x[n]$.
 
@@ -165,7 +189,7 @@ The finite measurement interval of the DFT corresponds to multiplying the signal
 
 To overcome the problem of lobe-introduction, we apply **windowing**. A window can be any function, that is applied to the signal in the measurement interval.
 
-::: {#fig-DFT_Windowing layout-ncol="2"}
+::: {#fig-DFT_Windowing layout="[45,-10,45]" fig-pos="H"}
 ![](images/paste-30.png){#fig-BlackmanWindow width="40%"}
 
 ![](images/paste-31.png){#fig-WindowZeropad width="40%"}

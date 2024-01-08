@@ -64,6 +64,8 @@ $$
 \tau_g=\frac{N}2\cdot T_S
 $$
 
+\newpage
+
 ::: callout-warning
 ## 180°-Phase-Jumps
 
@@ -77,6 +79,84 @@ The jumps can be eliminated by *duplicating the complex-nojugate pairs of zeros*
 Symmetrical FIR filters can be implemented with $\frac{N}2+1$ ( $N$ even) or $\frac{N+1}2$ ( $N$ odd) multiplications
 
 ![](images/paste-54.png){width="60%"}
+
+\newpage
+
+### Comb-Filter
+
+#### FIR Comb-Filter
+
+FIR Comb-Filters are of the form
+
+::: {layout="[50,-10,30,-10]"}
+$$
+H(z)=1\pm z^{-N}
+$$
+
+![](images/paste-102.png){width="30%"}
+:::
+
++----------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
+| $H(\Omega) = H(z)\big|_{z=e^{j\Omega}} =1\mathbf{+}e^{-j\Omega N}$                                                                                 | $$                                                                                                                                                  |
+|                                                                                                                                                    | H(\Omega) = H(z)\big|_{z=e^{j\Omega}}                                                                                                               |
+|                                                                                                                                                    | =1\mathbf-e^{-j\Omega N}                                                                                                                            |
+|                                                                                                                                                    | $$                                                                                                                                                  |
++====================================================================================================================================================+=====================================================================================================================================================+
+| $$ =e^{-j\frac\Omega2 N}\left(e^{j\frac\Omega2 N}+e^{-j\frac\Omega2 N}\right) $$ $$ =e^{-j\frac\Omega2 N}\cdot2\cos\left(\Omega\frac{N}2\right) $$ | $$ =e^{-j\frac\Omega2 N}\left(e^{j\frac\Omega2 N}-e^{-j\frac\Omega2 N}\right) $$ $$ =e^{-j\frac\Omega2 N}\cdot2j\sin\left(\Omega\frac{N}2\right) $$ |
+|                                                                                                                                                    |                                                                                                                                                     |
+| $$ |H(\Omega)|=2\cdot\left|\cos\left(\Omega\frac{N}2\right)\right| $$                                                                              | $$ |H(\Omega)|=2\cdot\left|\sin\left(\Omega\frac{N}2\right)\right| $$                                                                               |
+|                                                                                                                                                    |                                                                                                                                                     |
+| $$                                                                                                                                                 | $$ \angle H(\Omega) = -\frac{N}2\Omega+\frac\pi2+\begin{cases}0\\\pi\end{cases} $$                                                                  |
+| \angle H(\Omega) = -\frac{N}2\Omega+\begin{cases}0\\\pi\end{cases}                                                                                 |                                                                                                                                                     |
+| $$                                                                                                                                                 | ``` matlab                                                                                                                                          |
+|                                                                                                                                                    | N = 8;  % filter order                                                                                                                              |
+| ``` matlab                                                                                                                                         | pm = -1;  % +1/-1                                                                                                                                   |
+| N = 8;  % filter order                                                                                                                             | b_comb = [1 zeros(1,N-1) pm];                                                                                                                       |
+| pm = 1;  % +1/-1                                                                                                                                   | freqz(b_comb,1,2048);                                                                                                                               |
+| b_comb = [1 zeros(1,N-1) pm];                                                                                                                      | ```                                                                                                                                                 |
+| freqz(b_comb,1,2048);                                                                                                                              |                                                                                                                                                     |
+| ```                                                                                                                                                | ![](images/paste-100.png){width="50%"}                                                                                                              |
+|                                                                                                                                                    |                                                                                                                                                     |
+| ![](images/paste-97.png){width="50%"}                                                                                                              | ``` matlab                                                                                                                                          |
+|                                                                                                                                                    | zplane(b_comb);                                                                                                                                     |
+| ``` matlab                                                                                                                                         | ```                                                                                                                                                 |
+| zplane(b_comb);                                                                                                                                    |                                                                                                                                                     |
+| ```                                                                                                                                                | ![](images/paste-101.png){width="50%"}                                                                                                              |
+|                                                                                                                                                    |                                                                                                                                                     |
+| ![](images/paste-99.png){width="50%"}                                                                                                              |                                                                                                                                                     |
++----------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
+
+\newpage
+
+#### IIR Comb-Filter
+
+IIR Comb-Filters are described through
+
+::: {layout="[50,-10,30,-10]"}
+$$
+H(z)=\frac{1}{1-z^{-N}}
+$$
+
+![](images/paste-103.png){width="30%"}
+:::
+
+``` matlab
+N = 20;   % filter order
+pm = -1; % +1/-1
+
+a_comb = [1 zeros(1,N-1) pm];
+freqz(1,a_comb);
+```
+
+![](images/paste-104.png){width="40%"}
+
+``` matlab
+zplane(1, a_comb);
+```
+
+![](images/paste-105.png){width="40%"}
+
+\newpage
 
 ### Window Design Method
 
