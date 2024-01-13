@@ -207,11 +207,7 @@ $$
 C(s) = k_i \frac{(1+s\ T_1)(1+s\ T_2)}{s} = k_p \frac{(1+s\ T_i)(1+s\ T_d)}{s\cdot T_i}
 $$
 
-::: callout-tip
-## Vorgehen xyz
-
-hoi
-:::
+\newpage
 
 [Zielgrössen]{.underline}: Durchtrittsfrequenz $\omega_{gc}$, die Phasenreserve $\varphi_m$ und allenfalls Amplitudenreserve $g_m$.
 
@@ -249,19 +245,25 @@ $$
 ![](images/pid_regler%5Causlegung_bodediagramm.png){fig-align="center" width="30%"}
 :::
 
-blabedi
-
 ### ...Einstellregeln im Zeitbereich
 
 ![](images/paste-25.png){fig-align="center" width="6cm"}
 
 #### Ziegler-Nichols-Tabelle (via Sprungantwort)
 
-| Typ |      $k_p$       |    $T_i$     |     $T_d$      |
-|:---:|:----------------:|:------------:|:--------------:|
-|  P  |  $\sfrac{1}{a}$  |      \-      |       \-       |
-| PI  | $\sfrac{0.9}{a}$ | $3\cdot\tau$ |       \-       |
-| PID | $\sfrac{1.2}{a}$ | $2\cdot\tau$ | $0.5\cdot\tau$ |
+```{=latex}
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Typ & $k_p$ & $T_i$ & $T_d$ \\
+\hline
+P   & $\sfrac{1}{a}$     & \-           & \- \\
+PI  & $\sfrac{0.9}{a}$   & $3\cdot\tau$ & \- \\
+PID & $\sfrac{1.2}{a}$   & $2\cdot\tau$ & $0.5\cdot\tau$ \\
+\hline
+\end{tabular}
+\end{center}
+```
 
 ### ...Einstellregeln im Frequenzbereich
 
@@ -271,11 +273,19 @@ Verstärkung $k$ erhöhen, bis sich eine anhaltende Schwingung einstellt. Regelp
 
 #### Ziegler-Nichols-Tabelle (via Kritische Verstärkung)
 
-| Typ |     $k_p$      |     $T_i$      |      $T_d$       |
-|:---:|:--------------:|:--------------:|:----------------:|
-|  P  | $0.5\cdot k_c$ |      $-$       |       $-$        |
-| PI  | $0.4\cdot k_c$ | $0.8\cdot T_c$ |       $-$        |
-| PID | $0.6\cdot k_c$ | $0.5\cdot T_c$ | $0.125\cdot T_c$ |
+```{=latex}
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Typ & $k_p$ & $T_i$ & $T_d$ \\
+\hline
+P   & $0.5\cdot k_c$     & $-$           & $-$ \\
+PI  & $0.4\cdot k_c$     & $0.8\cdot T_c$ & $-$ \\
+PID & $0.6\cdot k_c$     & $0.5\cdot T_c$ & $0.125\cdot T_c$ \\
+\hline
+\end{tabular}
+\end{center}
+```
 
 ## Stellgrössen-Sättigung
 

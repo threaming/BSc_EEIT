@@ -116,20 +116,20 @@ Für *reelle Signal* gilt, dass die Fourier-Koeffizienten Konjugiert komplex an 
 
 : Modulation
 
-|                                                                                                                                                                          |
+|                                                                                                                                                                                |
 |:----------------------------------------------------------------------:|
-|                                   Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists                                    |
-|   $$                                                                                                                                                                     
-                                               \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                                                 
-                                                                                                                                                                     $$    |
+|                                      Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists                                       |
+|   $$                                                                                                                                                                           
+                                                   \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                                                   
+                                                                                                                                                                           $$    |
 
 : Parseval Theorem
 
-|                                                                                                                                                       |
+|                                                                                                                                                             |
 |:----------------------------------------------------------------------:|
-|   $$                                                                                                                                                  
-                                               x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)                         
-                                                                                                                                                  $$    |
+|   $$                                                                                                                                                        
+                                                   x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)                           
+                                                                                                                                                        $$    |
 
 : Correspondence of Convolution and Multiplication
 
@@ -244,6 +244,14 @@ To calculate a spectrum through *FFT* ( $ifft(fft(x)\cdot fft(y)$ )
 
 $$\left[\frac{N}{2}\cdot log_2(N)\right]_{cpl.Mul.}+[N\cdot log_2(N)]_{cpl.Add.}$$
 
+::: callout-important
+## Complex / Real Computation
+
+$1$ Complex Addition $=$ $2$ Real Additions
+
+$1$ Complex Multiplikation = $4$ Real Multiplication $+$ $2$ Real Additions
+:::
+
 ```{python}
 #| echo: false
 import matplotlib.pyplot as plt
@@ -343,6 +351,22 @@ y_k[n]&=s[n]-W_N^k\cdot s[n-1]
 \end{align}
 ```
 ![](images/paste-39.png){width="60%"}
+
+::: callout-note
+## Computational Effort
+
+Complex $x[n]$:
+
+$$
+\left[2N+4\right]_{cpl.Mul.}+[4N+4]_{cpl.Add}
+$$
+
+Real $x[n]$:
+
+$$
+[N+2]_{real.Mul.}+[2N+2]_{real.Add}
+$$
+:::
 
 \newpage
 

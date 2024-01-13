@@ -58,10 +58,10 @@ The length of $N$ defines a filter further as *even* or *odd*.
 The four types of linear-phase FIR-filters. Type 3 and 4 feature a constant phase offset of 90°.
 :::
 
-Symmetric FIR filters have a constant group delay of $N/2$ sample times, all frequencies get delayed by the same amount
+Symmetric FIR filters have a constant group delay of $N/2$ sample times, all frequencies get delayed by the same amount. Allgemein kann die Verzögerung in Funktion der Abtastperiode $T_S$ geschrieben werden
 
 $$
-\tau_g=\frac{N}2\cdot T_S
+\tau_g=\frac{N}2\cdot T_S\qquad =\frac{\partial \varphi(H(\Omega))}{\partial\Omega}\cdot T_S
 $$
 
 \newpage

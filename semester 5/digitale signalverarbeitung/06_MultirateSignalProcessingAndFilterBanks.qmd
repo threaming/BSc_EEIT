@@ -128,13 +128,17 @@ Die beiden Vorteile sind, (1) Filter müssen nur mit *geringer Abtastrate* arbei
 
 To convert the sampling rate by a non-integer factor use a **Up-** and **Downsampling** combination to convert the samplingrate by a factor of $\frac{I}{D}$. It is preferable to first upsample and downsample afterwards, the other way around information loss can occur, but the low-pass filter has to work at the higher samplingrate. Furthermore the low-pass filter of both conversions can be combined
 
-![](images/dsp104img1.png){width="70%"}
+![](images/dsp104img1.png){width="50%"}
+
+Where the low-pass filter ideally holds
+
+$$ H(\Omega)= \begin{cases} 1 & \text{if }\Omega\in\left[-\frac{\pi}{\max(D,I)},\frac{\pi}{\max(D,I)}\right]\\ 0 & \text{otherwise} \end{cases} $$
 
 Through the use of $I$ Polyphase filters a efficient implementation can be achieved. The trick is to let the "switch" always make $D$-steps.
 
 **Example**: $I=160$, $D=147$
 
-![](images/paste-80.png){width="50%"}
+![](images/paste-80.png){width="40%"}
 
 Implementation in Python:
 
@@ -205,6 +209,8 @@ If we apply $N$ Filters $H_0(z),H_1(z),\dots,H_{N-1}(z)$ but downsample by a dif
 -   ... undersampling when $N>M$
 
 -   ... oversampling when $M>N$
+
+-   ... perfect reconstruction $M=N$
 :::
 
 The filters $H_\ell$ are generaly defined as

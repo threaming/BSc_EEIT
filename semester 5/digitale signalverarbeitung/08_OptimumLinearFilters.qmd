@@ -41,6 +41,28 @@ $$
 \widetilde{\mathbf{w}}=\mathbf{R}_{yy}^{-1}\mathbf{r}_{sy}
 $$
 
+::: callout-note
+## Example
+
+![](images/dsp304img1.png){width="40%"}
+
+$$
+y[n]=g[k]*s[n]+v[n]
+$$
+
+Autokorrelation $\gamma_{yy}$ for $\mathbf{R}_{yy}$
+
+$$
+\gamma_{yy}=g[-k]*\gamma_{ss}[m]*g[k]+\gamma_{vv}[m]
+$$
+
+Autokorrelation $\gamma_{sy}$ for $\mathbf{r}_{sy}$
+
+$$
+\gamma_{sy}[m]=E\{s[n]\cdot y[n-m]\}=\sum_{k=0}^\infty g[k]\cdot\underbrace{E\{s[n]\cdot s[n-m-k]\}}_{\gamma_{ss}[m+k]}
+$$
+:::
+
 ## Unconstrained Wiener Filters
 
 Through the unconstrained filter one gets a different filter response, but is not suitable for practical applications. We, for this example, implement a non-causal IIR filter with the impuls response $\dots,\tilde{w}{-1},\tilde{w}_0,\tilde{w}_1,\dots$, setting $D=0$
