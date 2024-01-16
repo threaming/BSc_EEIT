@@ -347,7 +347,7 @@ box/.default = 1cm, % size of the circle diameter
 
  % [END] beamer
  % [END] title
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, frame hidden, boxrule=0pt, colback={codebgcolor}, sharp corners, borderline west={3pt}{0pt}{shadecolor}, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, frame hidden, borderline west={3pt}{0pt}{shadecolor}, enhanced, sharp corners, colback={codebgcolor}, breakable]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Inhaltsverzeichnis}
 {
@@ -438,7 +438,7 @@ a & b & c \\ d & e & f \\ g & h & i
 \hypertarget{signal-system}{%
 \subsection{Signal \& System}\label{signal-system}}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gültigkeit End- \& Anfangswertsatz}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gültigkeit End- \& Anfangswertsatz}, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 End- \& Anfangswertsatz gilt nur bei stabilen Systemen.
 
@@ -617,7 +617,7 @@ Systems}\label{phasenwinkel-eines-systems}}
   \end{tikzpicture}
 \end{center}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Schleifenübertragungsfunktion}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Schleifenübertragungsfunktion}, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 \[
 L(s) = C(s)\cdot P(s)
@@ -643,7 +643,7 @@ Fehler zum Auskorrigieren).
 \subsection{Minimalphasiges System}\label{minimalphasiges-system}}
 
 Liegen \ul{keine} Pole oder Nullstellen in der \ul{rechten Halbebene},
-so spricht man von \textbf{minimalphasigen Systeme}. Amplituden- und
+so spricht man von \textbf{minimalphasigen Systemen}. Amplituden- und
 Phasengang stehen in einer direkten Beziehung zueinander. Es gilt
 \textbf{nur bei minimalphasigen Systemen}:
 
@@ -763,7 +763,7 @@ e = e_0 \cdot r + e_1 \cdot \dot{r}+e_2\cdot \ddot{r}+\cdots
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Stationärer Fehler}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Stationärer Fehler}, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Bei Rampe: \(e_0 = 0\qquad\) Bei Parabel \(e_0 = e_1 = 0\)
 
@@ -848,7 +848,7 @@ System betrachtet soll:
 
 \newpage
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Besseres Frequenzverhalten}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Besseres Frequenzverhalten}, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Um besseres Frequenzverhalten zu erreichen, sollte mit der
 Führungsgrösse anstelle einer Rampe eine s-Kurve gefahren werden
@@ -1145,7 +1145,7 @@ gegeben, ergibt sich folgendes Ausgangssignal
 y(t)=\underbrace{C\textcolor{BrickRed}{e^{At}}(x(0)-(sI-A)^{-1}B)}_{\text{transient } y_t} + \underbrace{\overbrace{(C(sI-A)^{-1}B+D)}^{\text{Übertragungsfunktion}} e^{st}}_{\text{stationär } y_s}
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Hinweis}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Hinweis}, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Ist \(A\) stabil, so geht der transiente Anteil \(y_t\) asymptotisch
 gegen Null. Der stationäre Anteil bleibt übrig und entspricht der
@@ -1160,7 +1160,7 @@ gegen Null. Der stationäre Anteil bleibt übrig und entspricht der
 \subsection{Lösen von Differential
 Gleichungen}\label{luxf6sen-von-differential-gleichungen}}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Lösung einer Differentialgleichung}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Lösung einer Differentialgleichung}, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 \[
 x(t_0)=x_0\quad\frac{dx(t)}{dt}=F(x(t))
@@ -1238,7 +1238,7 @@ eines Bereiches des Zustandsraums!
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Beispiel}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Beispiel}, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Ein Pendel, welches die gesamte Rotationsachse (\(360\degree\),
 rundherum) ausnützen kann, hat zwei Gleichgewichtslagen:
@@ -1272,7 +1272,7 @@ Das zugehörige Phasendiagramm
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Zyklisches Verhalten}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Zyklisches Verhalten}, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Systeme mit zyklischen Verhalten \emph{(Grenzzyklen)} weisen ein
 einschwingen auf. Dies meist unabhängig vom Startpunkt, jedoch gibt es
@@ -1318,7 +1318,7 @@ meist einen Punkt an dem ein System nicht zu schwingen beginnt \emph{(}
 Polstellen eines linearen Systems (\(\frac{dx}{dt}=Ax\) \& \(x(0)=x_0\))
 können mit dem \emph{charakteristischen Polynoms} berechnet werden.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{charakteristisches Polynom}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{charakteristisches Polynom}, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Die Nullstellen von \(\lambda\) werden mit der Dynamik-Matrix \(A\)
 berechnet. Diese entsprechen dem Nennerpolynom \(C(sI-A)^{-1}\)
@@ -1351,7 +1351,7 @@ det(\lambda I-A)\qquad\rightarrow\text{nach }\lambda\text{ auflösen}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-caution-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Gültigkeit}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Gültigkeit}, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Stabilität linearer Systeme ist \ul{nur von} \(A\) \ul{abhängig}, nicht
 vom Anfangswert \(x_0\). Dies gilt Global!
@@ -1370,7 +1370,7 @@ ebenfalls asymptotisch stabil.
 \hypertarget{hurwitz-kriterium}{%
 \subsection{Hurwitz-Kriterium}\label{hurwitz-kriterium}}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-caution-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Vorsicht}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Vorsicht}, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 \textbf{GESCHLOSSENER} KREIS VERWENDEN!
 
@@ -1403,7 +1403,7 @@ C = \frac{\textcolor{BrickRed}{n_C}}{\textcolor{BrickRed}{d_C}}\qquad P = \frac{
 \lambda = {\textcolor{NavyBlue}{d_P}\cdot\textcolor{BrickRed}{d_C}+\textcolor{NavyBlue}{n_P}\cdot\textcolor{BrickRed}{n_C}} 
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Hurwitz-Kriterium}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Hurwitz-Kriterium}, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Die Polstellen-Gleichung \(\lambda(s)\) mit \(a_0>0\) hat dann, und nur
 dann, ausschliesslich Lösungen mit negativen reellen Teilen, falls alle
@@ -1428,7 +1428,7 @@ H=\begin{bmatrix}
 \end{bmatrix} \in \mathbb{R}^{n\times n}
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tipp}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tipp}, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -1449,7 +1449,7 @@ s^3+2s^2+10\rightarrow\text{instabil, da } 0\cdot s
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-caution-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Was mit Hurwitz nicht möglich ist}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Was mit Hurwitz nicht möglich ist}, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Das Hurwitz-Kriterium beschreibt keine \emph{Robustheit} der Stabilität
 und erlangt keine Einsicht, wie der Regler \(C=\frac{n_c}{d_c}\) gewählt
@@ -1476,7 +1476,7 @@ H = \begin{bmatrix}
 \end{array}
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Stabilisierender Regler}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Stabilisierender Regler}, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Um ein instabiles System \emph{(negative Koeffizienten)} zu
 stabilisieren, kann ein ein Regler der Struktur \(C=\frac{n(s)}1\)
@@ -1533,7 +1533,7 @@ Winkeländerung}\label{allgemein-variante-winkeluxe4nderung}}
 Nur bei \(\Delta\phi\geq0\degree\) ist der \emph{geschlossene} Kreis
 \textbf{stabil}.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Offen stabile Systeme}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Offen stabile Systeme}, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Systeme, welche offen stabil sind, müssen der Bedinung \(\Delta\phi=0\)
 genügen.
@@ -1543,7 +1543,7 @@ ermittelt wurde.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Totzeit}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Totzeit}, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Die Bedingung gilt auch für Systeme mit Totzeit
 
@@ -1696,7 +1696,7 @@ Maximum der Sensitivitätsfunktion \(S\).
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Praxiswerte}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Praxiswerte}, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Folgende Werte dienen als \emph{Boilerplate} für die Reglerauslegung
 
@@ -1726,7 +1726,7 @@ s_m \approx 0.5 - 0.8 \\
 \hypertarget{modellierung}{%
 \subsection{Modellierung}\label{modellierung}}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Vereinfachung}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Vereinfachung}, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Modelle repräsentieren immer eine Vereinfachung des eigentlichen Systems
 und fokusiert daher immer auf ein Teil des Systems.
@@ -1744,7 +1744,7 @@ Atombombeneinschlags auf das Fahrzeug.
 
 \underline{\footnotesize{...welche Klasse}} -- Ausgehend von einem
 LTI-System sind der Grad von Zähler- und Nennerpolynom festzulegen.
-Zudem sidn allfällige Totzeiten zu berücksichtigen.
+Zudem sind allfällige Totzeiten zu berücksichtigen.
 
 \underline{\footnotesize{...welche Eingangssignale}} -- Das zu testende
 System muss hinreichend mit einem Signal angeregt werden \(\rightarrow\)
@@ -1763,7 +1763,7 @@ Trial \& Error mit Sprungantwort und Bodediagramm.
 \subsubsection{Methode der kleinsten
 Quadrate}\label{methode-der-kleinsten-quadrate}}
 
-Mit dieser Methode können Parameter anhand Messwerten bestummen werden.
+Mit dieser Methode können Parameter anhand Messwerten bestimmt werden.
 
 \[
 \begin{array}{r}
@@ -1841,7 +1841,7 @@ Führungsgrösse \(r\), sodass idealerweise \(y=r\).
   \end{tikzpicture}
 \end{center}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Merkmale einer Regelung}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Merkmale einer Regelung}, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Folgende Merkmale \textbf{muss} eine Regelung aufweisen, ansonsten ist
 es keine Regelung.
@@ -1918,7 +1918,7 @@ Sensitivitätsfunktionen beschrieben werden.
 G_{er} = S = \frac1{1+PC} 
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Bedeutung}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Bedeutung}, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Sensitivitäts-Übergangsfrequenz \(\omega_{sc}\) kennzeichnet den
 Übergang von Dämpfung zur Verstärkung
@@ -2110,7 +2110,7 @@ und verändert werden.
   Abdriftende System \(\rightarrow\) konstant\emph{.}
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-caution-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Abhängigkeit}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Abhängigkeit}, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Viele Systemeigenschaften sind \ul{nicht} unabhängig voneinander. Sie
 unterliegen von Natur aus bestimmten Beschränkungen
@@ -2126,7 +2126,7 @@ unterliegen von Natur aus bestimmten Beschränkungen
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Safety Critical}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Safety Critical}, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Werden instabile Systeme mittels Regelung stabilisiert, so wird die
 Regelung kritisch für die Sicherheit des Systems.
@@ -2158,7 +2158,7 @@ Mit Regelung können unerwünschte Störeinflüsse ausgeglichen werden
 \(\rightarrow\) Verbessert Genauigkeit und Auflösung (z.B. bei
 Sensoren).
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Anwendungen}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Anwendungen}, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Ein Konzept einer hohen Genauigkeit ist, mittels Regelung wird ein
 bestimmten und wohldefinierten Arbeitspunkt ausgeregelt und dabei
@@ -2210,7 +2210,7 @@ Feed\ul{forward} Control
 C(s) = k_p \qquad u = k_p\cdot e
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Achtung}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Achtung}, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 \(e=0\) ist mit einem P-Regler nicht möglich. Unter Annahme eines
 stabilen Regelkreises:
@@ -2259,8 +2259,8 @@ Hochfrequente Änderungen (z.B. Sprungantworten) führt zu hohem D-Anteil
 \begin{center}
   \begin{tikzpicture}
 
-    \node[box, minimum height=0.8cm, minimum width=0.8cm, inner sep=5pt] (procP) at (-2,0) {$k_d$};
-    \node[box, minimum height=0.8cm, minimum width=0.8cm, inner sep=5pt] (procTP) at (0,0) {$\small\frac{s}{1+sT_d}$};
+    \node[box, minimum height=0.8cm, minimum width=0.8cm, inner sep=5pt] (procP) at (-2,0) {$k_d\cdot s$};
+    \node[box, minimum height=0.8cm, minimum width=0.8cm, inner sep=5pt] (procTP) at (0,0) {$\small\frac{1}{1+sT_d}$};
     
     
 \node(start) at (-3.25,0) {$e$};
@@ -2278,7 +2278,7 @@ Für tiefe Frequenzen (\(\lvert s\rvert\ll\frac1{T_d}\)) wird
 \(G_{ue}\approx k_p\) (limitiert durch \(k_p\))
 
 \[
-C_{D}(s)= k_p\frac{T_d\cdot s}{1+s\cdot T_d} = \frac{\overbrace{k_d\cdot s}^{\text{D-Anteil}}}{\underbrace{1+s\cdot T_d}_{\text{Filter}}}
+C_{D}(s)= k_p\cdot s\cdot\frac{1}{1+s\cdot T_d} = \frac{\overbrace{k_d\cdot s}^{\text{D-Anteil}}}{\underbrace{1+s\cdot T_d}_{\text{Filter}}}
 \]
 
 \hypertarget{pid-regler}{%
@@ -2335,7 +2335,7 @@ C(s) & =k_p\left(1+\frac1{T_i\cdot s}+T_d\cdot s\right)=k_p\cdot\frac{(1+sT_1)(1
   T_d=\sfrac{k_d}{k_o} & Vorhaltzeit
 \end{conditions}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Wichtig}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Wichtig}, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Diese Beschreibung ist nur eine \ul{idealisierte} Repräsentation, welche
 für das Verständnis des System hilfreich ist. Im \ul{praktischen}
@@ -2362,7 +2362,7 @@ P-Anteil verstärkt den Regelfehler \(e\) um die
 C(s) = k_p \qquad u = k_p\cdot e
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Proportionalband}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Proportionalband}, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 \[
 u = \left\{
@@ -2430,7 +2430,7 @@ G_{yr}=\frac{K\cdot k_i}{s+K\cdot k_i}=\frac1{1+s\cdot T_{cl}}
 k_i = \frac{1}{T_{cl}\cdot K}=\frac1{T_{cl}\cdot P(0)}
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-caution-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{mittlere Verzögerungszeit}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{mittlere Verzögerungszeit}, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Die Auslegung bedingt, dass der Prozess gut durch eine Konstante
 beschrieben werden kann. Ein vernünftiges Kriterium dafür ist die
@@ -2474,7 +2474,7 @@ C(s) = k_i \frac{(1+s\ T_1)(1+s\ T_2)}{s} = k_p \frac{(1+s\ T_i)(1+s\ T_d)}{s\cd
 \ul{Zielgrössen}: Durchtrittsfrequenz \(\omega_{gc}\), die Phasenreserve
 \(\varphi_m\) und allenfalls Amplitudenreserve \(g_m\).
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Vorgehen}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Vorgehen}, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Prozess: \(P(s)=\frac{10}{(1+s)^2}\) mit Ziel
 \(\omega_{gc}\geq 10 \frac{rad}{s}\), \(\varphi_m\geq 50°\).
@@ -2533,7 +2533,7 @@ k_p = \frac{1}{\left\lvert\frac{10}{1+10j}\right\rvert} = \frac{(\sqrt{1^2+10^2}
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=0.3\textwidth,height=\textheight]{images/pid_regler/auslegung_bodediagramm.png}
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{images/pid_regler/auslegung_bodediagramm.png}
 
 }
 
@@ -2601,10 +2601,12 @@ PID & $0.6\cdot k_c$     & $0.5\cdot T_c$ & $0.125\cdot T_c$ \\
 \end{tabular}
 \end{center}
 
+\newpage
+
 \hypertarget{stellgruxf6ssen-suxe4ttigung}{%
 \subsection{Stellgrössen-Sättigung}\label{stellgruxf6ssen-suxe4ttigung}}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Sättigungseffekt}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Sättigungseffekt}, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Arbeitet der Regelkreis in der Sättigung, so ist dieser faktisch
 unterbrochen -- \emph{das System arbeitet als offener Kreis}, solange
@@ -2664,7 +2666,7 @@ k_t \approx 10 k_i
 \hypertarget{loop-shaping}{%
 \section{Loop Shaping}\label{loop-shaping}}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Verlauf von \(\lvert L\rvert\)}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Verlauf von \(\lvert L\rvert\)}, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 \[
 \begin{array}{ll}
@@ -2701,7 +2703,7 @@ C(s)=k\cdot \prod_i \left(\frac{s+a_i}{s+b_i}\right)
 
 Mit \(a_i > 0, b_i > 0, k > 0\)
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{PI-Regler \& D-Anteil}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{PI-Regler \& D-Anteil}, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 PI Regler \(\rightarrow\ b = 0\)
 
@@ -2737,7 +2739,7 @@ pro Ordnung)
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Beschreibung über Zeitkonstanten}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Beschreibung über Zeitkonstanten}, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Lag (\(T_2>T_1\))- \& Lead (\(T_1>T_2\))-Elemente können auch mit
 Zeitkonstanten beschrieben werden
@@ -2756,7 +2758,7 @@ Dabei entspricht \(T_1=\frac1a\) und \(T_2\frac1b\)
 Der Beeinflussing des Systemverhalten durch Regelung sind bestimmte
 Grenzen gesetzt. Verhalten kann nicht uniform verbessert werden.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Bode's Integral}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Bode's Integral}, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Ist der geschlossene Regelkreis mit \(L\) stabil und geht \(sL(s)\) für
 \(s\rightarrow\infty\) gegen null, dann ist
@@ -2794,7 +2796,7 @@ komplementiert.}}
 Digitalrechner arbeiten zeitdiskret \(\leftrightarrow\) Prozesse sind
 von zeitkontinuierlicher Natur
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-caution-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Verzögerung}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Verzögerung}, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Druch grosse Berechnungen kann es zu Verzögerungen kommen
 
@@ -2807,6 +2809,8 @@ Druch grosse Berechnungen kann es zu Verzögerungen kommen
 \end{figure}
 
 \end{tcolorbox}
+
+\newpage
 
 \hypertarget{kontinuierlicher-prozess}{%
 \subsubsection{1) kontinuierlicher
@@ -2859,7 +2863,7 @@ kontinuierlicher Regler \(s\) wird entworfen und dann diskretisiert.
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Stabilität}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Stabilität}, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Die \ul{Stabilitätsaussage bezieht} sich auf die \ul{transformierte
 Funktion}, \emph{nicht aber zwingend} auch für den geschlossenen
@@ -2937,7 +2941,7 @@ abgebildet werden.
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Anhaltende Schwingung}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Anhaltende Schwingung}, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Die Bedingung für eine anhaltende Schwingung lautet in erster Näherung:
 
@@ -3073,7 +3077,7 @@ welches das Ziel in zwei Schritten erreicht.
 \hypertarget{struktur}{%
 \section{Struktur}\label{struktur}}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Steuerung \& Stabilität}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Steuerung \& Stabilität}, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Steuerungen nehmen im Allgemeinen keinen Einfluss auf die Stablität des
 Regelkreises \(\rightarrow\) Solange \ul{\textbf{keine}}
@@ -3118,7 +3122,7 @@ wird nicht realisierbar sein.
   \(L^{-1}=\frac{s+2}{s-1}\)
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-caution-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pol-/ Nullstellenkürzung}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pol-/ Nullstellenkürzung}, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Eine Kürzung, und damit Egalisierung, von Polen durch entsprechende
 Nullstellen ist nur dann zulässig, wenn diese stabil und hinreichend
@@ -3127,7 +3131,7 @@ anwachsen oder nur sehr langsam abklingen.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Approximation}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Approximation}, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Als Lösung können stabile, kausale Approximationen
 \(P^\dagger(s)=P(0)^{-1}\) verwendet werden, welche die relevanten
@@ -3162,7 +3166,7 @@ G_{yr}=\frac{P(CF_r)+F_u}{1+PC}=\underbrace{F_r}_{\text{Sollverhalten}}+\underbr
 F_r \stackrel{!}{=}PF_u\qquad F_u = P^{-1}F_r
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-caution-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Anforderungen \(F_r\)}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Anforderungen \(F_r\)}, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Damit \(F_u = P^{-1}F_r\) realisierbar ist, gelten folgende Kriterien:
 
@@ -3231,7 +3235,7 @@ eingeteilt und mit einem Semikolon \texttt{;} Reihenweise geteilt.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Grösse \texttt{size}}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Grösse \texttt{size}}, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Mit \texttt{size} kann die Grösse einer Variable ermittelt werden.
 \texttt{size} gibt als Resultat ein 1x2 Vektor zurück
@@ -3286,7 +3290,7 @@ aus, nämlich \(\begin{bmatrix}1 & 1\end{bmatrix}\)
 \end{bmatrix}
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Slicing}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Slicing}, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Mit \emph{Slicing} kann ein Teil einer Matrix \textbf{kopiert} werden
 und einer anderen Variable zugewiesen werden.
@@ -3302,7 +3306,7 @@ und einer anderen Variable zugewiesen werden.
 \hypertarget{plotting}{%
 \subsection{Plotting}\label{plotting}}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Figure-Separierung}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Figure-Separierung}, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Mit \texttt{figure(n)} können mehrere Plot-Befehle in eigene Figuren
 geladen werden.
@@ -3512,7 +3516,7 @@ ausgegeben werden.
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-caution-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{MATLAB Zauber}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{MATLAB Zauber}, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Damit die Pol- und Nullstellen erkennbar sind, muss eventuell mit den
 Darstellungsgrenzen gespielt werden.
@@ -3687,14 +3691,14 @@ Zeitinvarianzen}\label{linearituxe4t-zeitinvarianzen}}
 \hypertarget{lti-systeme}{%
 \subsection{LTI-Systeme}\label{lti-systeme}}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Anforderung}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Anforderung}, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Alle Kriterien \emph{Zeitinvarianz}, \emph{Verstärkungs} und
 \emph{Überlagerungsprinzip} müssen für LTI-System gelten.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tipp}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tipp}, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 \ul{Zustands-}, \ul{Ein-} oder \ul{Ausgangsgrössen} in nichtlinearen
 Operationen ( \(\cdot^2,\sin,\ln\ldots\)) in Differenzialgleichung
@@ -3841,7 +3845,9 @@ F(y^{(n)},\ldots,\dot{y},y,u^{(m)},\ldots,\dot{u},u)=0\quad\text{mit } m\leq n
 
 mit \(z=y-y_e\) \& \(v=u-u_e\).
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Vorgehen}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, arc=.35mm]
+\newpage
+
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Vorgehen}, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Beispiel mit Differentialgleichung
 
@@ -3938,7 +3944,9 @@ M\Delta \ddot{h} + \alpha \Delta \dot{h} + 3 k\overline{h}^2=0
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Vorgehen \textbf{wie in Frankreich}}, bottomtitle=1mm, opacityback=0, left=2mm, opacitybacktitle=0.6, bottomrule=.15mm, leftrule=.75mm, coltitle=black, titlerule=0mm, colback=white, breakable, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, arc=.35mm]
+\newpage
+
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Vorgehen \textbf{wie in Frankreich}}, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, titlerule=0mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, rightrule=.15mm, bottomtitle=1mm, colback=white, coltitle=black, opacitybacktitle=0.6, arc=.35mm, opacityback=0, toptitle=1mm, toprule=.15mm]
 
 Beispiel mit Differentialgleichung
 
@@ -4051,13 +4059,15 @@ M\Delta \ddot{h} + \alpha \Delta \dot{h} + 3 k\overline{h}^2=0
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=6cm,height=2.6cm]{images/paste-75.png}
+{\centering \includegraphics{images/paste-75.png}
 
 }
 
 \end{figure}
 
 \end{tcolorbox}
+
+\newpage
 
 \hypertarget{uxfcbertragungselemente}{%
 \section{Übertragungselemente}\label{uxfcbertragungselemente}}
@@ -4239,6 +4249,8 @@ Sprungantwort
 }
 
 \end{figure}
+
+\newpage
 
 \hypertarget{dt1-glied}{%
 \subsubsection{DT1-Glied}\label{dt1-glied}}

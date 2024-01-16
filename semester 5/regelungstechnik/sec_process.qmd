@@ -10,7 +10,6 @@
 \draw[->]  (procBox) edge (end);
 \end{tikzpicture}\end{center}
 ```
-
 ## Modellierung
 
 ::: callout-important
@@ -25,7 +24,7 @@ Modelle repräsentieren immer eine Vereinfachung des eigentlichen Systems und fo
 
 ## Identifikation
 
-`\underline{\footnotesize{...welche Klasse}}`{=latex} -- Ausgehend von einem LTI-System sind der Grad von Zähler- und Nennerpolynom festzulegen. Zudem sidn allfällige Totzeiten zu berücksichtigen.
+`\underline{\footnotesize{...welche Klasse}}`{=latex} -- Ausgehend von einem LTI-System sind der Grad von Zähler- und Nennerpolynom festzulegen. Zudem sind allfällige Totzeiten zu berücksichtigen.
 
 `\underline{\footnotesize{...welche Eingangssignale}}`{=latex} -- Das zu testende System muss hinreichend mit einem Signal angeregt werden $\rightarrow$ Diracstösse, Sprungfunktionen, Rampen und harmonische Funktionen
 
@@ -35,7 +34,7 @@ Modelle repräsentieren immer eine Vereinfachung des eigentlichen Systems und fo
 
 ### Methode der kleinsten Quadrate
 
-Mit dieser Methode können Parameter anhand Messwerten bestummen werden.
+Mit dieser Methode können Parameter anhand Messwerten bestimmt werden.
 
 $$
 \begin{array}{r}

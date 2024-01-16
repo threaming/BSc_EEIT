@@ -12,6 +12,8 @@ Druch grosse Berechnungen kann es zu Verzögerungen kommen
 ![](images/paste-82.png){width="8cm"}
 :::
 
+\newpage
+
 ### 1) kontinuierlicher Prozess
 
 kontinuierlicher Regler $s$ wird entworfen und dann diskretisiert.

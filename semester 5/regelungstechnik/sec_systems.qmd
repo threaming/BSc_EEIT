@@ -94,7 +94,7 @@ Mit einer Vorsteuerung kann die Regelungszeit gekürzt werden (kleinerer Fehler 
 
 ## Minimalphasiges System
 
-Liegen [keine]{.underline} Pole oder Nullstellen in der [rechten Halbebene]{.underline}, so spricht man von **minimalphasigen Systeme**. Amplituden- und Phasengang stehen in einer direkten Beziehung zueinander. Es gilt **nur bei minimalphasigen Systemen**:
+Liegen [keine]{.underline} Pole oder Nullstellen in der [rechten Halbebene]{.underline}, so spricht man von **minimalphasigen Systemen**. Amplituden- und Phasengang stehen in einer direkten Beziehung zueinander. Es gilt **nur bei minimalphasigen Systemen**:
 
 $$
 \angle{G}\approx\frac{\pi}{2}\cdot\frac{d{\log\lvert G\rvert}}{d{\log{\omega}}}

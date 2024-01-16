@@ -116,20 +116,20 @@ Für *reelle Signal* gilt, dass die Fourier-Koeffizienten Konjugiert komplex an 
 
 : Modulation
 
-|                                                                                                                                                                                |
+|                                                                                                                                                                                   |
 |:----------------------------------------------------------------------:|
-|                                      Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists                                       |
-|   $$                                                                                                                                                                           
-                                                   \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                                                   
-                                                                                                                                                                           $$    |
+|                                        Between the signal samples $x[n]$ and the Fourier coefficients $X[k]$ following relationship exists                                        |
+|   $$                                                                                                                                                                              
+                                                     \frac1N\sum_{n=0}^{N-1}x[n]^2=\sum_{k=0}^{N-1}\left|\frac{X[k]}{N}\right|^2                                                    
+                                                                                                                                                                              $$    |
 
 : Parseval Theorem
 
-|                                                                                                                                                             |
+|                                                                                                                                                                |
 |:----------------------------------------------------------------------:|
-|   $$                                                                                                                                                        
-                                                   x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)                           
-                                                                                                                                                        $$    |
+|   $$                                                                                                                                                           
+                                                     x[n]\circledast_N y[n]\qquad\laplace\qquad X[k]\cdot Y[k]\qquad(k=0,1,\dots,N-1)                            
+                                                                                                                                                           $$    |
 
 : Correspondence of Convolution and Multiplication
 
@@ -229,7 +229,7 @@ When setting the length $N$ of the window, one compromises between:
 
 *(*For both **good spectral and time resolution** we have to overlap the DFT windows, see [@fig-short_time_DFT]. In the limit, we could overlap two consecutive DFT windows by $N-1$ sample values *if computationally feasible*.
 
-![**Overlapping of windows in the short-time DFT**](images/paste-33.png){#fig-short_time_DFT width="60%"}
+![**Overlapping of windows in the short-time DFT**](images/paste-33.png){#fig-short_time_DFT width="50%"}
 
 ## Fast Fourier Transform **FFT**
 

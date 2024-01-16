@@ -114,6 +114,8 @@ $$
 
 mit $z=y-y_e$ & $v=u-u_e$.
 
+\newpage
+
 ::: callout-tip
 #### Vorgehen
 
@@ -179,6 +181,8 @@ $$
 M\Delta \ddot{h} + \alpha \Delta \dot{h} + 3 k\overline{h}^2=0
 $$
 :::
+
+\newpage
 
 ::: callout-tip
 ## Vorgehen **wie in Frankreich**
@@ -255,5 +259,7 @@ $$
 
 `\normalsize`{=latex}
 
-![](images/paste-75.png){width="6cm" height="2.6cm"}
+![](images/paste-75.png)
 :::
+
+\newpage
