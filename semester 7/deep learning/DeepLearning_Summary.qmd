@@ -1,0 +1,110 @@
+---
+format:
+  chribel-summary-quarto-pdf:
+    include-in-header:
+    - text: "\\usepackage[datesep=.]{datetime2}"
+    - text: "\\DTMsetdatestyle{ddmmyyyy}"
+    - text: "\\usepackage{blindtext}"
+    toc: true
+    classoption: twocolumn
+
+# [DOCUMENT INFORMATION]
+title: "Deep Learning"
+subtitle: "COSC440"
+author: "Andy Ming"
+
+# [PAGE OPTIONS]
+lang: enGB
+babel-lang: ukenglish
+
+# [HEADER & FOOTER]
+fancyhdr:
+  header:
+    right: "Deep Learning"
+    center: ""
+    left: "University of Canterbury"
+  footer:
+    right: "COSC440"
+    center: "\\thepage\\ / \\pageref{LastPage}"
+    left: "\\today"
+  
+source:
+  github: "https://www.youtube.com/watch?v=VGhcSupkNs8"
+
+accentcolor: "124E82" # must be given as hex, sadly :(
+
+chribel-fontfamily:
+  - name: AlegreyaSans      # used for section headings, title page
+  - name: cmbright          # used for paragraph and math
+  - name: inconsolata
+    options: "scaled=0.95"  # for code blocks
+---
+
+``` cpp
+int8_t hello;
+
+void main(void) {
+  hello = 1;
+
+  while(true) {
+    hello++;
+    if(hello=10) {
+      hello = 0;
+    }
+  }
+}
+```
+
+``` {#lst-hello .cpp lst-cap="hello"}
+int8_t hello;
+
+void main(void) {
+  hello = 1;
+
+  while(true) {
+    hello++;
+    if(hello=10) {
+      hello = 0;
+    }
+  }
+}
+```
+
+@lst-hello
+
+::: {#lst-hello2 lst-cap="hello"}
+:::
+
+`\vspace{-4mm}`{=latex}
+
+``` cpp
+int8_t hello;
+
+int8_t add(int8_t a, int8_t b);
+int8_t subtract(int8_t a, int8_t b);
+
+void main(void) {
+  hello = 1;
+
+  while(true) {
+    hello++;
+    if(hello=10) {
+      hello = 0;
+    }
+  }
+}
+
+int8_t add(int8_t a, int8_t b) {
+  return a + b;
+}
+
+int8_t subtract(int8_t a, int8_t b) {
+  return a - b;
+}
+```
+
+\blindtext
+
+\blindtext
+
+@lst-hello2
