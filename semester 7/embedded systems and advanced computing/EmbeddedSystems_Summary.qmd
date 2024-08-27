@@ -40,75 +40,298 @@ chribel-fontfamily:
     options: "scaled=0.95"  # for code blocks
 ---
 
-```cpp
-int8_t hello;
+# How to work code
 
-void main(void) {
-  hello = 1;
+Remember that software engineering is 50-70% maintenance. Because modern machines heavily rely on microcontrollers there is great demand.
 
-  while(true) {
-    hello++;
-    if(hello=10) {
-      hello = 0;
-    }
-  }
-}
-```
+![](images/paste-3.png){fig-align="center" width="30%"}
 
-```{#lst-hello .cpp lst-cap="hello"}
-int8_t hello;
+Software engineering has many different aspects (the dark blue ones are focused on here), find out more [here](https://www.computer.org/education/bodies-of-knowledge/software-engineering/topics).
 
-void main(void) {
-  hello = 1;
+![](images/paste-1.png){fig-align="center" width="25%"}
 
-  while(true) {
-    hello++;
-    if(hello=10) {
-      hello = 0;
-    }
-  }
-}
-```
+## Feature Branches
 
-@lst-hello
+To implement different features, use a branch per feature, this guarantees that the main is always in working condition.
 
-:::{#lst-hello2 lst-cap="hello"}
+![](images/paste-2.png)
+
+::: callout-important
+## Branching Rules
+
+-   Feature branches are **temporary** branches for new features, improvements, bug fixes or refactorings.
+-   Don't push directly to **master/main**.
+-   Each feature branch is owned by **one** developer.
+-   Only do merge requests on **complete** changes i.e. [don’t break main]{.underline}.
+-   Thoroughly test your change prior to **starting** AND prior to **completing** a merge request.
+-   Use your commit messages to tell the **story** of your development process.
 :::
 
-`\vspace{-4mm}`{=latex}
+To minimise integration issues:
 
-```cpp
-int8_t hello;
+-   A feature branch should only hold a small increment of change
+-   If main is updated during feature development, merge the new main into your feature branch **locally**, **before** making a merge request
 
-int8_t add(int8_t a, int8_t b);
-int8_t subtract(int8_t a, int8_t b);
+## Clean Code
 
-void main(void) {
-  hello = 1;
+::: callout-warning
+## Smells of Bad Code
 
-  while(true) {
-    hello++;
-    if(hello=10) {
-      hello = 0;
+-   *Rigidity*: Changing a single behaviour requires changes in many places
+-   *Fragility*: Changing a single behaviour causes malfunctions in unconnected parts
+-   *Inseparability*: Code can't be reused elsewhere
+-   *Unreadability*: Original intent can't be derived from code
+:::
+
+### Reveal Intent
+
+``` cpp
+// BAD
+uint16_t adcAv;  // Average Altitude ADC counts
+// GOOD
+uint16_t averageAltitudeAdc;
+```
+
+### Don't Repeat Yourself (DRY)
+
+Avoid duplicate code $\rightarrow$ Put it into a function. Can you put it in a function? Then you should!
+
+### Consistent Abstraction
+
+**High-Level** ideas shouldn't get lost in **Low-Level** operations.
+
+``` cpp
+// Bad Example
+deviceState.newGoal = readADC() * POT_SCALE_COEFF;   // low-level
+deviceState.newGoal = (deviceState.newGoal / STEP_GOAL_ROUNDING)*STEP_GOAL_ROUNDING;  // high-level
+```
+
+### Encapsulation
+
+-   *Hide* as much as possible
+-   *Public* Interface: Header File, only declare what other modules need to know
+-   *Private* / Inner Workings: Source File
+-   *Avoid* global variables $\rightarrow$ Use *getter* & *setter*
+
+### Comments
+
+More comments $\neq$ better quality. Use comments only to:
+
+1.  Reveal intent after you tried everything else
+2.  Document public APIs - sometimes
+
+### Code Reviews
+
+Use *merge requests*, label feeback as *bug, code, quality, preference*.
+
+![](images/paste-14.png){fig-align="center" width="40%"}
+
+## SOLID
+
+How to make designs **flexible**.
+
+## Legacy Code
+
+# Embedded Software Design
+
+## Architecture
+
+Architecture are "important" structures, every structure is important for a specific part of the software. There are several different structures in embedded software systems.
+
+::: callout-note
+## Architecture Goals
+
+-   *Understandability* - In Development & Maintenance
+-   *Modifiability* - Through "best practices"
+-   *Performance* - Reduce Overheads
+
+Other possible requirements: Portability, Testability, Maintainability, Scalability, Robustness, Availability, Safety, Security
+:::
+
+**Static Structures:** Conceptual abstraction a developer works with
+
+![](images/paste-4.png){fig-align="center" width="40%"}
+
+**Dynamic Structures:** Relationships that exist in executing software
+
+![](images/paste-9.png){fig-align="center" width="40%"}
+
+**Allocation Structures:** Assignment of software elements to external things
+
+![](images/paste-10.png){fig-align="center" width="40%"}
+
+Patterns are always a combination of tactics, depending on what you're trying to achieve.
+
+![](images/paste-11.png)
+
+::: callout-important
+## Trade-Offs
+
+Quality attributes can conflict with each other. For example:
+
+![](images/paste-12.png){fig-align="center" width="60%"}
+:::
+
+::: callout-note
+## Keep Record of Decisions
+
+To keep record of decisions and to not loose the overview use tools like:
+
+-   *Architecture Haikus*: A onepager overview of your document [see here or in the appendix folder](https://ieeexplore.ieee.org/document/7093016).
+
+-   *Architecture Decision Records*: A incremental document to record decisions on the go [either in a tool or a markdown file](https://adr.github.io/).
+:::
+
+### Layered
+
+Each layer is is providing services to the above layer through well-defined interfaces. Each layer can only interact with the layer directly above or below.
+
+Supports portability and modifiability by allowing internal changes to be made inside a layer without impacting other layers, and isolating changes in layer-to-layer interfaces from more distant layers.
+
+![](images/paste-5.png){fig-align="center" width="30%"}
+
+### Ports-and-Adapters (or *Hexagonal*)
+
+Introduces a single core logic which communicates through abstraction interfaces (**Ports**) to different modules. The **Adapters** map the external interactions to the standard interface of the port.
+
+Supports portability and testability by making the inputs to the ports independent of any specific source, and supports modifiability by creating a loose coupling between components.
+
+![](images/paste-6.png){fig-align="center" width="40%"}
+
+### Pipes-and-Filters
+
+Supports modifiability through loose coupling between components, and performance by introducing opportunities for parallel execution.
+
+![](images/paste-7.png){fig-align="center" width="40%"}
+
+### Microkernel
+
+RTOS is a implementation of a Microkernel Architecture. The **Microkernel** includes a set of common core services. Specific services (**Tasks**) can be plugged into the kernel.
+
+Supports modifiability and portability.
+
+![](images/paste-8.png){fig-align="center" width="25%"}
+
+## RTOS
+
+To improve **Performance** we introduce **Concurrency** (Run tasks in parallel).
+
+![](images/paste-15.png){fig-align="center" width="25%"}
+
+Preemptive approach: *Separation* of concerns, *Scalability*, State is *Managed*
+
+![Task states, highest priority runnable task is executed](images/paste-16.png)
+
+### Tasks
+
+``` cpp
+// Main Setup
+#include <FreeRTOS.h>
+#include <task.h>
+void main() {
+    xTaskCreate(BlinkTask, "BlinkA", STACK_SIZE, NULL, BLINK_PRIO, NULL);
+    xTaskCreate(BlinkTask, "BlinkB", STACK_SIZE, NULL, BLINK_PRIO, NULL);
+    vTaskStartScheduler();
+}
+
+// The Task
+void BlinkTask(void* pvParameters) {
+    while(true) {
+        ledInvert();
+        vTaskDelay(pdMS_TO_TICKS(500));
     }
-  }
-}
-
-int8_t add(int8_t a, int8_t b) {
-  return a + b;
-}
-
-int8_t subtract(int8_t a, int8_t b) {
-  return a - b;
 }
 ```
 
+### Concurrency
 
+## Resources
 
-```{=latex}
-\blindtext
+## Performance
 
-\blindtext
+# Testing
+
+Testing is for *Finding Bugs*, *Reduce risk to user **and** business*, *reduce development costs*, *keep code clean*, *improve performance* and to *verify that **requirements are met***. There are different test which can be performed:
+
+-   *Unit Testing*: Verify behaviour of individual units (modules)
+-   *Integration Testing*: Ensure that units work together as intended
+-   *System Testing*: Test **end-to-end** functionality of application
+-   *Acceptance Testing*: Verify that the requirements are met (whole system)
+-   *Performance Testing*: Evalutate performance metrics (e.g. execution time)
+-   *Smoke Testing*: Quick test to ensure major features are working
+
+To make testing efficient, we implement automatic testing routines. They act as a **live** documentation. Allows for **refactoring with confidence**.
+
+## Unit Test
+
+A good test case checks **one behaviour** under **one condition**, this makes it easier to localise errors.
+
+``` cpp
+void test_single_element_in_single_element_out(void) {
+    // Arrange: given buffer has a single element
+    writeCircBuf(&buff, 11);
+    // Act: when buffer is read
+    uint32_t value = readCircBuf(&buff);
+    // Assert: then the same value is returned
+    TEST_ASSERT_EQUAL(11, value);
+}
 ```
 
-@lst-hello2
+::: callout-note
+## Testing Frameworks
+
+-   [Unit Test Framework Unity](https://www.throwtheswitch.org/unity)
+-   [Test Double Framework fff](https://github.com/meekrosoft/fff)
+:::
+
+### Unit Test with Collaborators
+
+![](images/paste-13.png)
+
+### Test Doubles
+
+Implement test doubles through the fake function framework ([fff](https://github.com/meekrosoft/fff)). There are different variations of test doubles:
+
+**Stub**: Specify a return value - *Arrange*
+
+``` cpp
+// Set single return value
+i2c_hal_register_fake.return_val = true;
+// Set return sequence
+uint32_t myReturnVals[3] = { 3, 7, 9 };
+SET_RETURN_SEQ(readCircBuf, myReturnVals, 3);
+```
+
+**Spy**: Capture Parameters - *Arrange* / *Assert*
+
+``` cpp
+// Arrange, e.g. get passed function
+adc_hal_register(ADC_ID_1, dummy_callback);
+void (*isr) (void) = ADCIntRegister_fake.arg2_val;
+// Assert Parameter
+TEST_ASSERT_EQUAL(3, ADCSequenceDataGet_fake.arg1_val);
+```
+
+**Mock**: Can act as a *Stub*, *Spy*, and much more (from fff). Implemented as follows:
+
+``` cpp
+// in some_mock.h
+VALUE_FUNC(uint32_t *, initCircBuf, circBuf_t *, uint32_t);
+VOID_FUNC(writeCircBuf, circBuf_t *, uint32_t);
+```
+
+**Fake**: Provide a custom fake function - *Arrange*
+
+``` cpp
+// Define Fake Function
+int32_t ADCSequenceDataGet_fake_adc_value(uint32_t arg0, uint32_t arg1, uint32_t *arg2) {
+    *arg2 = FAKE_ADC_VALUE;
+    return 0;
+}
+// Apply Fake Function - Arrange
+ADCSequenceDataGet_fake.custom_fake = ADCSequenceDataGet_fake_adc_value;
+```
+
+### Continuous Integration
+
+*CI* is used to automate the integration of code changes. These are automated scripts running all the tests. This is usually implemented in the code hoster (e.g. *GitLab*) and is executed after every push. It also runs before every merge and **blocks a merge** if one of the tests fails.
