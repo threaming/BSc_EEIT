@@ -218,11 +218,191 @@ To improve **Performance** we introduce **Concurrency** (Run tasks in parallel).
 
 ![](images/paste-15.png){fig-align="center" width="25%"}
 
-Preemptive approach: *Separation* of concerns, *Scalability*, State is *Managed*
+Preemptive approach: *Separation* of concerns, *Scalability*, State is *Managed.*
 
-![Task states, highest priority runnable task is executed](images/paste-16.png)
+Do the ***right thing*** at the ***right time*** $W$
+
+![](images/paste-17.png){fig-align="center" width="40%"}
+
+::: callout-note
+## RTOS vs. Desktop OS
+
+-   Desktop OSs don't try to achieve *hard* real-time performance
+-   In a Desktop OS, programs can be loaded in runtime
+-   RTOS is compiled as part of the application, to add a new "program" the application has to be recompiled
+:::
 
 ### Tasks
+
+``` cpp
+xTaskCreate(
+    BlinkTask,    // Function that defines task 
+    "Blink Task", // Task name (used in debugging) 
+    STACK_SIZE,   // No. of 4-byte words for stack
+    NULL,         // Optional pointer to task argument 
+    PRIORITY,     // Higher number = higher priority 
+    NULL);        // Optional pointer to task handle
+```
+
+Taskswitches happen at *scheduling points* which occur when a **task is blocked**, **interrupt causes a task**, **priority change**, **higher priority task gets ready** or **system tick interrupt**.
+
+![](images/task_states.png){fig-align="center" width="40%"}
+
+#### Stack Size
+
+::: callout-important
+## Stack Size Value
+
+The stack size value passed in `xTaskCreate` is measured in **4-Byte** words.
+
+Set high margins, something like **300%**
+:::
+
+-   Minimal: `configMINIMAL_STACK_SIZE`
+
+-   Maximal: Device *RAM*
+
+-   Actually: Analyse
+
+    -   Dynamic: Set something and see if it works / use `uxTaskGetStackHighWaterMark` to measure
+
+    -   Static: Use tools (e.g. GCC `-fstack-usage`) to attempt reading on how much stack is needed per function
+
+#### Priority
+
+Task priority has a strong influence on when a task is run and thus on the overall behaviours of the application.
+
+**Assign priority based on importance**
+
+1.  Separate tasks into "critical" (hard deadline) and "non-critical" (soft deadline)
+2.  Assign low priority to non-critical tasks
+3.  To be sure about critical tasks meeting their deadlines, apply scheduling theory
+
+**Assign non-critical tasks to low priorities**
+
+1.  Either apply the same priority for all non-critical tasks
+2.  Or prioritise by *importance*, which depends on
+    a.  Shortness of Deadline
+    b.  Frequency of Execution
+    c.  Need for Precessor time
+
+**Assign critical tasks *deadline monotonic* priorities**
+
+Apply priority based on the size of it's deadline.
+
+1.  Highest $\leftarrow$ shortest deadline
+2.  Lowest $\leftarrow$ longest deadline
+
+::: callout-tip
+## Deadline / Rate Monotonic Priorities
+
+Deadlines $D_i$ and Period $T_i$ for each task $i$
+
+**Deadline Monotonic**: $D_i \leq T_i$
+
+**Rate Monotonic**: $D_i = T_i$
+
+Futhermore, following assumptions are made:
+
+-   Fixed-priority preemptive scheduling
+-   Hard-Deadline tasks are either:
+    -   *Periodic* (fixed interval)
+
+    -   *Sporadic* (known minimum time between triggering events)
+:::
+
+#### Check Schedulability of Critical Tasks
+
+To check if deadlines can be met (schedulable) we calculate the **response time upper bound** $R^{ub}_i$ for each task $i$. This has to be less than the task deadline $D_i$
+
+$$
+R^{ub}_i \leq D_i
+$$
+
+The tasks are ordered after priority from $i=1$ (highest priotity) and so on. Then Calculate the upper bound for every task through
+
+$$
+R_i^{ub}=\frac{C_i+\sum_{j=1}^{i-1}C_j(1-U_j)}{1-\sum_{j=1}^{i-1}U_j}
+$$
+
+$$
+\begin{array}{l}
+C_i \text{ worst case execution time (WCET)} \\
+U_i \text{ utilisation } U_i = \frac{C_i}{T_i} \\
+T_i \text{ task period}
+\end{array}
+$$
+
+Thus $R_1^{ub}=C_1$ ans each lower priority task has a response time that depends on the utilisation of the tasks above it.
+
+::: callout-caution
+## Response Time Upper Bound
+
+-   If task $R^{ub}_i \leq D_i$ checks, task is practically schedulable
+-   If task fails test, there is still chance for it to work, as there've been many assumptions
+-   Response times tests don't account for task interactions and os overhead
+-   Tests depend on some kind of worst case execution time per task
+:::
+
+![](images/paste-20.png){fig-align="center" width="40%"}
+
+#### Estimating WCET
+
+To estimate **W**orst **C**ase **E**xecution **T**ime, there are two basic approaches
+
+**Static Analysis** (Analysis of the source code)
+
+-   Relies on good processor model
+-   Good for simple code & MCU
+-   Difficult for complex code & MCU
+
+**Dynamic analysis** (Measurement at runtime)
+
+-   Common in industry
+-   Must be able to exercise worst-case path
+-   Simple: Toggle GPIO
+
+### Concurrency / Gleichzeitigkeit
+
+Tasks "logically happen" at the same time, either physically (multi-core) or through context switches (single-core).
+
+![Tasks of different priority in a preemptive RTOS](images/paste-18.png){fig-align="center" width="50%"}
+
+-   **Cooperative** multi-tasking: Tasks determine whether they give control back or not
+-   **Preemptive** multi-tasking: A scheduler takes control of what task gets how much time and also pulls tasks from executing
+
+#### Cooperative Round-Robin
+
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\begin{itemize}
+    \item[+] Simple
+    \item[•] No priorities
+    \item[•] Worst case response = sum of all task times
+    \item[•] Scheduling can be deterministic, but task periods must be harmonic
+    \item[-] Must manually manage state of long-running tasks
+    \item[-] Any change may alter response times
+\end{itemize}
+
+#### Preemptive: Fore-/Background
+
+![](images/paste-19.png){fig-align="center" width="40%"}
+
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\begin{itemize}
+    \item[+] Prioritise tasks
+    \item[+] Separation of tasks and scheduling eases change
+    \item[•] Worst case response = interrupt time + longest task time
+    \item[•] Time-triggered scheduling deterministic, task harmonic
+    \item[-] Complex task handling / 3rd-party microkernel
+    \item[-] Race conditions for interrupts
+    \item[-] Manual managing of long-running tasks
+\end{itemize}
+
+#### Preemptive: RTOS Impelementation
+
+Each task is written as if it is a *single main loop*.
 
 ``` cpp
 // Main Setup
@@ -243,7 +423,19 @@ void BlinkTask(void* pvParameters) {
 }
 ```
 
-### Concurrency
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\begin{itemize}
+    \item[+] Prioritise tasks and responses
+    \item[+] Separation of tasks and scheduling eases change
+    \item[+] Long-running tasks are scheduler managed
+    \item[+] Scheduling is flexible
+    \item[+] Usefull features (timing-services, protocol stacks, multi-processors,...)
+    \item[•] Worst-case response = interrupt time + scheduler context switch
+    \item[-] Depending on 3rd-party microkernel
+    \item[-] Must manage raceconditions on recourses
+    \item[-] OS overhead costs recources
+\end{itemize}
 
 ## Resources
 
