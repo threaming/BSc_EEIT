@@ -732,6 +732,37 @@ ADCSequenceDataGet_fake.custom_fake = ADCSequenceDataGet_fake_adc_value;
 
 *CI* is used to automate the integration of code changes. These are automated scripts running all the tests. This is usually implemented in the code hoster (e.g. *GitLab*) and is executed after every push. It also runs before every merge and **blocks a merge** if one of the tests fails.
 
+## Higher Level Testing
+
+Unit tests only verify small elements of a system in isolation.
+
+### Automated Acceptance Testing
+
+-   Verifys system requirements
+-   Live documentation of high-level requirements
+-   Understandify behaviour
+-   Acceptance test pass $\rightarrow$ requirement met
+-   Written by PM or QA ( $\approx$ customer)
+-   Written in natural scripting language
+-   Non-Technical stakeholder in the loop
+-   Called: **B**ehaviour-**D**riven **D**evelopment **BDD**
+
+### Automated System Tests
+
+**Hardware Simulation**: Developed on PC, no need to know specific hardware implementation yet, limitations with hardware peripherals.
+
+**Hardware Emulation**: Emulate processor on PC, needs resources for emulator. Tools: QUEMU
+
+**Hardware in the Loop**: Runs on target, test scripts on a test enclosure to manipulate hardware, expensive setup. Tools: NI DAQ, Labview
+
+![](images/paste-30.png){fig-align="center" width="8cm"}
+
+### Manual Testing
+
+Sometimes automated test setups are more expensive.
+
+Manual testing can involve **user interaction**, **Debugger**, **direct Signal Probing** (Oscilloscope, Multimeter, Logic Analyzer).
+
 ## Test Driven Design TDD
 
 ![](images/paste-29.png)
@@ -742,3 +773,16 @@ Applying TDD through writing *unit tests* during development, benefits:
 -   **Courage to make changes**: tested code is changeable code
 -   **Tests are Reliable**: high level of coverage
 -   **Good Architecture**: Writing test implies decoupling
+
+For each new unit:
+
+1.  Come up with a **set of requirements**
+2.  Generate a **rough test list**
+3.  Implement unit by going through the list with **TDD**
+4.  Tick off, remove, or add items to/from the list in the process
+
+Use **ZOM** to come up with tests:
+
+-   **Z**ero case(s): simplest scenario $\rightarrow$ build interface
+-   **O**ne case: simplest scenario to transition from **Z**ero to **O**ne
+-   **M**any cases: generalise design, each test case adds a scenario
