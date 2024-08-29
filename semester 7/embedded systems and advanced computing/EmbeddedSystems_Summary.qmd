@@ -130,7 +130,32 @@ Use *merge requests*, label feeback as *bug, code, quality, preference*.
 
 How to make designs **flexible**.
 
-## Legacy Code
+## Legacy / Vererbt / Veralteter Code
+
+If handed bad quality (no tests, no encapsulation, no good practices, ...) and you have to add features you can either (1) *add to the mess by hacking in new features* or (2) *rewrite code from scratch*.
+
+The issues are (1) will *reduce productivity* and it's *easy to introduce bugs* but (2) is very *time consuming*, it's *difficult to maintain two versions* (there might still be old versions in the field which have to be maintained) and there will be a *new set of bugs* to deal with.
+
+So we try to refactor until it's easy to make changes. To preserve functionality we iterate *in small increments* with **Trageted Tests** *(allows changes and new features to happen at the same time)*:
+
+1.  **Write tests** of the code you need to change
+2.  **Test drive** changes to legacy code
+3.  **Test drive** new code
+4.  **Refactor** tested area
+
+Also add **Characterisation Tests** where understanding is required. *Tests are a living documentation*.
+
+To make sure *key functionality* isn't altered, add **Strategic Tests**. (e.g. control algorithm, safety-critical error detection, ...)
+
+::: callout-note
+## Putting Code Under Test
+
+1.  Identify are of code to test (targeted, characterisation, strategic)
+2.  Find test points (function calls, global variables $\rightarrow$ encapsulate ASAP, serial)
+3.  Break dependencies (Solitary tests)
+
+![](images/paste-21.png){fig-align="center" width="8cm" height="4.6cm"}
+:::
 
 # Embedded Software Design
 
@@ -211,6 +236,23 @@ RTOS is a implementation of a Microkernel Architecture. The **Microkernel** incl
 Supports modifiability and portability.
 
 ![](images/paste-8.png){fig-align="center" width="25%"}
+
+#### Tasks for Priority and Modularity
+
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\begin{itemize}
+    \item[+] Control Priority
+    \item[+] Control Response Time
+    \item[+] Modularity
+    \item[-] Concurrency Issues
+    \item[-] Overhead (Scheduler)
+    \item[-] Starvation (Task gets no CPU time)
+\end{itemize}
+
+![](images/paste-27.png){fig-align="center" width="6cm"}
+
+Use **just enough** tasks.
 
 ## RTOS
 
@@ -364,12 +406,22 @@ To estimate **W**orst **C**ase **E**xecution **T**ime, there are two basic appro
 
 ### Concurrency / Gleichzeitigkeit
 
-Tasks "logically happen" at the same time, either physically (multi-core) or through context switches (single-core).
+Tasks "logically happen" at the same time, either physically (multi-core) or through context switches (single-core). This should improve **Responsiveness**.
 
 ![Tasks of different priority in a preemptive RTOS](images/paste-18.png){fig-align="center" width="50%"}
 
 -   **Cooperative** multi-tasking: Tasks determine whether they give control back or not
 -   **Preemptive** multi-tasking: A scheduler takes control of what task gets how much time and also pulls tasks from executing
+
+::: callout-note
+## Important Properties
+
+**Safety**: Nothing bad ever happens
+
+**Liveness**: Something useful eventually happens
+
+**Responsiveness**: Eventually is a reasonable amount of time
+:::
 
 #### Cooperative Round-Robin
 
@@ -436,6 +488,158 @@ void BlinkTask(void* pvParameters) {
     \item[-] Must manage raceconditions on recourses
     \item[-] OS overhead costs recources
 \end{itemize}
+
+::: callout-warning
+## Concurrency Issues
+
+**Race Condition**: Outcome depends on timing $\rightarrow$ Occur when task modify **shared data**
+
+![](images/paste-22.png){fig-align="center" width="7cm" height="4.5cm"}
+
+**Containment**: Keep data within a task
+
+**Immutability**: Use unchanging data
+
+**Atomic Data**: Only share data which can be changed atomically
+
+**Critical Section**: Section of code must execute *atomically* (in one run)
+
+**Synchronisation**: Concurrency Control
+:::
+
+#### Mutex (Mutual Exclusion)
+
+Only one task can take / lock the mutex at a time. Other task trying to acquire the mutex are blocked until the mutex is released. A mutex can only be ***released** by the task that **acquired** it*.
+
+If two or more tasks **share a recource**, use a mutex for protection.
+
+``` cpp
+#include <semphr.h>
+SemaphoreHandle_t mutex = xSemaphoreCreateMutex();
+...
+// in a task
+for (int32_t i = 0; i < 1000000; i++) {
+    xSemaphoreTake(mutex, portMAX_DELAY);
+    counter = counter + 1;
+    xSemaphoreGive(mutex);
+}
+```
+
+::: callout-note
+## Encapsulate Synchronization
+
+-   Avoid scattering mutexes around the code
+-   Prevent client tasks of accessing mutexes directly
+-   Ensure only a single mutex is hold at a time
+
+``` cpp
+// counter_manipultor.c
+static SemaphoreHandle_t mutex;
+static int32_t counter = 0;
+
+void counterAdd(int32_t value) {
+    xSemaphoreTake(mutex, portMAX_DELAY);
+    counter = counter + value;
+    xSemaphoreGive(mutex);
+}
+int32_t counterGetValue() {
+    xSemaphoreTake(mutex, portMAX_DELAY);
+    int32_t local = counter;
+    xSemaphoreGive(mutex);
+    return local;
+}
+
+// counter_task.c
+void CounterTask(void* pvParameters) {
+    for (int32_t i = 0; i < 100; i++) {
+        counterAdd(1);
+    }
+    int32_t final = counterGetValue();
+    printf“(%”d, final);
+    vTaskSuspend(NULL);
+}
+```
+:::
+
+#### Semaphore
+
+A semaphore can be ***given** by any task*. To receive and wait for a signal use `xSemaphoreTake(...)`.
+
+If two or more tasks need to **coordinate actions**, use a semaphore to send signals.
+
+``` cpp
+SemaphoreHandle_t signal = xSemaphoreCreateBinary();
+void TaskA(void* pvParameters) {
+    for (;;) {
+        printf("Ready!");
+        xSemaphoreGive(signal);
+        vTaskSuspend(NULL);
+    }
+}
+void TaskB(void* pvParameters) {
+    for (;;) {
+        xSemaphoreTake(signal, portMAX_DELAY);
+        printf("Go!");
+        vTaskSuspend(NULL);
+    }
+}
+```
+
+#### Task Notification
+
+Task notifications are FreeRTOS specific and offer a *light weight* alternative to a semaphore.
+
+#### Queues
+
+Used to send data from one task to the other. Data is written to a queue **as copy**.
+
+``` cpp
+// create queue
+#include <queue.h>
+QueueHandle_t msgQueue = xQueueCreate(QUEUE_SIZE, sizeof(msg_t));
+
+// send a message
+xQueueSend(msgQueue, &toSend, 0);
+
+// receive a message
+xQueueReceive(msgQueue, &received, portMAX_DELAY);
+```
+
+`xQueueReceive(..., portMAX_DELAY)` is blocking until something is put into the queue. The time can be adjusted by the last argument, usually `portMAX_DELAY`, veeeeery long.
+
+#### Deadlock
+
+.
+
+![](images/paste-26.png)
+
+We can also design tasks to only block in one place and thus deadlocks are less likely
+
+``` cpp
+void Task(void* pvParameters) {
+    for (;;) {
+        xQueueReceive(...); // single block
+        switch (received.msgType) {
+            case MSG_A: // Handle A events 
+            case MSG_B: // Handle B events 
+            case TIMER_1: // Handle timer 
+            case default: // Assert?
+        }
+    }
+}
+```
+
+Or use a structure which prevents deadlocks generally
+
+![](images/paste-28.png){fig-align="center" width="8cm"}
+
+Use a **Pipeline** to minimise circular dependencies and a **Client-Server** structure to restrict the directionality of connections.
+
+#### Priority Inversion
+
+.
+
+![](images/paste-25.png)
 
 ## Resources
 
