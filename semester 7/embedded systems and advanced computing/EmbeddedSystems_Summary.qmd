@@ -731,3 +731,14 @@ ADCSequenceDataGet_fake.custom_fake = ADCSequenceDataGet_fake_adc_value;
 ### Continuous Integration
 
 *CI* is used to automate the integration of code changes. These are automated scripts running all the tests. This is usually implemented in the code hoster (e.g. *GitLab*) and is executed after every push. It also runs before every merge and **blocks a merge** if one of the tests fails.
+
+## Test Driven Design TDD
+
+![](images/paste-29.png)
+
+Applying TDD through writing *unit tests* during development, benefits:
+
+-   **Reduce Debug Time**: small feedback loop
+-   **Courage to make changes**: tested code is changeable code
+-   **Tests are Reliable**: high level of coverage
+-   **Good Architecture**: Writing test implies decoupling
