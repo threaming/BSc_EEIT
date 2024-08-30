@@ -308,6 +308,59 @@ To make sure *key functionality* isn't altered, add **Strategic Tests**. (e.g. c
 ![](images/paste-21.png){fig-align="center" width="8cm" height="4.6cm"}
 :::
 
+## Designing with Models
+
+### Event Driven State Machine
+
+![](images/paste-55.png){fig-align="center" width="7cm"}
+
+With a model there are already some flaws which arise. For example: What happens if the door is closing and a valid card is wiped?
+
+Programm Execution:
+
+-   State: PC + Variable Values
+-   Transitions: Instructions
+
+### Time Driven State Machine
+
+PID-Controllers are state machines with "near infinite" states
+
+![](images/paste-56.png){fig-align="center" width="7cm"}
+
+### Use modelling languages
+
+The following example is written in [PLUSCAL](https://lamport.azurewebsites.net/tla/tutorial/intro.html)
+
+``` cpp
+Light == {UNLIT, RED, GREEN, AMBER} 
+Direction == {NS, EW}
+    
+variables
+    state = [dir \in Direction |-> UNLIT];
+
+process Lights \in Direction 
+begin
+    Cycle:
+        either await state[self] = RED;
+            state[self] := GREEN;
+        or await state[self] = GREEN;
+            state[self] := AMBER;
+        or await state[self] = AMBER;
+            state[self] := RED;
+        end either; 
+    goto Cycle; 
+end process;
+
+// Define a Requirement
+define 
+    Safe =/ ~(state[NS] = GREEN / state[EW] = GREEN) 
+end define;
+```
+
+The model can be checked and we can verify if the requirement is met or not. Add to the model until it meets all requirements
+
+![](images/paste-57.png){fig-align="center" width="8cm"}
+
 # Embedded Software Design
 
 ## Architecture
