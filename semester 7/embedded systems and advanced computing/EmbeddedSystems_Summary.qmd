@@ -128,7 +128,107 @@ Use *merge requests*, label feeback as *bug, code, quality, preference*.
 
 ## SOLID
 
-How to make designs **flexible**.
+How to make designs **flexible**, as requirements change all the time (Agile).
+
+![](images/paste-31.png)
+
+*SOLID* is all about **managing dependencies**.
+
+![](images/paste-32.png)
+
+### Single Responsibility Principle (SRP)
+
+*"A module should only have a single responibility. It should only have one reason to change"*
+
+Instead of `ADC_read` which handles the ADC reading, averaging and the setting of the new goal, we breack it up into a module `ADC_HAL` which handles the ADC reading and averaging and the module `new_goal_reader` which just handles the setting of the new goal.
+
+-   A module does **one thing** and does it **well**
+-   Use good names, reveal intent
+-   Don't access numerous data structures and globals
+
+### Open-Closed Principle (OCP)
+
+*"Software entities (modules, functions) should be **open to extension, but closed for modification**"*
+
+The `new_goal_reader` doesn't have to be modified in case of a hardware change. But it's functionality can be extended through swapping out the HAL implementation.
+
+-   Changes through adding code instead of modifying
+-   aka USB standard: Plug-n-Play, no hardware change needed
+-   OOP use "interface" or "abstract class"
+-   C use "header files" or "function pointers"
+
+### Liskov Substitution Principle (LSP)
+
+*"Subtypes should be substitutable with their base types"*
+
+`TIVA ADC HAL` is perfectly substitutable with its base type of the `ADC HAL` interface.
+
+### Interface Segregation Principle (ISP)
+
+*"Clients should not be forced to depend on functions that they do not use"*
+
+The interface `ADC HAL` is defined on the needs of `new_goal_reader` (the client). Don't show unneeded functions.
+
+-   Write "small" interfaces
+-   Allows to limit dependencies
+
+### Dependecy inversion Principle (DIP)
+
+*"High-level modules should not depend upon low-level modules. Both should depend on abstraction"*
+
+The interface `ADC HAL` is the abstraction and both, `new_goal_reader` and `TIVA ADC HAL`, are implementing this. `new_goal_reader` doesn't know (and care) which implementation is called.
+
+In OOP this is called **Polymorphism**.
+
+## SOLID Models for C
+
+::: callout-tip
+## How much design is enough?
+
+-   Use simplest flexible design for today's requirements
+-   Changing requirements $\rightarrow$ Change **Design**
+-   Tests ensure functionality is retained
+:::
+
+### Single Instance Model
+
+![](images/paste-33.png){fig-align="center" width="7cm"}
+
+### Multiple Instance Model
+
+-   Create multiple instances
+-   Use abstract data type (ADT) $\rightarrow$ object definitions and details are **encapsulated**
+-   Public functions to operate on the abstract data type `f(O,x)`
+-   **Multiple** instance, **Static** binding
+
+``` cpp
+// In header file
+typedef struc circBuf circBuf_t;
+
+// In source file
+struct circBuf {
+    uint32_t size;
+    uint32_t windex;
+    uint32_t rindex;
+    int32_t *data;
+}
+```
+
+### Dynamic Interface
+
+![](images/paste-34.png){fig-align="center" width="7cm"}
+
+-   Configuration determined in runtime
+-   Interface is a *public struct of function pointers*
+-   **Single** instance, **Dynamic** binding
+
+### Pre-Type Dynamic Interface
+
+-   Support any number & combination of drivers
+-   Each type has its own constructor
+-   Objects cast to abstract interface
+-   Have a array of abstract instances
+-   **Multiple** instance, **Dynamic** binding
 
 ## Legacy / Vererbt / Veralteter Code
 
