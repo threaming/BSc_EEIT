@@ -796,6 +796,75 @@ Use a **Pipeline** to minimise circular dependencies and a **Client-Server** str
 
 ## Performance
 
+## Preemptive Debugging
+
+![](images/paste-39.png){fig-align="center" width="6cm" height="3.7cm"}
+
+``` cpp
+float squareRoot(float x) {
+    // Require:
+    // Failure equals happened before function gets called
+    assert(x >= 0);
+    y = ... ;
+    // Ensure:
+    // Failure equals error in this function
+    assert((y*y) == x);
+    return y;
+}
+```
+
+With FreeRTOS `configAssert( x )` can be called. The behaviour is user dependent (standard `while(true);` $\rightarrow$ Fail-Safe.
+
+``` cpp
+/* Custom implementation */
+void vAssertCalled( const char * pcFile, unsigned long ulLine ) {
+ (void)pcFile; // unused
+ (void)ulLine; // unused
+ while (true); // LED, EEPROM,...
+}
+```
+
+**D**on't **R**epeat **Y**ourself - **DRY**
+
+![](images/paste-40.png)
+
+::: callout-warning
+## Don't do this
+
+``` cpp
+ASSERT(kbPress != 'j');
+```
+
+Avoid asserting **expected errors** $\rightarrow$ Handle directly in code
+
+``` cpp
+ASSERT(i++ < 5);
+```
+
+Avoid **Sideeffects**
+:::
+
+### Static Analysis
+
+Happens **at compile-time**:
+
+``` cpp
+_Static_assert(BLINK_STACK_SIZE > configMINIMAL_STACK_SIZE, "Stack size too small");
+```
+
+Use a framework like [Frama-C](https://frama-c.com/):
+
+``` cpp
+/*@
+    requires y > 0
+    ensures \result > y
+*/
+int makeLarger(int y) {
+    int x = y*2;
+    return x;
+}
+```
+
 # Testing
 
 Testing is for *Finding Bugs*, *Reduce risk to user **and** business*, *reduce development costs*, *keep code clean*, *improve performance* and to *verify that **requirements are met***. There are different test which can be performed:
