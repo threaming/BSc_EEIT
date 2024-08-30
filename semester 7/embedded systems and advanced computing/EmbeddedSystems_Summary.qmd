@@ -794,7 +794,122 @@ Use a **Pipeline** to minimise circular dependencies and a **Client-Server** str
 
 ## Resources
 
-## Performance
+::: callout-note
+## Ausgangslage TIVA
+
+32KB RAM, 256KB ROM, Low-Power
+
+FreeRTOS needs: 5-10KB ROM, RAM: 236bytes (scheduler), 76bytes + storage size (queue), 60 bytes + stack size (task)
+:::
+
+::: callout-warning
+## Premature optimization is the root of all evil.
+
+Don't optimize before you know your constraints.
+:::
+
+![](images/paste-41.png)
+
+### Choose
+
+#### Get the memory map
+
+``` cpp
+set(CMAKE_EXE_LINKER_FLAGS) {
+    ...
+    -Xlinker
+    -Map=${SMAKE_CURRENT_BINARY_DIR}/%
+    ...
+}
+
+// output
+... 
+.text 0x00000470 0x280 accl_manager.c.obj
+      0x00000470 acclInit
+      0x00000488 acclProcess
+...
+```
+
+The distance between two functions equals their size (mostly).
+
+#### Use `objdump -d` to disassemble executable
+
+![](images/paste-44.png){fig-align="center" width="7cm" height="4.5cm"}
+
+#### Profiling
+
+-   Use GPIO and oscilloscope to profile how long certain parts of a function run
+-   Use a DIY sampling profiler
+
+``` cpp
+(gdb) continue Continuing.
+^C Program received signal SIGINT, Interrupt. prvIdleTask (pvParameters=0x0 <vPortValidateInterruptPriority>)
+    at FreeRTOS/Source/tasks.c:3487
+3487                vApplicationIdleHook();
+```
+
+### Change
+
+#### Flyweight pattern
+
+Task refers to same immutable data over and over again
+
+![](images/paste-42.png){fig-align="center" width="7cm"}
+
+#### Memory Pool pattern
+
+Prebuilt datapool for mutable data $\rightarrow$ Control over size
+
+![](images/paste-43.png){fig-align="center" width="7cm"}
+
+#### Compiler and Linker help
+
+``` cpp
+// Optimize for size 
+gcc –Os <your file>.c
+// Use link-time optimizations 
+gcc -flto
+// Use linker to remove unused code and data 
+gcc -ffunction-sections -fdata-sections 
+Link with --gc-sections
+// Optimize for speed 
+gcc –O2 <your file>.c 
+gcc –O3 <your file>.c
+```
+
+#### Use better algorithms
+
+.
+
+![](images/paste-45.png)
+
+#### Write better algorithms
+
+.
+
+![](images/paste-46.png)
+
+#### Cache Data
+
+.
+
+![](images/paste-47.png){fig-align="center" width="7cm"}
+
+#### More
+
+-   Minimize data passing by **passing by reference**
+-   **Datacompression** with Differencing (store difference of two values in sequence), or Run length encoding
+-   Task notifications instead of queues
+-   Limit scope of local variables
+-   **Reduce Overhead** through removing layers
+
+Engineering in the face of uncertainty:
+
+1.  Use margins (e.g. RAM 200%-300%)
+2.  Estimate early
+3.  Check often
+
+### Performance
 
 ## Preemptive Debugging
 
