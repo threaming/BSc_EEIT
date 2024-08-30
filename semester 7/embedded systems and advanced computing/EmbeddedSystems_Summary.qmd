@@ -230,6 +230,57 @@ struct circBuf {
 -   Have a array of abstract instances
 -   **Multiple** instance, **Dynamic** binding
 
+## Design Patterns
+
+23 patterns introduced by the **G**ang **o**f **F**our (GoF), for **Dependency Management**. There are 3 types:
+
+-   **Creational**: Create instances of objects
+-   **Structural**: Set communication pathways
+-   **Behavioural**: Distribute responsibilities
+
+![](images/paste-35.png){fig-align="center" width="8cm"}
+
+::: callout-tip
+## Recommendations
+
+-   Don't overcomplicate, design for todays requirements
+-   Use pattern if beneficial, maybe simple code is sufficient
+-   Customise patterns to application
+:::
+
+### Adapter Pattern
+
+-   What: Wrap adapter around another module to give it a more desirable interface
+-   Hiding ugly interfaces of a 3rd-party service
+-   Hiding data conversions
+-   Make incompatible modules compatible
+-   Fulfills SRP, ISP, LSP
+
+![](images/paste-36.png){fig-align="center" width="7cm" height="2.4cm"}
+
+### State Pattern
+
+-   What: Module will behave differently depending on internal states
+-   Allows implementation of FSM without several lengthy conditional statements
+-   State is saved in the private `currentState` variable
+-   There is a module implementation per state
+-   The client initialises the context with a state
+-   Fulfills SRP, OCP
+
+![](images/paste-37.png){fig-align="center" width="9cm" height="2.4cm"}
+
+### Command Pattern
+
+-   What: Turns request into a stand-alone object
+-   Invoker calls receiver through command object
+-   Client attaches invoker with its commands
+-   Multiple things can execute one command
+-   Command is placed in queue until receiver is ready
+-   Triggers can invoke series of commands
+-   Fulfills SRP, OCP
+
+![](images/paste-38.png){fig-align="center" width="8.5cm"}
+
 ## Legacy / Vererbt / Veralteter Code
 
 If handed bad quality (no tests, no encapsulation, no good practices, ...) and you have to add features you can either (1) *add to the mess by hacking in new features* or (2) *rewrite code from scratch*.
