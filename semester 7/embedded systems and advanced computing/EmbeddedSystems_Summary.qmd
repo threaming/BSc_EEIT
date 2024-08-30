@@ -980,6 +980,77 @@ int makeLarger(int y) {
 }
 ```
 
+## Security
+
+![](images/paste-48.png)
+
+::: callout-note
+## C is not a "safe" language
+
+Array overflow is not prevented, you could access the `state` variable in the following example:
+
+![](images/paste-49.png){fig-align="center" width="6cm" height="3.5cm"}
+:::
+
+### Security failures are often design failures
+
+Use the checklist **STRIDE** and design a architecture to avoid running into problems
+
+-   **S**poofing
+
+-   **T**ampering
+
+-   **R**epudiation
+
+-   **I**nformation Disclosure
+
+-   **D**enial of Service
+
+-   **E**levation of Privilige
+
+![](images/paste-53.png){fig-align="center" width="8cm"}
+
+### Evaluate Threads
+
+This is time consuming $\rightarrow$ **in Projektmanagement beachten**
+
+<https://emb3d.mitre.org/>
+
+![](images/paste-54.png){fig-align="center" width="8cm"}
+
+### Follow "secure" coding standards
+
+<https://securecoding.cert.org/>
+
+![](images/paste-50.png){fig-align="center" width="8cm" height="3.7cm"}
+
+### Use static analysis to find problems
+
+``` cpp
+// Turn on all warnings 
+gcc –Wall -Wextra <your file>.c
+// Use static analyzer 
+gcc –fanalyzer <your file>.c
+```
+
+### Consider exceptional CHILDREN
+
+-   **C**omputation
+-   **H**ardware
+    -   Transient Faults
+    -   Memory Corruption
+-   **I**/O
+    -   Running out of file space?
+-   **L**ibrary
+    -   Handle error returns
+-   **D**ata input
+    -   Buffer input overflows
+    -   More / Less data than expected
+-   **R**aces and deadlocks
+-   **E**xternal user
+    -   Wrong, Late, Other input
+-   **N**ull pointer and memory
+
 # Testing
 
 Testing is for *Finding Bugs*, *Reduce risk to user **and** business*, *reduce development costs*, *keep code clean*, *improve performance* and to *verify that **requirements are met***. There are different test which can be performed:
