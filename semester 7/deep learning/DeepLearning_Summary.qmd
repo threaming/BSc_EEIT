@@ -195,6 +195,64 @@ for start in range(0, len(train_inputs), model.batch_size):
 
 ## Automatic Differentiation
 
+To avoid having to recalculate the whole chain every time a new layer is added, we use *automatic derivation*. There are several options:
+
+### Numeric differentiation
+
+-   $\frac{df}{dx}\approx\frac{f(x+\Delta x)-f(x)}{\Delta x}$
+-   Called *finite differences*
+-   Easy to implement
+-   Arbitraritly inaccurate/unstable
+
+### Symbolic differentiation
+
+-   $\frac{dx^2}{dx}=2x$
+-   Computer does algebra and simplifies expressions
+-   Very exact
+-   Complex to implement
+-   Only handles static expressions
+
+### Automatic differentiation
+
+-   Use the chain rule at runtime
+-   Gives exact results
+-   Handles dynamics
+-   Easier to implement
+-   Can't simplify expressions
+
+#### Forward Mode Autodiff
+
+Every node stores its `(value, derivative)` in a tuple, called **dual numbers**. To compute the overall derivative, each derivative can be chained up. This is implemented via **Overloading**, every function / operator has multiple definitions based on the types of the arguments. ML-Framwork functions work on these tuples.
+
+![](images/paste-14.png)
+
+**Time Effect**: $O(N*M)$ time, $O(1)$ memory, with $N$ = number of inputs, with $M$ = number of nodes
+
+::: callout-note
+## Issue w/ forward mode
+
+![](images/paste-15.png)
+:::
+
+#### Reverse Mode Autodiff
+
+First, run the function to produce the graph, then compute the **derivatives backward**.
+
+![](images/paste-16.png){fig-align="center" width="7cm"}
+
+-   Analog to the forward mode: overload math functions/operators
+-   Overloaded function return *Node* objects
+-   Overloaded functions build compute graph while executing
+-   After forward pass, the operations are recorded
+-   The backwards pass walks along the graph and computes the derivatives
+-   **Time Effect**: $O(M)$ time, $O(M)$ memory, with $M$ = number of nodes
+
+#### Fan-Outs (Reverse)
+
+The way to handle fan-out is to **add** the derivatives of the fanned-out nodes through replication $r(x)$.
+
+![](images/paste-17.png)
+
 ## Diagnosis Problems
 
 # Deep Learning Concepts
