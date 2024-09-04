@@ -117,6 +117,15 @@ Facial Recognition algorithm wrongly matches government members to mugshots from
 
 ![](images/paste-3.png){fig-align="center" width="9cm" height="3.5cm"}
 
+### Self-Supervised Learning
+
+From data **without labels** we can learn the structure of the data itself, there are several approaches, the basic idea is dimensionality reduction:
+
+-   K-Means Clustering
+-   Principal Component Analysis (PCA)
+-   Butterfly-Network (Autoencoder)
+-   ...
+
 ## Types of Problems
 
 ## Maschine Learning Pipeline
@@ -555,6 +564,52 @@ The distance we slide a filter on each iteration is called **stride**. With a bi
 
 ![](images/paste-30.png)
 
+##### Computation
+
+The image is flattened and the kernel is unrolled into a bigger matrix. This leads to a normal **matrix/vector multiplication**
+
+![](images/paste-56.png)
+
+#### Fractional Stride
+
+For **deconvolutions** you can also use fractionally-strided convolutions (here $\frac12$ stride):
+
+![](images/paste-55.png){fig-align="center" width="7cm" height="3.9cm"}
+
+##### Computation
+
+Same as with the convolution, we flatten all matrices into vectors/matrices but now we **transpose** the kernel matrix, which gives us the **de-convolution**:
+
+![](images/paste-57.png){fig-align="center" width="5cm"}
+
+::: callout-caution
+## Checkerboard Artifacts
+
+THe transpose convolution causes [artifacts in output images](https://distill.pub/2016/deconv-checkerboard/) because some pixels get written more often than others (at the overlaps, which occur in a line).
+
+![](images/paste-58.png){fig-align="center" width="6cm" height="1.5cm"}
+
+*Prevention*:
+
+1.  Upsampling using nearest neighbour interpolation
+
+![](images/paste-59.png){fig-align="center" width="7cm"}
+
+2.  Perform a convolution with `'SAME'` padding on upsampled image
+
+![](images/paste-60.png){fig-align="center" width="8cm"}
+
+``` python
+# Layer to upsample the image by a factor of 5 in x and y using nearest 
+# neighbor interpolation
+tf.keras.layers.UpSampling2D(size=(5, 5), interpolation=’nearest’)
+# Do a convolutional layer on the result 
+tf.keras.layers.Conv2D(filters = 1, kernel_size = (10,10), padding = “SAME”)
+```
+:::
+
+#### Filter Banks
+
 Futhermore, use several kernels per image, this block of kernels is a **filter bank**. The output is then a **mutli-channel** image. Multiple filters are able to extract *different features* of the image.
 
 ![](images/paste-31.png){fig-align="center" width="8cm"}
@@ -563,7 +618,7 @@ Futhermore, use several kernels per image, this block of kernels is a **filter b
 
 To not loose resolution through a convolution, the original image has to be extended, **padded**. There are two convolution options, **VALID**, which is without padding, or **SAME** which is padding so that the output size is same as the input size.
 
-![](images/paste-32.png)
+![](images/paste-32.png){fig-align="center" width="8cm" height="4cm"}
 
 #### Bias
 
@@ -573,7 +628,7 @@ As with other layers, a **Bias** can be added to the convolutional layer
 
 This can be done through `tf.nn.bias_add(value, bias)`. When using keras layers, a bias is included by default `tf.keras.layers.Conv2D(filters, kernel_sz, strides, padding, use_bias = True)`.
 
-#### Pooling
+### Pooling
 
 Pooling keeps track of the regions with the highest activation, indicating object presence, also lowers the resolution in a controllable way.
 
@@ -585,11 +640,88 @@ The translational variance is largely eliminated with the introduction of convol
 
 There are further invariances, which can hurt a CNNs performance. CNNs don't do to good on these, for good performance, lots of training is needed.
 
-![](images/paste-38.png){fig-align="center" width="8cm"}
+![](images/paste-38.png){fig-align="center" width="7cm"}
 
 ## Sequential and Recurrent Networks
 
 ## Latent Space
+
+**Latent Space** is a compact representation, representing the input in a lower dimension. This is used for **Self-Supervised Learning**.
+
+Represent the data with fewer dimensions, although data might exist in high dimensional space, it actually may exist along a lower dimensional subspace (e.g. 2D-Plane in 3D-Space, Line in 2D-Space), **Dimensionality Reduction.**
+
+We do this for **smaller dataset footprint (memory)**, more efficient search through **nearest neighbour algorithms**, many **clustering algorithms behave better** in lower dimensions, Easier to **visualize**.
+
+### Principal Component Analyis (PCA)
+
+![](images/paste-46.png){fig-align="center" width="9cm"}
+
+Given a dataset $D$ of dimension $n$ and a target dimension $m\leq n$, find $m$ vectors in $\mathbb{R}^n$ along which $D$ has the highest variance. $m$ are the **principal components**.
+
+How: Find the direction of maximal variation, project onto this vector, repeat $m$ times.
+
+*Example with MNIST:*
+
+![](images/paste-47.png){fig-align="center" width="8cm"}
+
+::: callout-caution
+## Limitations of PCA
+
+PCA can't figure out **non-linear** projections from $\mathbb{R}^2$ to $\mathbb{R}^1$.
+
+![](images/paste-48.png){fig-align="center" width="7cm" height="2cm"}
+:::
+
+### Butterfly-Network (Autoencoder)
+
+Because we don't have labels, we copy the first part of the network and inverse it. The loss is then calculated through
+
+$$
+L(x,\bar{x})=(x-\bar{x})^2\qquad\text{squared error loss}
+$$
+
+![](images/paste-49.png){fig-align="center" width="9cm"}
+
+After training the network with the unlabelled data, the second part can be cut off and a binary layer be added. Now fine tune the last layer on **labelled data through supervised learning**.
+
+![](images/paste-50.png){fig-align="center" width="7cm" height="2.9cm"}
+
+### Convolutional Autoencoder
+
+The same approach can be applied to convolutional networks. But **convolutional matrices are expensive**, thus we just swap the forward and backwards pass code for the **deconvolution**.
+
+![](images/paste-53.png){fig-align="center" width="8cm" height="1.9cm"}
+
+This can be done in [Tensorflow ](https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/nn/conv2d_transpose)
+
+![](images/paste-54.png){fig-align="center" width="10cm"}
+
+### Autoencoder Applications
+
+#### Denoising
+
+Networks can be trained to denoise images. The training is easy, as you just add the noise to original images.
+
+![](images/paste-51.png){fig-align="center" width="8cm" height="2.3cm"}
+
+#### Anomaly / Novelty Detection
+
+.
+
+![](images/paste-52.png)
+
+#### Others
+
+-   Transformer
+-   Density-based techniques (k-nearest neighbor, local outlier factor, isolation forests, and many more variations of this concept)
+-   Subspace, correlation-based, and tensor-based outlier detection for highdimensional data
+-   One-class support vector machines
+-   Replicator neural networks, autoencoders, and long short-term memory neural networks
+-   Bayesian Networks
+-   Hidden Markov models (HMMs)
+-   Cluster analysis-based outlier detection
+-   Deviations from association rules and frequent itemsets
+-   Fuzzy logic-based outlier detection;
 
 ## Transfer Learning
 
