@@ -44,9 +44,6 @@ chribel-fontfamily:
 
 ## Science of Arrays
 
-::: callout-tip
-## Use Arrays wisely
-
 Don't loop over elements in a array. Use numpy functions to do elementwise operations:
 
 ``` python
@@ -55,7 +52,7 @@ z = x + y
 z = np.add(x, y)
 ```
 
-Use Boradcasting to work with arrays of different sizes:
+Use **Boradcasting** to work with arrays of different sizes. In Hardware data is take from the same memory space multiple times.
 
 ``` python
 # We will add the vector v to each row of the matrix x,
@@ -75,11 +72,14 @@ Do **Matrix Multiplications**, remember that matrices of shape $100x20 \times 20
 C = np.dot(A,B)
 F = np.matmul(D,E)
 ```
-:::
 
-Reason:
+The **Reason** is that this code is optimised for fast computation. Manly due to the utilisation of GPUs which offer high parallelism. *Don't bother trying to implement a faster version*.
 
-![](images/paste-5.png)
+![](images/paste-19.png){fig-align="center" width="9cm" height="1.7cm"}
+
+![](images/paste-20.png){fig-align="center" width="7cm" height="4.6cm"}
+
+![](images/paste-21.png)
 
 # Machine Learning Concepts
 
@@ -273,6 +273,12 @@ The way to handle fan-out is to **add** the derivatives of the fanned-out nodes 
 
 ## Multi-Dimensional Arrays & Memory Models
 
+### Vectorized Operations
+
+For efficient operation, use **Matrices**.
+
+![](images/paste-18.png)
+
 ## Neural Networks
 
 ### Perceptron
@@ -325,7 +331,85 @@ $$
 
 ### Multi-Layer
 
-![](images/paste-10.png){fig-align="center" width="8cm"}
+Through adding hidden layers we can make bigger networks and add more states to the algorithm.
+
+![](images/paste-22.png)
+
+The size of these **hidden layers** are defined by the **hyperparameter**. These define the configuration of a model and are set before training begins. *Rule of Thumb*: Make hidden layers the same size as the input, then start to tweak to see the effect. If you have more time and money, [check this](https://en.wikipedia.org/wiki/Hyperparameter_optimization).
+
+![](images/paste-27.png){fig-align="center" width="7cm"}
+
+::: callout-note
+## Universal Approximation Theorem
+
+Remarkably, a one-hidden-layer network can actually represent any function (under the following assumptions):
+
+-   Function is continuous
+-   We are modeling the function over a closed, bounded subset of $\mathbb{R}^n$
+-   Activation function is sigmoidal (i.e. bounded and monotonic)
+
+![](images/paste-28.png)
+:::
+
+::: callout-warning
+## Stacking Linear Layers isn't Enough
+
+When simplifying the linear equation we get
+
+$$
+\sigma\left([\begin{smallmatrix} w_2 & b_2 \end{smallmatrix}]
+\left([\begin{smallmatrix} w_1 & b_1 \end{smallmatrix}]\left[\begin{smallmatrix} x\\1 \end{smallmatrix}\right]\right)\right) =
+\sigma\left([\begin{smallmatrix} w_{12} & b_{12} \end{smallmatrix}]\left[\begin{smallmatrix} x\\1 \end{smallmatrix}\right]\right)
+$$
+
+Which is exactly the same as just one layer again, we need **activation**.
+:::
+
+### Activation Functions
+
+We introduce a **nonlinear** layer
+
+![](images/paste-10.png){fig-align="center" width="7cm"}
+
+A activation function binds network outputs to a particular range. In the last layer this can be used to restrict the range, for example *age is strictly positive*.
+
+Futher PyTorch activation functions can be found [here](https://pytorch.org/docs/stable/nn.html#non-linear-activations-weighted-sum-nonlinearity).
+
+#### Sigmoid
+
+.
+
+![](images/paste-23.png)
+
+#### Tanh
+
+.
+
+![](images/paste-24.png)
+
+::: callout-warning
+## Vanishing Gradient
+
+The problem with **Sigmoid** and **Tanh** is that the further away the parameters get from zero, the smaller is the gradient. Thus the network stops learning at these points. When **stacking layers** the issue gets even more severe.
+:::
+
+#### ReLU
+
+.
+
+![](images/paste-25.png)
+
+::: callout-warning
+## Dead ReLU
+
+Because the negative part fed into the activation will result in a $0$ output. For example, a large gradient flowing through a ReLU neuron could cause the weights to update in such a way that the neuron will never activate on any datapoint again.
+:::
+
+#### Leaky ReLU
+
+To tackle a possible *dead ReLU* issue, we use a tiny positive slope for negative inputs.
+
+![](images/paste-26.png)
 
 ## Sequential and Recurrent Networks
 
