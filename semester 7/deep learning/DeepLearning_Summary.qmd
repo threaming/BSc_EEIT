@@ -89,6 +89,16 @@ Gender detecting algorithm is trained on a highly biased dataset, which leads to
 
 ![](images/paste-39.png){fig-align="center" width="8cm" height="2.7cm"}
 
+::: callout-caution
+## Beyond Average Test-Set Performance
+
+Even if a test-set is a well representation of the real world, which will lead to good average accuracy. The network can still do badly on minority group test sets.
+
+**Good average performance can mask poor performance of specific cases**
+
+![](images/paste-45.png){fig-align="center" width="8cm" height="3cm"}
+:::
+
 ### Reknognition
 
 Facial Recognition algorithm wrongly matches government members to mugshots from a criminal database. The algorithm had **5% false positives** which isn't to bad, but when deployed states big issues of wrongly accusing innocent people. [Read More](https://www.aclu.org/news/privacy-technology/amazons-face-recognition-falsely-matched-28)
@@ -266,6 +276,72 @@ The way to handle fan-out is to **add** the derivatives of the fanned-out nodes 
 ![](images/paste-17.png)
 
 ## Diagnosis Problems
+
+### Overfitting
+
+Training on a complex dataset can lead to **overfitting** ([PTB ](https://paperswithcode.com/dataset/penn-treebank)is a language dataset).
+
+![](images/paste-40.png){fig-align="center" width="8cm"}
+
+**Solve Overfitting**:
+
+#### Early Stopping
+
+If one stops training when the testing loss is starting to rise, at least the loss won't get bigger
+
+``` python
+# Pseudo Code Early Stopping
+curr_test_loss = inf 
+for i in range(n_epochs):
+    train model()
+    new_test_loss = model.get_test_loss() 
+    if new_test_loss > curr_test_loss:
+        break
+    else:
+        curr_test_loss = new_test_loss
+```
+
+#### Reduce Parameters
+
+Reducing parameters, means less possibilities to learn or even memorize a dataset.
+
+![](images/paste-41.png){fig-align="center" width="8cm"}
+
+Reducing parameters can mean...
+
+-   ... reducing layer size
+-   ... decrease number of channels in a convolution
+-   ... decrease number of layers
+
+::: callout-tip
+## Reducing Parameters
+
+Can also be used to check if parts of a network **are actually needed** $\rightarrow$ remove part $\rightarrow$ retrain model $\rightarrow$ if it behaves the same, it wasn't needed.
+
+Requires obnoxious tuning of hyperparameters.
+:::
+
+#### Data Agumentation
+
+Generate **random variations** on your training data.
+
+![](images/paste-42.png)
+
+#### Dropout
+
+*Make it harder for the network*. In a single training pass, the output of randomly selected nodes from each layer are set to $0$. The nodes that drop out are **different each pass**. This builds **Resillience**. During testing all nodes are active again.
+
+![](images/paste-43.png){fig-align="center" width="7cm" height="3.8cm"}
+
+Dropout can be handled with Keras through `tf.keras.layers.dropout(rate)`, where `rate`is a *hyperparameter* between $[0,1]$. `rate=0.5` is drop $\frac12$, keep $\frac12$. `rate=0.25` is drop $\frac14$, keep $\frac34$.
+
+#### Regularization
+
+This approach **modifies the loss** through adding a additional term to our existing loss function.
+
+![](images/paste-44.png)
+
+Regularization can be applied to certain layers on Keras through `tf.keras.layers.Dense(16, kernel_regularizer=keras.regularizers.l2(lambda), activation='relu')`.
 
 # Deep Learning Concepts
 
