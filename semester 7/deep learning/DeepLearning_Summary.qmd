@@ -81,6 +81,18 @@ The **Reason** is that this code is optimised for fast computation. Manly due to
 
 ![](images/paste-21.png)
 
+## Morals of AI
+
+### Gender Shades
+
+Gender detecting algorithm is trained on a highly biased dataset, which leads to different results, depending on the target. [Read More](http://gendershades.org/)
+
+![](images/paste-39.png){fig-align="center" width="8cm" height="2.7cm"}
+
+### Reknognition
+
+Facial Recognition algorithm wrongly matches government members to mugshots from a criminal database. The algorithm had **5% false positives** which isn't to bad, but when deployed states big issues of wrongly accusing innocent people. [Read More](https://www.aclu.org/news/privacy-technology/amazons-face-recognition-falsely-matched-28)
+
 # Machine Learning Concepts
 
 **Machine Learning == Function Approximation**
@@ -410,6 +422,94 @@ Because the negative part fed into the activation will result in a $0$ output. F
 To tackle a possible *dead ReLU* issue, we use a tiny positive slope for negative inputs.
 
 ![](images/paste-26.png)
+
+### Convolution
+
+Convolution is like a *"partially connected"* layer. Only certain inputs are connected to certain output pixels.
+
+To introduce **translational invariance** $f(T(x))=f(x)$ we apply convolutions. These are "Filters" which highlight different structures, the following network makes sense from the structures, not the pixels itself. Main application: **Computer Vision**.
+
+![](images/paste-29.png){fig-align="center" width="7cm" height="2.2cm"}
+
+::: callout-note
+## Hyperparameters
+
+There are 4 hyperparameters for the convolution
+
+-   Number of filters, $n$
+-   Size of these filters, $n$
+-   The Stride, $s$
+-   Amount of padding, $p$
+
+![](images/paste-34.png){fig-align="center" width="8cm"}
+
+We can calculate the output size through
+
+$$
+w'=\frac{w-f+2p}{s}+1,\space h'=\frac{h-f+2p}{s}+1, \space d'=n
+$$
+
+For **VALID** padding $p=0$, for **SAME** padding $p$ is chosen so output is same
+:::
+
+``` python
+# Execute manual Convolution
+# Should be of shape (batch_sz, 32, 32, 3) for CIFAR10 
+inputs = CIFAR_image_batch
+# Sets up a 5x5 filter with 3 input channels and 16 output channels 
+self.filter = tf.Variable(tf.random.normal([5, 5, 3, 16], stddev=0.1))
+# Convolves the input batch with our defined filter 
+conv = tf.nn.conv2d(inputs, self.filter, [1, 2, 2, 1], padding="SAME")
+```
+
+The inputs to `tf.nn.conv2d(...)` are:
+
+-   `input` = \[batchSz, input_height, input_width, input_channels\]
+-   `filter` = \[f_height, f_width, in_channels, out_channels\]
+-   `strides` = \[batch_stride, stride_along_height, stride_along_width, stride_along_input_channels\]
+-   `padding` = either `'SAME'` or `'VALID'`
+
+Tipically there are several convolutional layers and then a fully connected layer. This can be achieved through flattening a layer `flat = tf.reshape(conv, [conv.shape[0],-1])`.
+
+![](images/paste-36.png)
+
+#### Stride
+
+The distance we slide a filter on each iteration is called **stride**. With a bigger stride, you compress a same size input into a smaller output. This decreases the image resolution controlled, **Downsampling**. The filters are **Kernels** and are made of **learnable parameters**.
+
+![](images/paste-30.png)
+
+Futhermore, use several kernels per image, this block of kernels is a **filter bank**. The output is then a **mutli-channel** image. Multiple filters are able to extract *different features* of the image.
+
+![](images/paste-31.png){fig-align="center" width="8cm"}
+
+#### Padding
+
+To not loose resolution through a convolution, the original image has to be extended, **padded**. There are two convolution options, **VALID**, which is without padding, or **SAME** which is padding so that the output size is same as the input size.
+
+![](images/paste-32.png)
+
+#### Bias
+
+As with other layers, a **Bias** can be added to the convolutional layer
+
+![](images/paste-35.png){fig-align="center" width="8cm"}
+
+This can be done through `tf.nn.bias_add(value, bias)`. When using keras layers, a bias is included by default `tf.keras.layers.Conv2D(filters, kernel_sz, strides, padding, use_bias = True)`.
+
+#### Pooling
+
+Pooling keeps track of the regions with the highest activation, indicating object presence, also lowers the resolution in a controllable way.
+
+![](images/paste-37.png){fig-align="center" width="8cm"}
+
+### Invariances
+
+The translational variance is largely eliminated with the introduction of convolutions, this can be further improved by introduction of [antialising](https://arxiv.org/pdf/1904.11486).
+
+There are further invariances, which can hurt a CNNs performance. CNNs don't do to good on these, for good performance, lots of training is needed.
+
+![](images/paste-38.png){fig-align="center" width="8cm"}
 
 ## Sequential and Recurrent Networks
 
