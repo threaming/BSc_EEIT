@@ -222,7 +222,19 @@ for start in range(0, len(train_inputs), model.batch_size):
 -   The gradient of a random-sampled batch is a unbiased estimator of the overall gradient of the dataset.
 -   Pick a large enough batch size for s*table updates*, but small enough to *fit your GPU*
 
-### Optimization
+::: callout-warning
+## Stuck Gradients
+
+When the gradients get low or there is a local minima, SGD can get **Stuck**.
+
+![](images/paste-69.png){fig-align="center" width="6cm"}
+:::
+
+### Adaptive Momentum Estimation (Adam)
+
+Two moments: SGD momentum and squared gradients. Also uses an exponentially decaying average. Fast and almost always the best, very little need to hyperparameter tune learning rate.
+
+See [Notebook](https://colab.research.google.com/drive/1x2jN4uLMpd3VLVAA435bfwlE3s55sNti)
 
 ## Automatic Differentiation
 
@@ -646,12 +658,6 @@ This can be done in [Tensorflow](https://www.tensorflow.org/versions/r2.0/api_do
 
 ### Autoencoder Applications
 
-#### Denoising
-
-Networks can be trained to denoise images. The training is easy, as you just add the noise to original images.
-
-![](images/paste-51.png){fig-align="center" width="8cm" height="2.3cm"}
-
 #### Anomaly / Novelty Detection
 
 .
@@ -672,6 +678,41 @@ Networks can be trained to denoise images. The training is easy, as you just add
 -   Fuzzy logic-based outlier detection;
 
 ## Transfer Learning
+
+Taking a pre-trained network of a similar domain and adjust the last layers.
+
+![](images/paste-70.png){fig-align="center" width="8cm"}
+
+-   Saves training time & money
+-   Network is more likely to generalise
+
+### Fine Tuning
+
+One can switch out the **last layer** and add a different classification
+
+![](images/paste-71.png){fig-align="center" width="7cm"}
+
+Or also switch add/replace a fully connected layer if the differences in the domain are bigger
+
+![](images/paste-72.png){fig-align="center" width="7cm"}
+
+### Zero Training
+
+The last layer can be replaced by a *Logistic Regression* or *Nearest Neighbor Classifier.* The *transferred network* is then just a feature extraction pipeline. Use a database with known targets and classify new data through searching for nearest neighbour.
+
+![](images/paste-73.png){fig-align="center" width="8cm" height="3.3cm"}
+
+### Few-Shot Learning
+
+When there are only **few example of a sample** to be detected.
+
+**Siamese Networks** where the sample and the test go through the same network. Then they are compared in the latent space.
+
+![](images/paste-74.png){fig-align="center" width="8cm"}
+
+Nominate or Generate a **representative** from each class
+
+![](images/paste-75.png){fig-align="center" width="5cm" height="3.7cm"}
 
 ## Training Methods and Tricks
 
@@ -809,6 +850,20 @@ A powerful visualisation, logging, and monitoring tool designed to be integrated
 # Deep Learning Problems, Models & Research
 
 ## Computer Graphics and Vision
+
+### Denoising
+
+**Autoencoder** networks can be trained to denoise images. The training is easy, as you just add the noise to original images.
+
+![](images/paste-51.png){fig-align="center" width="8cm" height="2.3cm"}
+
+### Diffusion Models
+
+A *Diffusion Model* is a denoising autoencoder with fancy math, it's the inverse of adding noise.
+
+![](images/paste-68.png){fig-align="center" width="8cm"}
+
+[Examples](https://colab.research.google.com/github/keras-team/keras-io/blob/master/examples/generative/ipynb/ddim.ipynb)
 
 ## Natural Language
 
