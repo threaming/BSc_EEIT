@@ -865,7 +865,126 @@ A *Diffusion Model* is a denoising autoencoder with fancy math, it's the inverse
 
 [Examples](https://colab.research.google.com/github/keras-team/keras-io/blob/master/examples/generative/ipynb/ddim.ipynb)
 
+### Attention
+
+With attention we can transfer information from the input to the output. We pass a weighted sum of encoder states to the decoder.
+
+![](images/paste-76.png){fig-align="center" width="7cm"}
+
+The attention can also be visualised
+
+![](images/paste-83.png){fig-align="center" width="8cm"}
+
 ## Natural Language
+
+### Attention
+
+With attention we can transfer information from the input to the output. We pass a weighted sum of encoder states to the decoder.
+
+In natural language this can mean, **different words in the output pay attention to different words in the output**
+
+![](images/paste-77.png){fig-align="center" width="3cm" height="3.6cm"}
+
+The "attention" is represented as a weights matrix. It states \*how much attention does output word $j$ pay to input word $i$. Each column shows the importance of the input words to one output words. Each Column **sums to one**.
+
+![](images/paste-78.png){fig-align="center" width="8cm"}
+
+The score of each word (one column) is the **attention alignment score** **function**
+
+$$
+\alpha_{t,i} = \text{align}(y_t, x_i) = \frac{\exp(\text{score}(s_{t-1}, h_i))}{\sum_{i'=1}^{n} \exp(\text{score}(s_{t-1}, h_{i'}))}
+$$
+
+which is the *softmax of some predefined alignment score*. And this shows how well the two words $y_t$ and $x_i$ are aligned. For the $\text{score}(\dots)$ function there are several options
+
+![](images/paste-79.png){fig-align="center" width="9cm"}
+
+Check [here](https://lilianweng.github.io/posts/2018-06-24-attention/) for more
+
+### Self-Attention
+
+Self-attention computes the output vector $r_i$ for each word via a weighted average of vectors extracted from each word in the input sentence. Here, self-attention learns that "it" should pay attention to "The animal".
+
+![](images/paste-80.png){fig-align="center" width="8cm"}
+
+1.  We compute a $\textcolor{violet}{\text{query vector}}$ for the word and compare it to a $\textcolor{orange}{\text{key vector}}$ for every other word. This computes a $\textcolor{yellow}{\text{score}}$.
+2.  For the output vector $r_1$ we sum all $\textcolor{blue}{\text{value vectors}}$ , weighted by the $\textcolor{yellow}{\text{score}}$ in step 1.
+
+![](images/paste-82.png){width="7cm"}
+
+For the [**example**](https://jalammar.github.io/illustrated-transformer/)***Machines*** we get the 3 vectors:
+
+![](images/paste-88.png){fig-align="center" width="5cm"}
+
+To get the **self-attention for *Thinking***, we do:
+
+![](images/paste-90.png){fig-align="center" width="5cm"}
+
+1.  **Score**: Dot product of the query vector $q_1$ of "Thinking" with the key vectors $\{k_1,k_2\}$ of each word.
+2.  **Scale**: Divide each score by $\sqrt{\text{dimensionality } d_k}$ for more stable gradients.
+3.  **Softmax**: Apply softmax to transform scores into attention weights
+4.  **Weighting**: Multiply with the value vectors $\{v_1,v_2\}$
+5.  **Sum**: Sum the weighted value vectors into the final **self-attention for "Thinking"**
+
+#### Computation
+
+![](images/paste-91.png){fig-align="center" width="10cm" height="4.6cm"}
+
+### Multi-Head Attention
+
+Multi-head Attention is used to improve the performance of regular self-attention. We compute self-attention as before some number of times. Call these “attention heads”. The size of the attention heads are smaller than when just using regular self-attention.
+
+To get one set of attention vectors, we concatenate all the heads and apply a linear layer in order to get Z.
+
+![](images/paste-94.png){fig-align="center" width="8cm"}
+
+Multiple heads allow for each head to learn different relationships between words in the sentence. The network ( $W^O$ ) then learns how to handle this. These multiple attentions can be [visualised with this tool](https://colab.research.google.com/github/tens%20orflow/tensor2tensor/blob/master/tensor2ten%20sor/notebooks/hello_t2t.ipynb)
+
+![](images/paste-95.png){fig-align="center" width="6cm"}
+
+### Word Vectors
+
+Words can be stored as **vectors**, the size of the vector is set by the $\textcolor{blue}{\text{embedding sz}}$ and is a hyperparameter. The $\textcolor{orange}{\text{embedding matrix}}$ is learnable and initialised randomly. Each embedding *can* have a meaning, but doesn't have to (trained with the network).
+
+![](images/paste-84.png){fig-align="center" width="9cm"}
+
+The embedding matrix is then used as a lookup table for all the words. (Example, first word in input sentence with ID=2)
+
+![](images/paste-85.png){fig-align="center" width="8cm"}
+
+### Transformer
+
+Transformers are based on Encoders and Decoders. The big difference to Autoencoders is, that they, are outputting a different language.
+
+The multiple stack up of Encoders and Decoders is for **better performance**.
+
+![](images/paste-86.png){fig-align="center" width="6cm"}
+
+#### Encoder Block Map
+
+If we input a word sequence $\{x_1,x_2\}$, first the **self attention** is applied to get the value vectors $\{z_1,z_2\}$. Then a Feed Forward Network is applied to each word individually.
+
+![](images/paste-87.png){fig-align="center" width="7cm"}
+
+For performance improvments we add **Residuals** to negate vanishing gradients. Furthermore, we apply **LayerNorm**, which improves convergence time
+
+![](images/transformer_resideual_layer_norm.png){fig-align="center" width="7cm"}
+
+#### Positional Encoding
+
+Instead of passing a Embedding vector to the encoder, we pass a **Embedding with Time Signal** vector. Positional encoding can be learned or defined by a fixed function.
+
+![](images/paste-93.png){fig-align="center" width="8cm"}
+
+#### Decoder Block Map
+
+Following the encoder blocks, there are **Decoder Blocks**, these have are very similar to the encoders, but with a additional layer of a **Encoder-Decoder Attention**.
+
+![](images/paste-96.png){fig-align="center" width="9cm"}
+
+The **Encoder-Decoder Attention** takes the output of the encoder instead of the input words
+
+![](images/paste-97.png){fig-align="center" width="10cm" height="3.9cm"}
 
 ## Audio and Video Synthesis
 
