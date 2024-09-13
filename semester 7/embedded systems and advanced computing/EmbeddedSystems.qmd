@@ -1342,7 +1342,84 @@ Many processors using distributed memory and communication through a network *(m
 
 ![](images/paste-64.png){fig-align="center" width="9cm"}
 
-## Instruction set architectures
+### Accessing Program Memory on AVR
+
+AVR is a manufacturer who uses the *Harvard*-Architecture. To access the program memory (flash) the `PROGMEM` macro from `avr/pgmspace` is used. *(support of that is introduced in GCC 4.8)*
+
+``` cpp
+#include <avr/pgmspace.h>
+
+// for flash access
+PROGMEM const char flash_str[] = "Hello world";
+char flash_read_byte (const char *p) {
+    return pgm_read_byte(p);
+}
+
+/* translates to following assembly */
+flash_read_byte:
+    movw r30 , r24
+    lpm r24 , Z    // load program memory
+    ret
+
+// for SRAM access
+const char sram_str[] = "Hello world";
+char sram_read_byte (const char *p) {
+    return *p;
+}
+
+/* translates to following assembly */
+sram_read_byte:
+    movw r30 , r24 
+    ld r24 , Z
+    ret
+```
+
+## Instruction Set Architectures (ISA)
+
+The *instruction set architecture* (ISA) is the assembly language of a specific processor. The ISA includes things such as:
+
+-   Instruction Set (NOP, BRA, LOAD, ADD, ...)
+-   Data Types (u/s-int, float, addresses)
+-   Registers
+    -   PC: programm counter
+    -   SP: stack pointer
+    -   R0, R1, R2, ... : general purpose registers
+    -   W, Z, V, C: status registers
+-   Addreassing nodes, for accessing memory
+
+### Register Transfer Language (RTL)
+
+Describes how a cpu instruction behaves
+
+![](images/paste-66.png){fig-align="center" width="9cm"}
+
+### Stack ISA
+
+Stack ISAs operands are pushed onto a stack before operators are applied. Source operands are popped off the stack, and destination operands are pushed back onto it, resulting in very short instructions. However, the stack can become a bottleneck, as it is not randomly addressable.
+
+![](images/paste-67.png){fig-align="center" width="10cm"}
+
+### Accumulator ISA
+
+Accumulator ISAs use a single accumulator register for storing the results of all ALU operations, leading to short instruction lengths where only one operand is specified. Memory traffic is high since the accumulator is the primary storage, but this design was popular in early microprocessors when memory and CPU speeds were comparable.
+
+![](images/paste-68.png){fig-align="center" width="10cm"}
+
+### General Purpose Register
+
+::: callout-caution
+## Issue with frequent memory access
+
+Because the speed of **DRAM** didn't keep up with the speed of **CPUs**, memory is a bottleneck of performance.
+
+![](images/Memory-Access-vs-CPU-Speed.png){fig-align="center" width="7cm"}
+:::
+
+Most high-performance computers use general-purpose register ISAs because registers are faster than memory. These ISAs have many registers, explicit operands, and longer instructions. Load/store ISAs, where ALU instructions only operate on registers, are popular despite requiring more instructions because they are simpler and more suited to pipelining. ISAs can be classified into memory-memory, register-memory, and register-register, based on how many memory operands an ALU instruction can have.
+
+![](images/paste-69.png){fig-align="center" width="9cm" height="3.4cm"}
+
+![](images/paste-70.png){fig-align="center" width="9cm"}
 
 ## Instruction encoding
 
