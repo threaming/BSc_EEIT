@@ -75,11 +75,11 @@ F = np.matmul(D,E)
 
 The **Reason** is that this code is optimised for fast computation. Manly due to the utilisation of GPUs which offer high parallelism. *Don't bother trying to implement a faster version*.
 
-![](images/paste-19.png){fig-align="center" width="9cm" height="1.7cm"}
+![](imagesi/paste-19.png){fig-align="center" width="9cm" height="1.7cm"}
 
-![](images/paste-20.png){fig-align="center" width="7cm" height="4.6cm"}
+![](imagesi/paste-20.png){fig-align="center" width="7cm" height="4.6cm"}
 
-![](images/paste-21.png)
+![](imagesi/paste-21.png)
 
 ## Morals of AI
 
@@ -87,7 +87,7 @@ The **Reason** is that this code is optimised for fast computation. Manly due to
 
 Gender detecting algorithm is trained on a highly biased dataset, which leads to different results, depending on the target. [Read More](http://gendershades.org/)
 
-![](images/paste-39.png){fig-align="center" width="8cm" height="2.7cm"}
+![](imagesi/paste-39.png){fig-align="center" width="8cm" height="2.7cm"}
 
 ::: callout-caution
 ## Beyond Average Test-Set Performance
@@ -96,7 +96,7 @@ Even if a test-set is a well representation of the real world, which will lead t
 
 **Good average performance can mask poor performance of specific cases**
 
-![](images/paste-45.png){fig-align="center" width="8cm" height="3cm"}
+![](imagesi/paste-45.png){fig-align="center" width="8cm" height="3cm"}
 :::
 
 ### Reknognition
@@ -107,15 +107,15 @@ Facial Recognition algorithm wrongly matches government members to mugshots from
 
 **Machine Learning == Function Approximation**
 
-![](images/paste-1.png){fig-align="center" width="6cm" height="3.3cm"}
+![](imagesi/paste-1.png){fig-align="center" width="6cm" height="3.3cm"}
 
-![](images/paste-4.png){fig-align="center" width="7cm"}
+![](imagesi/paste-4.png){fig-align="center" width="7cm"}
 
 ## Types of Learning
 
-![](images/paste-2.png)
+![](imagesi/paste-2.png)
 
-![](images/paste-3.png){fig-align="center" width="9cm" height="3.5cm"}
+![](imagesi/paste-3.png){fig-align="center" width="9cm" height="3.5cm"}
 
 ### Self-Supervised Learning
 
@@ -130,7 +130,7 @@ From data **without labels** we can learn the structure of the data itself, ther
 
 ## Maschine Learning Pipeline
 
-![](images/paste-6.png)
+![](imagesi/paste-6.png)
 
 ### Dataset
 
@@ -140,7 +140,7 @@ From data **without labels** we can learn the structure of the data itself, ther
 
 Split the dataset into **Train, Validation, and Test sets**
 
-![](images/paste-7.png){fig-align="center" width="8cm"}
+![](imagesi/paste-7.png){fig-align="center" width="8cm"}
 
 ### Train Model
 
@@ -159,7 +159,7 @@ Split the dataset into **Train, Validation, and Test sets**
 
 Function $L$ which measures how "wrong" a network is. We want our network to answer right with **high probability**.
 
-![](images/paste-11.png){fig-align="center" width="9cm" height="2.9cm"}
+![](imagesi/paste-11.png){fig-align="center" width="9cm" height="2.9cm"}
 
 To get a probability for **binary classification**, we introduce a **probability layer**. One of the possible function is **Softmax**
 
@@ -171,7 +171,7 @@ For every output $j$ it takes every logit (output of network before activation/p
 
 To get the loss $L$ we apply a loss-function, *low probability* $\rightarrow$ *high loss*. We use **Cross Entropy Loss**
 
-![](images/paste-13.png)
+![](imagesi/paste-13.png)
 
 ### Gradient Descent
 
@@ -183,7 +183,7 @@ $\Delta w_{j,i}=-\alpha\frac{\partial L}{\partial w_{j,i}}$
 
 To compute $-\alpha\frac{\partial L}{\partial w_{j,i}}$ use the chain rule
 
-![](images/paste-12.png)
+![](imagesi/paste-12.png)
 
 ``` python
 ## Backpropagation on batch learning
@@ -227,7 +227,7 @@ for start in range(0, len(train_inputs), model.batch_size):
 
 When the gradients get low or there is a local minima, SGD can get **Stuck**.
 
-![](images/paste-69.png){fig-align="center" width="6cm"}
+![](imagesi/paste-69.png){fig-align="center" width="6cm"}
 :::
 
 ### Adaptive Momentum Estimation (Adam)
@@ -267,21 +267,21 @@ To avoid having to recalculate the whole chain every time a new layer is added, 
 
 Every node stores its `(value, derivative)` in a tuple, called **dual numbers**. To compute the overall derivative, each derivative can be chained up. This is implemented via **Overloading**, every function / operator has multiple definitions based on the types of the arguments. ML-Framwork functions work on these tuples.
 
-![](images/paste-14.png)
+![](imagesi/paste-14.png)
 
 **Time Effect**: $O(N*M)$ time, $O(1)$ memory, with $N$ = number of inputs, with $M$ = number of nodes
 
 ::: callout-note
 ## Issue w/ forward mode
 
-![](images/paste-15.png)
+![](imagesi/paste-15.png)
 :::
 
 #### Reverse Mode Autodiff
 
 First, run the function to produce the graph, then compute the **derivatives backward**.
 
-![](images/paste-16.png){fig-align="center" width="7cm"}
+![](imagesi/paste-16.png){fig-align="center" width="7cm"}
 
 -   Analog to the forward mode: overload math functions/operators
 -   Overloaded function return *Node* objects
@@ -294,7 +294,7 @@ First, run the function to produce the graph, then compute the **derivatives bac
 
 The way to handle fan-out is to **add** the derivatives of the fanned-out nodes through replication $r(x)$.
 
-![](images/paste-17.png)
+![](imagesi/paste-17.png)
 
 ## Diagnosis Problems
 
@@ -302,13 +302,13 @@ The way to handle fan-out is to **add** the derivatives of the fanned-out nodes 
 
 Training on a complex dataset can lead to **overfitting** ([PTB](https://paperswithcode.com/dataset/penn-treebank)is a language dataset).
 
-![](images/paste-40.png){fig-align="center" width="8cm"}
+![](imagesi/paste-40.png){fig-align="center" width="8cm"}
 
 ### Regularization
 
 This approach **modifies the loss** through adding a additional term to our existing loss function.
 
-![](images/paste-44.png)
+![](imagesi/paste-44.png)
 
 Regularization can be applied to certain layers on Keras through `tf.keras.layers.Dense(16, kernel_regularizer=keras.regularizers.l2(lambda), activation='relu')`.
 
@@ -334,13 +334,13 @@ Regularization can be applied to certain layers on Keras through `tf.keras.layer
 
 For efficient operation, use **Matrices**.
 
-![](images/paste-18.png)
+![](imagesi/paste-18.png)
 
 ## Neural Networks
 
 ### Perceptron
 
-![](images/paste-8.png){fig-align="center" width="8cm"}
+![](imagesi/paste-8.png){fig-align="center" width="8cm"}
 
 **Predicting with a Perceptron**:
 
@@ -373,7 +373,7 @@ $$
 
 **Multi-Class Perceptron**
 
-![](images/paste-9.png){fig-align="center" width="8cm"}
+![](imagesi/paste-9.png){fig-align="center" width="8cm"}
 
 **Biary Classifier**: Only one output can be active $\hat{y} = \text{argmax}\left(f\left(x^k\right)\right)$, thus the update terms are
 
@@ -390,11 +390,11 @@ $$
 
 Through adding hidden layers we can make bigger networks and add more states to the algorithm.
 
-![](images/paste-22.png)
+![](imagesi/paste-22.png)
 
 The size of these **hidden layers** are defined by the **hyperparameter**. These define the configuration of a model and are set before training begins. *Rule of Thumb*: Make hidden layers the same size as the input, then start to tweak to see the effect. If you have more time and money, [check this](https://en.wikipedia.org/wiki/Hyperparameter_optimization).
 
-![](images/paste-27.png){fig-align="center" width="7cm"}
+![](imagesi/paste-27.png){fig-align="center" width="7cm"}
 
 ::: callout-note
 ## Universal Approximation Theorem
@@ -405,7 +405,7 @@ Remarkably, a one-hidden-layer network can actually represent any function (unde
 -   We are modeling the function over a closed, bounded subset of $\mathbb{R}^n$
 -   Activation function is sigmoidal (i.e. bounded and monotonic)
 
-![](images/paste-28.png)
+![](imagesi/paste-28.png)
 :::
 
 ::: callout-warning
@@ -426,7 +426,7 @@ Which is exactly the same as just one layer again, we need **activation**.
 
 We introduce a **nonlinear** layer
 
-![](images/paste-10.png){fig-align="center" width="7cm"}
+![](imagesi/paste-10.png){fig-align="center" width="7cm"}
 
 A activation function binds network outputs to a particular range. In the last layer this can be used to restrict the range, for example *age is strictly positive*.
 
@@ -436,13 +436,13 @@ Futher PyTorch activation functions can be found [here](https://pytorch.org/docs
 
 .
 
-![](images/paste-23.png)
+![](imagesi/paste-23.png)
 
 #### Tanh
 
 .
 
-![](images/paste-24.png)
+![](imagesi/paste-24.png)
 
 ::: callout-warning
 ## Vanishing Gradient
@@ -454,7 +454,7 @@ The problem with **Sigmoid** and **Tanh** is that the further away the parameter
 
 .
 
-![](images/paste-25.png)
+![](imagesi/paste-25.png)
 
 ::: callout-warning
 ## Dead ReLU
@@ -466,7 +466,7 @@ Because the negative part fed into the activation will result in a $0$ output. F
 
 To tackle a possible *dead ReLU* issue, we use a tiny positive slope for negative inputs.
 
-![](images/paste-26.png)
+![](imagesi/paste-26.png)
 
 ### Convolution
 
@@ -474,7 +474,7 @@ Convolution is like a *"partially connected"* layer. Only certain inputs are con
 
 To introduce **translational invariance** $f(T(x))=f(x)$ we apply convolutions. These are "Filters" which highlight different structures, the following network makes sense from the structures, not the pixels itself. Main application: **Computer Vision**.
 
-![](images/paste-29.png){fig-align="center" width="7cm" height="2.2cm"}
+![](imagesi/paste-29.png){fig-align="center" width="7cm" height="2.2cm"}
 
 ::: callout-note
 ## Hyperparameters
@@ -486,7 +486,7 @@ There are 4 hyperparameters for the convolution
 -   The Stride, $s$
 -   Amount of padding, $p$
 
-![](images/paste-34.png){fig-align="center" width="8cm"}
+![](imagesi/paste-34.png){fig-align="center" width="8cm"}
 
 We can calculate the output size through
 
@@ -516,48 +516,48 @@ The inputs to `tf.nn.conv2d(...)` are:
 
 Tipically there are several convolutional layers and then a fully connected layer. This can be achieved through flattening a layer `flat = tf.reshape(conv, [conv.shape[0],-1])`.
 
-![](images/paste-36.png)
+![](imagesi/paste-36.png)
 
 #### Stride
 
 The distance we slide a filter on each iteration is called **stride**. With a bigger stride, you compress a same size input into a smaller output. This decreases the image resolution controlled, **Downsampling**. The filters are **Kernels** and are made of **learnable parameters**.
 
-![](images/paste-30.png)
+![](imagesi/paste-30.png)
 
 ##### Computation
 
 The image is flattened and the kernel is unrolled into a bigger matrix. This leads to a normal **matrix/vector multiplication**
 
-![](images/paste-56.png)
+![](imagesi/paste-56.png)
 
 #### Fractional Stride
 
 For **deconvolutions** you can also use fractionally-strided convolutions (here $\frac12$ stride):
 
-![](images/paste-55.png){fig-align="center" width="7cm" height="3.9cm"}
+![](imagesi/paste-55.png){fig-align="center" width="7cm" height="3.9cm"}
 
 ##### Computation
 
 Same as with the convolution, we flatten all matrices into vectors/matrices but now we **transpose** the kernel matrix, which gives us the **de-convolution**:
 
-![](images/paste-57.png){fig-align="center" width="5cm"}
+![](imagesi/paste-57.png){fig-align="center" width="5cm"}
 
 ::: callout-caution
 ## Checkerboard Artifacts
 
 THe transpose convolution causes [artifacts in output images](https://distill.pub/2016/deconv-checkerboard/) because some pixels get written more often than others (at the overlaps, which occur in a line).
 
-![](images/paste-58.png){fig-align="center" width="6cm" height="1.5cm"}
+![](imagesi/paste-58.png){fig-align="center" width="6cm" height="1.5cm"}
 
 *Prevention*:
 
 1.  Upsampling using nearest neighbour interpolation
 
-![](images/paste-59.png){fig-align="center" width="7cm"}
+![](imagesi/paste-59.png){fig-align="center" width="7cm"}
 
 2.  Perform a convolution with `'SAME'` padding on upsampled image
 
-![](images/paste-60.png){fig-align="center" width="8cm"}
+![](imagesi/paste-60.png){fig-align="center" width="8cm"}
 
 ``` python
 # Layer to upsample the image by a factor of 5 in x and y using nearest 
@@ -572,19 +572,19 @@ tf.keras.layers.Conv2D(filters = 1, kernel_size = (10,10), padding = “SAME”)
 
 Futhermore, use several kernels per image, this block of kernels is a **filter bank**. The output is then a **mutli-channel** image. Multiple filters are able to extract *different features* of the image.
 
-![](images/paste-31.png){fig-align="center" width="8cm"}
+![](imagesi/paste-31.png){fig-align="center" width="8cm"}
 
 #### Padding
 
 To not loose resolution through a convolution, the original image has to be extended, **padded**. There are two convolution options, **VALID**, which is without padding, or **SAME** which is padding so that the output size is same as the input size.
 
-![](images/paste-32.png){fig-align="center" width="8cm" height="4cm"}
+![](imagesi/paste-32.png){fig-align="center" width="8cm" height="4cm"}
 
 #### Bias
 
 As with other layers, a **Bias** can be added to the convolutional layer
 
-![](images/paste-35.png){fig-align="center" width="8cm"}
+![](imagesi/paste-35.png){fig-align="center" width="8cm"}
 
 This can be done through `tf.nn.bias_add(value, bias)`. When using keras layers, a bias is included by default `tf.keras.layers.Conv2D(filters, kernel_sz, strides, padding, use_bias = True)`.
 
@@ -592,7 +592,7 @@ This can be done through `tf.nn.bias_add(value, bias)`. When using keras layers,
 
 Pooling keeps track of the regions with the highest activation, indicating object presence, also lowers the resolution in a controllable way.
 
-![](images/paste-37.png){fig-align="center" width="8cm"}
+![](imagesi/paste-37.png){fig-align="center" width="8cm"}
 
 ### Invariances
 
@@ -600,7 +600,7 @@ The translational variance is largely eliminated with the introduction of convol
 
 There are further invariances, which can hurt a CNNs performance. CNNs don't do to good on these, for good performance, lots of training is needed.
 
-![](images/paste-38.png){fig-align="center" width="7cm"}
+![](imagesi/paste-38.png){fig-align="center" width="7cm"}
 
 ## Sequential and Recurrent Networks
 
@@ -614,7 +614,7 @@ We do this for **smaller dataset footprint (memory)**, more efficient search thr
 
 ### Principal Component Analyis (PCA)
 
-![](images/paste-46.png){fig-align="center" width="9cm"}
+![](imagesi/paste-46.png){fig-align="center" width="9cm"}
 
 Given a dataset $D$ of dimension $n$ and a target dimension $m\leq n$, find $m$ vectors in $\mathbb{R}^n$ along which $D$ has the highest variance. $m$ are the **principal components**.
 
@@ -622,14 +622,14 @@ How: Find the direction of maximal variation, project onto this vector, repeat $
 
 *Example with MNIST:*
 
-![](images/paste-47.png){fig-align="center" width="8cm"}
+![](imagesi/paste-47.png){fig-align="center" width="8cm"}
 
 ::: callout-caution
 ## Limitations of PCA
 
 PCA can't figure out **non-linear** projections from $\mathbb{R}^2$ to $\mathbb{R}^1$.
 
-![](images/paste-48.png){fig-align="center" width="7cm" height="2cm"}
+![](imagesi/paste-48.png){fig-align="center" width="7cm" height="2cm"}
 :::
 
 ### Butterfly-Network (Autoencoder)
@@ -640,21 +640,21 @@ $$
 L(x,\bar{x})=(x-\bar{x})^2\qquad\text{squared error loss}
 $$
 
-![](images/paste-49.png){fig-align="center" width="9cm"}
+![](imagesi/paste-49.png){fig-align="center" width="9cm"}
 
 After training the network with the unlabelled data, the second part can be cut off and a binary layer be added. Now fine tune the last layer on **labelled data through supervised learning**.
 
-![](images/paste-50.png){fig-align="center" width="7cm" height="2.9cm"}
+![](imagesi/paste-50.png){fig-align="center" width="7cm" height="2.9cm"}
 
 ### Convolutional Autoencoder
 
 The same approach can be applied to convolutional networks. But **convolutional matrices are expensive**, thus we just swap the forward and backwards pass code for the **deconvolution**.
 
-![](images/paste-53.png){fig-align="center" width="8cm" height="1.9cm"}
+![](imagesi/paste-53.png){fig-align="center" width="8cm" height="1.9cm"}
 
 This can be done in [Tensorflow](https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/nn/conv2d_transpose)
 
-![](images/paste-54.png){fig-align="center" width="10cm"}
+![](imagesi/paste-54.png){fig-align="center" width="10cm"}
 
 ### Autoencoder Applications
 
@@ -662,7 +662,7 @@ This can be done in [Tensorflow](https://www.tensorflow.org/versions/r2.0/api_do
 
 .
 
-![](images/paste-52.png)
+![](imagesi/paste-52.png)
 
 #### Others
 
@@ -681,7 +681,7 @@ This can be done in [Tensorflow](https://www.tensorflow.org/versions/r2.0/api_do
 
 Taking a pre-trained network of a similar domain and adjust the last layers.
 
-![](images/paste-70.png){fig-align="center" width="8cm"}
+![](imagesi/paste-70.png){fig-align="center" width="8cm"}
 
 -   Saves training time & money
 -   Network is more likely to generalise
@@ -690,17 +690,17 @@ Taking a pre-trained network of a similar domain and adjust the last layers.
 
 One can switch out the **last layer** and add a different classification
 
-![](images/paste-71.png){fig-align="center" width="7cm"}
+![](imagesi/paste-71.png){fig-align="center" width="7cm"}
 
 Or also switch add/replace a fully connected layer if the differences in the domain are bigger
 
-![](images/paste-72.png){fig-align="center" width="7cm"}
+![](imagesi/paste-72.png){fig-align="center" width="7cm"}
 
 ### Zero Training
 
 The last layer can be replaced by a *Logistic Regression* or *Nearest Neighbor Classifier.* The *transferred network* is then just a feature extraction pipeline. Use a database with known targets and classify new data through searching for nearest neighbour.
 
-![](images/paste-73.png){fig-align="center" width="8cm" height="3.3cm"}
+![](imagesi/paste-73.png){fig-align="center" width="8cm" height="3.3cm"}
 
 ### Few-Shot Learning
 
@@ -708,11 +708,11 @@ When there are only **few example of a sample** to be detected.
 
 **Siamese Networks** where the sample and the test go through the same network. Then they are compared in the latent space.
 
-![](images/paste-74.png){fig-align="center" width="8cm"}
+![](imagesi/paste-74.png){fig-align="center" width="8cm"}
 
 Nominate or Generate a **representative** from each class
 
-![](images/paste-75.png){fig-align="center" width="5cm" height="3.7cm"}
+![](imagesi/paste-75.png){fig-align="center" width="5cm" height="3.7cm"}
 
 ## Training Methods and Tricks
 
@@ -736,7 +736,7 @@ for i in range(n_epochs):
 
 Reducing parameters, means less possibilities to learn or even memorize a dataset.
 
-![](images/paste-41.png){fig-align="center" width="8cm"}
+![](imagesi/paste-41.png){fig-align="center" width="8cm"}
 
 Reducing parameters can mean...
 
@@ -756,13 +756,13 @@ Requires obnoxious tuning of hyperparameters.
 
 Generate **random variations** on your training data.
 
-![](images/paste-42.png)
+![](imagesi/paste-42.png)
 
 ### Dropout
 
 *Make it harder for the network*. In a single training pass, the output of randomly selected nodes from each layer are set to $0$. The nodes that drop out are **different each pass**. This builds **Resillience**. During testing all nodes are active again.
 
-![](images/paste-43.png){fig-align="center" width="7cm" height="3.8cm"}
+![](imagesi/paste-43.png){fig-align="center" width="7cm" height="3.8cm"}
 
 Dropout can be handled with Keras through `tf.keras.layers.dropout(rate)`, where `rate`is a *hyperparameter* between $[0,1]$. `rate=0.5` is drop $\frac12$, keep $\frac12$. `rate=0.25` is drop $\frac14$, keep $\frac34$.
 
@@ -773,12 +773,12 @@ Dropout can be handled with Keras through `tf.keras.layers.dropout(rate)`, where
 
 The deeper a net gets (more layers) the more learnable parameters are present. This leads to vanishing of the gradient throughout the network
 
-![](images/paste-61.png){fig-align="center" width="5cm" height="3.1cm"}
+![](imagesi/paste-61.png){fig-align="center" width="5cm" height="3.1cm"}
 :::
 
 To mitigate the *vanishing gradient problem*, we use **Redidual Blocks**
 
-![](images/paste-62.png){fig-align="center" width="7cm"}
+![](imagesi/paste-62.png){fig-align="center" width="7cm"}
 
 The output of each layer is the identity + some deviation (residual) from it. It allows the gradient to flow through two pathways. **Significantly stabilises training of very deep networks.**
 
@@ -788,9 +788,9 @@ The idea is to stabilise inputs, which should lead to **faster training**. This 
 
 A **normalisation layer** $BN$ is added after a fully connected or a convolution, before the non-linear activation. In*Tensorflow* this is done with `tf.keras.layers.BatNormalization(input)`.
 
-![](images/paste-63.png)
+![](imagesi/paste-63.png)
 
-![](images/paste-64.png){fig-align="left" width="7cm" height="3cm"}
+![](imagesi/paste-64.png){fig-align="left" width="7cm" height="3cm"}
 
 ### Checkpointing
 
@@ -802,11 +802,11 @@ Training takes a while and sometimes you want to “save” data for use in futu
 **Checkpointing** allows you to save your Tensorflow model! No need to retrain every time your run your program. Fast prediction. Export your trained weights for use in other applications
 :::
 
-![](images/paste-65.png){width="7cm" height="3cm"}
+![](imagesi/paste-65.png){width="7cm" height="3cm"}
 
 Example: (more [here](https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/guide/checkpoint.ipynb))
 
-![](images/paste-66.png){width="8cm" height="3.6cm"}
+![](imagesi/paste-66.png){width="8cm" height="3.6cm"}
 
 ### Xavier Initialisation
 
@@ -815,7 +815,7 @@ Example: (more [here](https://colab.research.google.com/github/tensorflow/docs/b
 
 With certain activation functions, it's possible to get bad initialisations. For example with the sigmoid function we have the issue of linearity around $x\approx0$ and the flatness / low gradient at $x>|4|$.
 
-![](images/paste-67.png){fig-align="center" width="6cm"}
+![](imagesi/paste-67.png){fig-align="center" width="6cm"}
 
 One solution is to use activations which don't have these issues, like **ReLU**.
 
@@ -855,13 +855,13 @@ A powerful visualisation, logging, and monitoring tool designed to be integrated
 
 **Autoencoder** networks can be trained to denoise images. The training is easy, as you just add the noise to original images.
 
-![](images/paste-51.png){fig-align="center" width="8cm" height="2.3cm"}
+![](imagesi/paste-51.png){fig-align="center" width="8cm" height="2.3cm"}
 
 ### Diffusion Models
 
 A *Diffusion Model* is a denoising autoencoder with fancy math, it's the inverse of adding noise.
 
-![](images/paste-68.png){fig-align="center" width="8cm"}
+![](imagesi/paste-68.png){fig-align="center" width="8cm"}
 
 [Examples](https://colab.research.google.com/github/keras-team/keras-io/blob/master/examples/generative/ipynb/ddim.ipynb)
 
@@ -869,13 +869,45 @@ A *Diffusion Model* is a denoising autoencoder with fancy math, it's the inverse
 
 With attention we can transfer information from the input to the output. We pass a weighted sum of encoder states to the decoder.
 
-![](images/paste-76.png){fig-align="center" width="7cm"}
+![](imagesi/paste-76.png){fig-align="center" width="7cm"}
 
 The attention can also be visualised
 
-![](images/paste-83.png){fig-align="center" width="8cm"}
+![](imagesi/paste-83.png){fig-align="center" width="8cm"}
 
-## Natural Language
+## Natural Language {#sec-naturallanguage}
+
+Natural language is a **sequence of words**. Each word is a discrete unit, predicting the next part of the sequence means predicting words. Same applies for individual letters in a letter-sequence.
+
+### Probabilistic LM-Implementations
+
+#### Tokenization
+
+![](imagesi/paste-99.png){fig-align="center" width="8cm"}
+
+$\textcolor{red}{\text{Attention:}}$ this is easier in english than other languages *(e.g. Chinese).*
+
+#### Vocabularies
+
+A *Vocabulary* is a set of all known words of the model. The **hyperparameter `vocab_size`** defines how many words are in the vocabulary. It is implemented by only keeping the `vocab_size`-most-important words, everything else is replaced by the **UNK** *(unknown)*-Token.
+
+![](images/paste-1.png){fig-align="center" width="8cm" height="3.7cm"}
+
+#### Maths
+
+![](imagesi/paste-100.png){fig-align="center" width="8cm"}
+
+#### Counting
+
+Counting is based on predicting a sentence based on the probability of this sentence appearing in the data. This strategy depends on having instances of sentence prefixes.
+
+![](images/paste-3.png){fig-align="center" width="8cm"}
+
+To mitigate this dependency, **N-gram** counting can be used, that only looks at **N** words at a time.
+
+![](images/paste-4.png){fig-align="center" width="6cm"}
+
+This approach still doesn't understand synonyms for either of the two words: $\textcolor{blue}{\text{He shouted }}\textcolor{orange}{\text{frustratedly}}$ has *probability 0*.
 
 ### Attention
 
@@ -883,11 +915,11 @@ With attention we can transfer information from the input to the output. We pass
 
 In natural language this can mean, **different words in the output pay attention to different words in the output**
 
-![](images/paste-77.png){fig-align="center" width="3cm" height="3.6cm"}
+![](imagesi/paste-77.png){fig-align="center" width="3cm" height="3.6cm"}
 
 The "attention" is represented as a weights matrix. It states \*how much attention does output word $j$ pay to input word $i$. Each column shows the importance of the input words to one output words. Each Column **sums to one**.
 
-![](images/paste-78.png){fig-align="center" width="8cm"}
+![](imagesi/paste-78.png){fig-align="center" width="8cm"}
 
 The score of each word (one column) is the **attention alignment score** **function**
 
@@ -897,7 +929,7 @@ $$
 
 which is the *softmax of some predefined alignment score*. And this shows how well the two words $y_t$ and $x_i$ are aligned. For the $\text{score}(\dots)$ function there are several options
 
-![](images/paste-79.png){fig-align="center" width="9cm"}
+![](imagesi/paste-79.png){fig-align="center" width="9cm"}
 
 Check [here](https://lilianweng.github.io/posts/2018-06-24-attention/) for more
 
@@ -905,20 +937,20 @@ Check [here](https://lilianweng.github.io/posts/2018-06-24-attention/) for more
 
 Self-attention computes the output vector $r_i$ for each word via a weighted average of vectors extracted from each word in the input sentence. Here, self-attention learns that "it" should pay attention to "The animal".
 
-![](images/paste-80.png){fig-align="center" width="8cm"}
+![](imagesi/paste-80.png){fig-align="center" width="8cm"}
 
 1.  We compute a $\textcolor{violet}{\text{query vector}}$ for the word and compare it to a $\textcolor{orange}{\text{key vector}}$ for every other word. This computes a $\textcolor{yellow}{\text{score}}$.
 2.  For the output vector $r_1$ we sum all $\textcolor{blue}{\text{value vectors}}$ , weighted by the $\textcolor{yellow}{\text{score}}$ in step 1.
 
-![](images/paste-82.png){width="7cm"}
+![](imagesi/paste-82.png){width="7cm"}
 
 For the [**example**](https://jalammar.github.io/illustrated-transformer/)***Machines*** we get the 3 vectors:
 
-![](images/paste-88.png){fig-align="center" width="5cm"}
+![](imagesi/paste-88.png){fig-align="center" width="5cm"}
 
 To get the **self-attention for *Thinking***, we do:
 
-![](images/paste-90.png){fig-align="center" width="5cm"}
+![](imagesi/paste-90.png){fig-align="center" width="5cm"}
 
 1.  **Score**: Dot product of the query vector $q_1$ of "Thinking" with the key vectors $\{k_1,k_2\}$ of each word.
 2.  **Scale**: Divide each score by $\sqrt{\text{dimensionality } d_k}$ for more stable gradients.
@@ -928,7 +960,7 @@ To get the **self-attention for *Thinking***, we do:
 
 #### Computation
 
-![](images/paste-91.png){fig-align="center" width="10cm" height="4.6cm"}
+![](imagesi/paste-91.png){fig-align="center" width="10cm" height="4.6cm"}
 
 ### Multi-Head Attention
 
@@ -936,21 +968,21 @@ Multi-head Attention is used to improve the performance of regular self-attentio
 
 To get one set of attention vectors, we concatenate all the heads and apply a linear layer in order to get Z.
 
-![](images/paste-94.png){fig-align="center" width="8cm"}
+![](imagesi/paste-94.png){fig-align="center" width="8cm"}
 
 Multiple heads allow for each head to learn different relationships between words in the sentence. The network ( $W^O$ ) then learns how to handle this. These multiple attentions can be [visualised with this tool](https://colab.research.google.com/github/tens%20orflow/tensor2tensor/blob/master/tensor2ten%20sor/notebooks/hello_t2t.ipynb)
 
-![](images/paste-95.png){fig-align="center" width="6cm"}
+![](imagesi/paste-95.png){fig-align="center" width="6cm"}
 
 ### Word Vectors
 
 Words can be stored as **vectors**, the size of the vector is set by the $\textcolor{blue}{\text{embedding sz}}$ and is a hyperparameter. The $\textcolor{orange}{\text{embedding matrix}}$ is learnable and initialised randomly. Each embedding *can* have a meaning, but doesn't have to (trained with the network).
 
-![](images/paste-84.png){fig-align="center" width="9cm"}
+![](imagesi/paste-84.png){fig-align="center" width="9cm"}
 
 The embedding matrix is then used as a lookup table for all the words. (Example, first word in input sentence with ID=2)
 
-![](images/paste-85.png){fig-align="center" width="8cm"}
+![](imagesi/paste-85.png){fig-align="center" width="8cm"}
 
 ### Transformer
 
@@ -958,35 +990,53 @@ Transformers are based on Encoders and Decoders. The big difference to Autoencod
 
 The multiple stack up of Encoders and Decoders is for **better performance**.
 
-![](images/paste-86.png){fig-align="center" width="6cm"}
+![](imagesi/paste-86.png){fig-align="center" width="6cm"}
 
 #### Encoder Block Map
 
 If we input a word sequence $\{x_1,x_2\}$, first the **self attention** is applied to get the value vectors $\{z_1,z_2\}$. Then a Feed Forward Network is applied to each word individually.
 
-![](images/paste-87.png){fig-align="center" width="7cm"}
+![](imagesi/paste-87.png){fig-align="center" width="7cm"}
 
 For performance improvments we add **Residuals** to negate vanishing gradients. Furthermore, we apply **LayerNorm**, which improves convergence time
 
-![](images/transformer_resideual_layer_norm.png){fig-align="center" width="7cm"}
+![](imagesi/transformer_resideual_layer_norm.png){fig-align="center" width="7cm"}
 
 #### Positional Encoding
 
 Instead of passing a Embedding vector to the encoder, we pass a **Embedding with Time Signal** vector. Positional encoding can be learned or defined by a fixed function.
 
-![](images/paste-93.png){fig-align="center" width="8cm"}
+![](imagesi/paste-93.png){fig-align="center" width="8cm"}
 
 #### Decoder Block Map
 
 Following the encoder blocks, there are **Decoder Blocks**, these have are very similar to the encoders, but with a additional layer of a **Encoder-Decoder Attention**.
 
-![](images/paste-96.png){fig-align="center" width="9cm"}
+![](imagesi/paste-96.png){fig-align="center" width="9cm"}
 
 The **Encoder-Decoder Attention** takes the output of the encoder instead of the input words
 
-![](images/paste-97.png){fig-align="center" width="10cm" height="3.9cm"}
+![](imagesi/paste-97.png){fig-align="center" width="10cm" height="3.9cm"}
 
 ## Audio and Video Synthesis
+
+### Time Series Forecasting
+
+**Sequence**: Ordered datapoints *(doesn't have to be timedependent)*
+
+**Time-series** (simple univariate): A single series of observations with temporal ordering
+
+$\textcolor{red}{\text{Traditionally}}$ **autoregression** is used to predict time-series, each output is predicted based on past outputs. For example:
+
+$$
+X(t)=b_0+b_1*X(t-1)+b_2*X(t-2)
+$$
+
+$\textcolor{green}{\text{Deep Learning}}$ **1D CNN**: convolutional layers where the input variable is a window of previous time series values. Can be extended to multivariate data through concatenating outputs of multiple 1D CNNs
+
+![](imagesi/paste-98.png){fig-align="center" width="8cm"}
+
+A well studied example of time-series data is [Natural Language](#sec-naturallanguage).
 
 ## Search using Deep Reinforcment Learning
 
