@@ -1346,7 +1346,7 @@ Many processors using distributed memory and communication through a network *(m
 
 AVR is a manufacturer who uses the *Harvard*-Architecture. To access the program memory (flash) the `PROGMEM` macro from `avr/pgmspace` is used. *(support of that is introduced in GCC 4.8)*
 
-``` cpp
+``` c
 #include <avr/pgmspace.h>
 
 // for flash access
@@ -1423,7 +1423,121 @@ Most high-performance computers use general-purpose register ISAs because regist
 
 ## Instruction encoding
 
+![](images/paste-71.png){fig-align="center" width="6cm"}
+
+::: callout-note
+## ALU flags
+
+| Z : result is *zero*
+| N : result is *negative*
+| V : result has *signed overflow*
+| C : result has *unsigned overflow* **carry**
+:::
+
+*Opcodes* encode the operations to perform. There are different kind of opcodes, depending on how many operands are involved:
+
+**Binary ALU instructions**: Two source operands
+
+![](images/paste-72.png){width="5cm" height="1.1cm"}
+
+**Unary ALU instructions**: One source operand
+
+![](images/paste-73.png){width="5cm" height="1.1cm"}
+
+**No Operand instruction**: No operand, doens't use ALU
+
+![](images/paste-74.png){width="4cm" height="0.7cm"}
+
+### Binary ALU Instruction Encoding
+
+![](images/paste-75.png){fig-align="center" width="8cm"}
+
+#### Operands
+
+Operands can be a **Register**, a **Constant**, or at a **Memory Location**.
+
+![](images/paste-77.png){width="7cm"}
+
+::: callout-warning
+## Length of Instructions
+
+If you want to load large constants (32-bit words), you won't have enough space in your instruction encoding. There are two solutions:
+
+**CISC**: Variable length instructions
+
+This introduces the issue of different instruction having different lengths, and thus needing more (specific) hardware.
+
+![](images/paste-78.png){fig-align="center" width="8cm" height="1.2cm"}
+
+**RISC**: Fixed length instructions
+
+This is great for $\textcolor{red}{\text{Pipelining}}$, and thus makes a processor faster. To fix the size issue we can use:
+
+1.  Synthesize large constants using multiple insn\
+    ![](images/paste-80.png){width="7cm" height="1.2cm"}
+2.  Load a constant from literal pool\
+    ![](images/paste-82.png){width="8cm"}
+:::
+
 ## CISC to RISC
+
+::: callout-important
+## CISC issues
+
+-   Initially ISAs were designed for easy assembly language programming
+
+-   This introduced many...
+
+    -   ... datatypes: $\tiny\textcolor{orange}{\text{byte/short/int/float/double/BCD/bit fields}}$
+
+    -   ... instructions: $\tiny\textcolor{orange}{\text{crc (cyclic redundancy check)/polynomial extension/linked list insertion/...}}$
+
+    -   ... addressing modes: $\tiny\textcolor{orange}{\text{R0<-M[3]/R0<-M[R1]/R0<-M[R1+R2]/R0<-M[M[R1+R2]]}}$
+:::
+
+### Computer Performance Measures
+
+To measure the compute performance, execute a benchmark and take the time:
+
+![](images/paste-83.png){fig-align="center" width="9cm"}
+
+To minimise program execution time, reduce the instruction count, reduce the CPI (Clocks per Instruction), or increase the Clock rate.
+
+| *Clock Rate*: Hardware technology and processor organisation
+| *CPI*: Processor organisation and instruction set architecture
+| *Instruction Count*: Instruction set architecture and compiler technology
+
+::: callout-warning
+## Misleading MIPS
+
+**M**illion **I**nstructions **P**er **S**econd is a missleading measure, as a processor without a FPU can have higher MIPS (simpler architecture), but takes longer to calculate. Furthermore, it doesn't take *chip cost* and *power consumption* into account.
+
+$$
+\text{MIPS}=\frac{\text{Clock Rate}}{\text{CPI}*10^6}=\frac{\text{Instruction Count}}{\text{Program Execution Time}}
+$$
+:::
+
+### Amdahl's Rule
+
+**Make the common case fast**
+
+To compare performance improvements, we need the *speedup* and *utilisation*
+
+$$
+\text{Exec Time New}=\text{Exec Time Old}\left[(1-\text{Utilisation})+\frac{\text{Utilisation}}{\text{Speedup}}\right]
+$$
+
+$$
+\text{Speedup Overall}=\frac{\text{Exec Time Old}}{\text{Exec Time New}}=\frac{1}{(1-\text{Utilisation})+\frac{\text{Utilisation}}{\text{Speedup}}}
+$$
+
+![](images/paste-84.png){fig-align="center" width="9cm" height="1.5cm"}
+
+With this we have a absolute number of the overall speedup. RISC was developed with this in mind, which lead to a overall improvement, even though the instruction count went up
+
+![](images/paste-85.png){fig-align="center" width="8cm" height="1.8cm"}
+
+![General Purpose Register CPU](images/paste-86.png){fig-align="center" width="8cm"}
 
 # Pipeline and Parallelism
 
