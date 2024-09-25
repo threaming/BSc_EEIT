@@ -44,17 +44,17 @@ chribel-fontfamily:
 
 Remember that software engineering is 50-70% maintenance. Because modern machines heavily rely on microcontrollers there is great demand.
 
-![](images/paste-3.png){fig-align="center" width="30%"}
+![](imagesi/paste-3.png){fig-align="center" width="30%"}
 
 Software engineering has many different aspects (the dark blue ones are focused on here), find out more [here](https://www.computer.org/education/bodies-of-knowledge/software-engineering/topics).
 
-![](images/paste-1.png){fig-align="center" width="25%"}
+![](imagesi/paste-1.png){fig-align="center" width="25%"}
 
 ## Feature Branches
 
 To implement different features, use a branch per feature, this guarantees that the main is always in working condition.
 
-![](images/paste-2.png)
+![](imagesi/paste-2.png)
 
 ::: callout-important
 ## Branching Rules
@@ -124,17 +124,17 @@ More comments $\neq$ better quality. Use comments only to:
 
 Use *merge requests*, label feeback as *bug, code, quality, preference*.
 
-![](images/paste-14.png){fig-align="center" width="40%"}
+![](imagesi/paste-14.png){fig-align="center" width="40%"}
 
 ## SOLID
 
 How to make designs **flexible**, as requirements change all the time (Agile).
 
-![](images/paste-31.png)
+![](imagesi/paste-31.png)
 
 *SOLID* is all about **managing dependencies**.
 
-![](images/paste-32.png)
+![](imagesi/paste-32.png)
 
 ### Single Responsibility Principle (SRP)
 
@@ -192,7 +192,7 @@ In OOP this is called **Polymorphism**.
 
 ### Single Instance Model
 
-![](images/paste-33.png){fig-align="center" width="7cm"}
+![](imagesi/paste-33.png){fig-align="center" width="7cm"}
 
 ### Multiple Instance Model
 
@@ -216,7 +216,7 @@ struct circBuf {
 
 ### Dynamic Interface
 
-![](images/paste-34.png){fig-align="center" width="7cm"}
+![](imagesi/paste-34.png){fig-align="center" width="7cm"}
 
 -   Configuration determined in runtime
 -   Interface is a *public struct of function pointers*
@@ -238,7 +238,7 @@ struct circBuf {
 -   **Structural**: Set communication pathways
 -   **Behavioural**: Distribute responsibilities
 
-![](images/paste-35.png){fig-align="center" width="8cm"}
+![](imagesi/paste-35.png){fig-align="center" width="8cm"}
 
 ::: callout-tip
 ## Recommendations
@@ -256,7 +256,7 @@ struct circBuf {
 -   Make incompatible modules compatible
 -   Fulfills SRP, ISP, LSP
 
-![](images/paste-36.png){fig-align="center" width="7cm" height="2.4cm"}
+![](imagesi/paste-36.png){fig-align="center" width="7cm" height="2.4cm"}
 
 ### State Pattern
 
@@ -267,7 +267,7 @@ struct circBuf {
 -   The client initialises the context with a state
 -   Fulfills SRP, OCP
 
-![](images/paste-37.png){fig-align="center" width="9cm" height="2.4cm"}
+![](imagesi/paste-37.png){fig-align="center" width="9cm" height="2.4cm"}
 
 ### Command Pattern
 
@@ -279,7 +279,7 @@ struct circBuf {
 -   Triggers can invoke series of commands
 -   Fulfills SRP, OCP
 
-![](images/paste-38.png){fig-align="center" width="8.5cm"}
+![](imagesi/paste-38.png){fig-align="center" width="8.5cm"}
 
 ## Legacy / Vererbt / Veralteter Code
 
@@ -305,14 +305,14 @@ To make sure *key functionality* isn't altered, add **Strategic Tests**. (e.g. c
 2.  Find test points (function calls, global variables $\rightarrow$ encapsulate ASAP, serial)
 3.  Break dependencies (Solitary tests)
 
-![](images/paste-21.png){fig-align="center" width="8cm" height="4.6cm"}
+![](imagesi/paste-21.png){fig-align="center" width="8cm" height="4.6cm"}
 :::
 
 ## Designing with Models
 
 ### Event Driven State Machine
 
-![](images/paste-55.png){fig-align="center" width="7cm"}
+![](imagesi/paste-55.png){fig-align="center" width="7cm"}
 
 With a model there are already some flaws which arise. For example: What happens if the door is closing and a valid card is wiped?
 
@@ -325,7 +325,7 @@ Programm Execution:
 
 PID-Controllers are state machines with "near infinite" states
 
-![](images/paste-56.png){fig-align="center" width="7cm"}
+![](imagesi/paste-56.png){fig-align="center" width="7cm"}
 
 ### Use modelling languages
 
@@ -359,7 +359,7 @@ end define;
 
 The model can be checked and we can verify if the requirement is met or not. Add to the model until it meets all requirements
 
-![](images/paste-57.png){fig-align="center" width="8cm"}
+![](imagesi/paste-57.png){fig-align="center" width="8cm"}
 
 # Embedded Software Design
 
@@ -379,26 +379,26 @@ Other possible requirements: Portability, Testability, Maintainability, Scalabil
 
 **Static Structures:** Conceptual abstraction a developer works with
 
-![](images/paste-4.png){fig-align="center" width="40%"}
+![](imagesi/paste-4.png){fig-align="center" width="40%"}
 
 **Dynamic Structures:** Relationships that exist in executing software
 
-![](images/paste-9.png){fig-align="center" width="40%"}
+![](imagesi/paste-9.png){fig-align="center" width="40%"}
 
 **Allocation Structures:** Assignment of software elements to external things
 
-![](images/paste-10.png){fig-align="center" width="40%"}
+![](imagesi/paste-10.png){fig-align="center" width="40%"}
 
 Patterns are always a combination of tactics, depending on what you're trying to achieve.
 
-![](images/paste-11.png)
+![](imagesi/paste-11.png)
 
 ::: callout-important
 ## Trade-Offs
 
 Quality attributes can conflict with each other. For example:
 
-![](images/paste-12.png){fig-align="center" width="60%"}
+![](imagesi/paste-12.png){fig-align="center" width="60%"}
 :::
 
 ::: callout-note
@@ -417,7 +417,7 @@ Each layer is is providing services to the above layer through well-defined inte
 
 Supports portability and modifiability by allowing internal changes to be made inside a layer without impacting other layers, and isolating changes in layer-to-layer interfaces from more distant layers.
 
-![](images/paste-5.png){fig-align="center" width="30%"}
+![](imagesi/paste-5.png){fig-align="center" width="30%"}
 
 ### Ports-and-Adapters (or *Hexagonal*)
 
@@ -425,13 +425,13 @@ Introduces a single core logic which communicates through abstraction interfaces
 
 Supports portability and testability by making the inputs to the ports independent of any specific source, and supports modifiability by creating a loose coupling between components.
 
-![](images/paste-6.png){fig-align="center" width="40%"}
+![](imagesi/paste-6.png){fig-align="center" width="40%"}
 
 ### Pipes-and-Filters
 
 Supports modifiability through loose coupling between components, and performance by introducing opportunities for parallel execution.
 
-![](images/paste-7.png){fig-align="center" width="40%"}
+![](imagesi/paste-7.png){fig-align="center" width="40%"}
 
 ### Microkernel
 
@@ -439,7 +439,7 @@ RTOS is a implementation of a Microkernel Architecture. The **Microkernel** incl
 
 Supports modifiability and portability.
 
-![](images/paste-8.png){fig-align="center" width="25%"}
+![](imagesi/paste-8.png){fig-align="center" width="25%"}
 
 #### Tasks for Priority and Modularity
 
@@ -454,7 +454,7 @@ Supports modifiability and portability.
     \item[-] Starvation (Task gets no CPU time)
 \end{itemize}
 
-![](images/paste-27.png){fig-align="center" width="6cm"}
+![](imagesi/paste-27.png){fig-align="center" width="6cm"}
 
 Use **just enough** tasks.
 
@@ -462,13 +462,13 @@ Use **just enough** tasks.
 
 To improve **Performance** we introduce **Concurrency** (Run tasks in parallel).
 
-![](images/paste-15.png){fig-align="center" width="25%"}
+![](imagesi/paste-15.png){fig-align="center" width="25%"}
 
 Preemptive approach: *Separation* of concerns, *Scalability*, State is *Managed.*
 
 Do the ***right thing*** at the ***right time*** $W$
 
-![](images/paste-17.png){fig-align="center" width="40%"}
+![](imagesi/paste-17.png){fig-align="center" width="40%"}
 
 ::: callout-note
 ## RTOS vs. Desktop OS
@@ -492,7 +492,7 @@ xTaskCreate(
 
 Taskswitches happen at *scheduling points* which occur when a **task is blocked**, **interrupt causes a task**, **priority change**, **higher priority task gets ready** or **system tick interrupt**.
 
-![](images/task_states.png){fig-align="center" width="40%"}
+![](imagesi/task_states.png){fig-align="center" width="40%"}
 
 #### Stack Size
 
@@ -590,7 +590,7 @@ Thus $R_1^{ub}=C_1$ ans each lower priority task has a response time that depend
 -   Tests depend on some kind of worst case execution time per task
 :::
 
-![](images/paste-20.png){fig-align="center" width="40%"}
+![](imagesi/paste-20.png){fig-align="center" width="40%"}
 
 #### Estimating WCET
 
@@ -612,7 +612,7 @@ To estimate **W**orst **C**ase **E**xecution **T**ime, there are two basic appro
 
 Tasks "logically happen" at the same time, either physically (multi-core) or through context switches (single-core). This should improve **Responsiveness**.
 
-![Tasks of different priority in a preemptive RTOS](images/paste-18.png){fig-align="center" width="50%"}
+![Tasks of different priority in a preemptive RTOS](imagesi/paste-18.png){fig-align="center" width="50%"}
 
 -   **Cooperative** multi-tasking: Tasks determine whether they give control back or not
 -   **Preemptive** multi-tasking: A scheduler takes control of what task gets how much time and also pulls tasks from executing
@@ -642,7 +642,7 @@ Tasks "logically happen" at the same time, either physically (multi-core) or thr
 
 #### Preemptive: Fore-/Background
 
-![](images/paste-19.png){fig-align="center" width="40%"}
+![](imagesi/paste-19.png){fig-align="center" width="40%"}
 
 \setlength{\itemsep}{0pt}
 \setlength{\parskip}{0pt}
@@ -698,7 +698,7 @@ void BlinkTask(void* pvParameters) {
 
 **Race Condition**: Outcome depends on timing $\rightarrow$ Occur when task modify **shared data**
 
-![](images/paste-22.png){fig-align="center" width="7cm" height="4.5cm"}
+![](imagesi/paste-22.png){fig-align="center" width="7cm" height="4.5cm"}
 
 **Containment**: Keep data within a task
 
@@ -815,7 +815,7 @@ xQueueReceive(msgQueue, &received, portMAX_DELAY);
 
 .
 
-![](images/paste-26.png)
+![](imagesi/paste-26.png)
 
 We can also design tasks to only block in one place and thus deadlocks are less likely
 
@@ -835,7 +835,7 @@ void Task(void* pvParameters) {
 
 Or use a structure which prevents deadlocks generally
 
-![](images/paste-28.png){fig-align="center" width="8cm"}
+![](imagesi/paste-28.png){fig-align="center" width="8cm"}
 
 Use a **Pipeline** to minimise circular dependencies and a **Client-Server** structure to restrict the directionality of connections.
 
@@ -843,7 +843,7 @@ Use a **Pipeline** to minimise circular dependencies and a **Client-Server** str
 
 .
 
-![](images/paste-25.png)
+![](imagesi/paste-25.png)
 
 ## Resources
 
@@ -861,7 +861,7 @@ FreeRTOS needs: 5-10KB ROM, RAM: 236bytes (scheduler), 76bytes + storage size (q
 Don't optimize before you know your constraints.
 :::
 
-![](images/paste-41.png)
+![](imagesi/paste-41.png)
 
 ### Choose
 
@@ -887,7 +887,7 @@ The distance between two functions equals their size (mostly).
 
 #### Use `objdump -d` to disassemble executable
 
-![](images/paste-44.png){fig-align="center" width="7cm" height="4.5cm"}
+![](imagesi/paste-44.png){fig-align="center" width="7cm" height="4.5cm"}
 
 #### Profiling
 
@@ -907,13 +907,13 @@ The distance between two functions equals their size (mostly).
 
 Task refers to same immutable data over and over again
 
-![](images/paste-42.png){fig-align="center" width="7cm"}
+![](imagesi/paste-42.png){fig-align="center" width="7cm"}
 
 #### Memory Pool pattern
 
 Prebuilt datapool for mutable data $\rightarrow$ Control over size
 
-![](images/paste-43.png){fig-align="center" width="7cm"}
+![](imagesi/paste-43.png){fig-align="center" width="7cm"}
 
 #### Compiler and Linker help
 
@@ -934,19 +934,19 @@ gcc –O3 <your file>.c
 
 .
 
-![](images/paste-45.png)
+![](imagesi/paste-45.png)
 
 #### Write better algorithms
 
 .
 
-![](images/paste-46.png)
+![](imagesi/paste-46.png)
 
 #### Cache Data
 
 .
 
-![](images/paste-47.png){fig-align="center" width="7cm"}
+![](imagesi/paste-47.png){fig-align="center" width="7cm"}
 
 #### More
 
@@ -966,7 +966,7 @@ Engineering in the face of uncertainty:
 
 ## Preemptive Debugging
 
-![](images/paste-39.png){fig-align="center" width="6cm" height="3.7cm"}
+![](imagesi/paste-39.png){fig-align="center" width="6cm" height="3.7cm"}
 
 ``` cpp
 float squareRoot(float x) {
@@ -994,7 +994,7 @@ void vAssertCalled( const char * pcFile, unsigned long ulLine ) {
 
 **D**on't **R**epeat **Y**ourself - **DRY**
 
-![](images/paste-40.png)
+![](imagesi/paste-40.png)
 
 ::: callout-warning
 ## Don't do this
@@ -1035,14 +1035,14 @@ int makeLarger(int y) {
 
 ## Security
 
-![](images/paste-48.png)
+![](imagesi/paste-48.png)
 
 ::: callout-note
 ## C is not a "safe" language
 
 Array overflow is not prevented, you could access the `state` variable in the following example:
 
-![](images/paste-49.png){fig-align="center" width="6cm" height="3.5cm"}
+![](imagesi/paste-49.png){fig-align="center" width="6cm" height="3.5cm"}
 :::
 
 ### Security failures are often design failures
@@ -1061,7 +1061,7 @@ Use the checklist **STRIDE** and design a architecture to avoid running into pro
 
 -   **E**levation of Privilige
 
-![](images/paste-53.png){fig-align="center" width="8cm"}
+![](imagesi/paste-53.png){fig-align="center" width="8cm"}
 
 ### Evaluate Threads
 
@@ -1069,13 +1069,13 @@ This is time consuming $\rightarrow$ **in Projektmanagement beachten**
 
 <https://emb3d.mitre.org/>
 
-![](images/paste-54.png){fig-align="center" width="8cm"}
+![](imagesi/paste-54.png){fig-align="center" width="8cm"}
 
 ### Follow "secure" coding standards
 
 <https://securecoding.cert.org/>
 
-![](images/paste-50.png){fig-align="center" width="8cm" height="3.7cm"}
+![](imagesi/paste-50.png){fig-align="center" width="8cm" height="3.7cm"}
 
 ### Use static analysis to find problems
 
@@ -1141,7 +1141,7 @@ void test_single_element_in_single_element_out(void) {
 
 ### Unit Test with Collaborators
 
-![](images/paste-13.png)
+![](imagesi/paste-13.png)
 
 ### Test Doubles
 
@@ -1214,7 +1214,7 @@ Unit tests only verify small elements of a system in isolation.
 
 **Hardware in the Loop**: Runs on target, test scripts on a test enclosure to manipulate hardware, expensive setup. Tools: NI DAQ, Labview
 
-![](images/paste-30.png){fig-align="center" width="8cm"}
+![](imagesi/paste-30.png){fig-align="center" width="8cm"}
 
 ### Manual Testing
 
@@ -1224,7 +1224,7 @@ Manual testing can involve **user interaction**, **Debugger**, **direct Signal P
 
 ## Test Driven Design TDD
 
-![](images/paste-29.png)
+![](imagesi/paste-29.png)
 
 Applying TDD through writing *unit tests* during development, benefits:
 
@@ -1252,7 +1252,7 @@ Use **ZOM** to come up with tests:
 
 The *prediction* of Gordon Moore states "doubling the number of components on a IC each year". This is also largely true.
 
-![](images/paste-58.png)
+![](imagesi/paste-58.png)
 
 The exponential growth turned out to be true, for how much longer?
 
@@ -1276,7 +1276,7 @@ The early history of digital computers and microprocessors highlights the progre
 
 The **IBM PC** is the first personal computer, the engineers wanted to use the *Motorola 68000* chip, but management choose the *Intel 8088*, that's the dawn of Intels dominance and thus the dominance of the *x86-Architechture*
 
-![](images/paste-59.png){fig-align="center" width="7cm"}
+![](imagesi/paste-59.png){fig-align="center" width="7cm"}
 :::
 
 # Fundamentals of Microprocessors and Architectures
@@ -1293,25 +1293,25 @@ Processors with a SISD-Architecture are **Uniprocessors (von Neumann)**, they co
 
 Memory stores *data and instructions*, thus the **von Neumann Bottleneck** appears. There is also the risk of **accessing data as instructions** and vice verca. This can stall the CPU and is mitigated through memory management units (MMU) in modern processors.
 
-![](images/paste-60.png){fig-align="center" width="8cm"}
+![](imagesi/paste-60.png){fig-align="center" width="8cm"}
 
 #### Harvard
 
 The memory is seperated as data / instruction. This adds security, but harder for the programmer (What memory space does a pointer point to?).
 
-![](images/paste-61.png){fig-align="center" width="8cm"}
+![](imagesi/paste-61.png){fig-align="center" width="8cm"}
 
 #### Modified Harvard
 
 There are separate instruction and databuses, but share the same memory space. Application: **DSP**
 
-![](images/paste-65.png){fig-align="center" width="8cm"}
+![](imagesi/paste-65.png){fig-align="center" width="8cm"}
 
 #### Hybrid
 
 There is a single memory space and data/insn-bus, but to gain speed, caches are used to mimic a harvard architecture.
 
-![](images/paste-62.png){fig-align="center" width="8cm" height="4.3cm"}
+![](imagesi/paste-62.png){fig-align="center" width="8cm" height="4.3cm"}
 
 ### **SIMD** - Single Instruction / Multiple Data
 
@@ -1334,13 +1334,13 @@ MIMD-Processors are multi-core processors, with several cores, often accessing t
 
 Few identical processors share a common memory. Caches are used to mitigate the *von Neumann Bottleneck*.
 
-![](images/paste-63.png){fig-align="center" width="9cm" height="3.1cm"}
+![](imagesi/paste-63.png){fig-align="center" width="9cm" height="3.1cm"}
 
 #### **MPP** - Massively Parallel Processor
 
 Many processors using distributed memory and communication through a network *(many topologies, e.g., star, ring, ...).*
 
-![](images/paste-64.png){fig-align="center" width="9cm"}
+![](imagesi/paste-64.png){fig-align="center" width="9cm"}
 
 ### Accessing Program Memory on AVR
 
@@ -1391,19 +1391,19 @@ The *instruction set architecture* (ISA) is the assembly language of a specific 
 
 Describes how a cpu instruction behaves
 
-![](images/paste-66.png){fig-align="center" width="9cm"}
+![](imagesi/paste-66.png){fig-align="center" width="9cm"}
 
 ### Stack ISA
 
 Stack ISAs operands are pushed onto a stack before operators are applied. Source operands are popped off the stack, and destination operands are pushed back onto it, resulting in very short instructions. However, the stack can become a bottleneck, as it is not randomly addressable.
 
-![](images/paste-67.png){fig-align="center" width="10cm"}
+![](imagesi/paste-67.png){fig-align="center" width="10cm"}
 
 ### Accumulator ISA
 
 Accumulator ISAs use a single accumulator register for storing the results of all ALU operations, leading to short instruction lengths where only one operand is specified. Memory traffic is high since the accumulator is the primary storage, but this design was popular in early microprocessors when memory and CPU speeds were comparable.
 
-![](images/paste-68.png){fig-align="center" width="10cm"}
+![](imagesi/paste-68.png){fig-align="center" width="10cm"}
 
 ### General Purpose Register
 
@@ -1412,18 +1412,18 @@ Accumulator ISAs use a single accumulator register for storing the results of al
 
 Because the speed of **DRAM** didn't keep up with the speed of **CPUs**, memory is a bottleneck of performance.
 
-![](images/Memory-Access-vs-CPU-Speed.png){fig-align="center" width="7cm"}
+![](imagesi/Memory-Access-vs-CPU-Speed.png){fig-align="center" width="7cm"}
 :::
 
 Most high-performance computers use general-purpose register ISAs because registers are faster than memory. These ISAs have many registers, explicit operands, and longer instructions. Load/store ISAs, where ALU instructions only operate on registers, are popular despite requiring more instructions because they are simpler and more suited to pipelining. ISAs can be classified into memory-memory, register-memory, and register-register, based on how many memory operands an ALU instruction can have.
 
-![](images/paste-69.png){fig-align="center" width="9cm" height="3.4cm"}
+![](imagesi/paste-69.png){fig-align="center" width="9cm" height="3.4cm"}
 
-![](images/paste-70.png){fig-align="center" width="9cm"}
+![](imagesi/paste-70.png){fig-align="center" width="9cm"}
 
 ## Instruction encoding
 
-![](images/paste-71.png){fig-align="center" width="6cm"}
+![](imagesi/paste-71.png){fig-align="center" width="6cm"}
 
 ::: callout-note
 ## ALU flags
@@ -1438,25 +1438,25 @@ Most high-performance computers use general-purpose register ISAs because regist
 
 **Binary ALU instructions**: Two source operands
 
-![](images/paste-72.png){width="5cm" height="1.1cm"}
+![](imagesi/paste-72.png){width="5cm" height="1.1cm"}
 
 **Unary ALU instructions**: One source operand
 
-![](images/paste-73.png){width="5cm" height="1.1cm"}
+![](imagesi/paste-73.png){width="5cm" height="1.1cm"}
 
 **No Operand instruction**: No operand, doens't use ALU
 
-![](images/paste-74.png){width="4cm" height="0.7cm"}
+![](imagesi/paste-74.png){width="4cm" height="0.7cm"}
 
 ### Binary ALU Instruction Encoding
 
-![](images/paste-75.png){fig-align="center" width="8cm"}
+![](imagesi/paste-75.png){fig-align="center" width="8cm"}
 
 #### Operands
 
 Operands can be a **Register**, a **Constant**, or at a **Memory Location**.
 
-![](images/paste-77.png){width="7cm"}
+![](imagesi/paste-77.png){width="7cm"}
 
 ::: callout-warning
 ## Length of Instructions
@@ -1467,16 +1467,16 @@ If you want to load large constants (32-bit words), you won't have enough space 
 
 This introduces the issue of different instruction having different lengths, and thus needing more (specific) hardware.
 
-![](images/paste-78.png){fig-align="center" width="8cm" height="1.2cm"}
+![](imagesi/paste-78.png){fig-align="center" width="8cm" height="1.2cm"}
 
 **RISC**: Fixed length instructions
 
 This is great for $\textcolor{red}{\text{Pipelining}}$, and thus makes a processor faster. To fix the size issue we can use:
 
 1.  Synthesize large constants using multiple insn\
-    ![](images/paste-80.png){width="7cm" height="1.2cm"}
+    ![](imagesi/paste-80.png){width="7cm" height="1.2cm"}
 2.  Load a constant from literal pool\
-    ![](images/paste-82.png){width="8cm"}
+    ![](imagesi/paste-82.png){width="8cm"}
 :::
 
 ## CISC to RISC
@@ -1499,7 +1499,7 @@ This is great for $\textcolor{red}{\text{Pipelining}}$, and thus makes a process
 
 To measure the compute performance, execute a benchmark and take the time:
 
-![](images/paste-83.png){fig-align="center" width="9cm"}
+![](imagesi/paste-83.png){fig-align="center" width="9cm"}
 
 To minimise program execution time, reduce the instruction count, reduce the CPI (Clocks per Instruction), or increase the Clock rate.
 
@@ -1531,23 +1531,155 @@ $$
 \text{Speedup Overall}=\frac{\text{Exec Time Old}}{\text{Exec Time New}}=\frac{1}{(1-\text{Utilisation})+\frac{\text{Utilisation}}{\text{Speedup}}}
 $$
 
-![](images/paste-84.png){fig-align="center" width="9cm" height="1.5cm"}
+![](imagesi/paste-84.png){fig-align="center" width="9cm" height="1.5cm"}
 
 With this we have a absolute number of the overall speedup. RISC was developed with this in mind, which lead to a overall improvement, even though the instruction count went up
 
-![](images/paste-85.png){fig-align="center" width="8cm" height="1.8cm"}
+![](imagesi/paste-85.png){fig-align="center" width="8cm" height="1.8cm"}
 
-![General Purpose Register CPU](images/paste-86.png){fig-align="center" width="8cm"}
+![General Purpose Register CPU](imagesi/paste-86.png){fig-align="center" width="8cm"}
 
 # Pipeline and Parallelism
 
 ## Computer pipelining
 
-## Pipeline hazards
+**For bigger throughput, separate stages should take the same amount of time.**
 
-## Pipeline hazards II
+A CPU needs the basic 5 stages (modern CPUs have way more):
+
+1.  *Fetch*: fetches insn from memory
+2.  *Decode*: Determine opcode & operands
+3.  *Read*: Reads source operands
+4.  *Execute*: ALU performs operation
+5.  *Write*: ALU result is written back to register
+
+A 5 stage pipeline provides a CPI=1, but a latency of 5 clock cycles.
+
+![](imagesi/paste-87.png){fig-align="center" width="9cm"}
+
+## Pipeline Hazards
+
+There are **Resource**-, **Data**-, and **Control**-Hazards.
+
+### Resource Hazards
+
+Occur when two stages need the same resource (e.g. memory, ALU). To mitigate this issue, the pipeline is **stalled**, which introduces a *pipeline bubble* and raises the CPI.
+
+![](imagesi/paste-89.png){fig-align="center" width="9cm"}
+
+A example for this hazard is the *division operation*, as it requires the $N$ ALU-operations for $N$-bit operands.
+
+### Data Hazards
+
+#### RAW, **R**ead **A**fter **W**rite
+
+$I1$ & $I2$ have a **true dependency** on `R0`.
+
+![](imagesi/paste-88.png){fig-align="center" width="8cm"}
+
+| *Problem*: `R0` is written in stage 5 for $I2$, but read in stage 3 for $I2$
+| *Solution*: **Stalling** pipeline, until `R0` is written by $I1$
+
+#### WAR, **W**rite **A**fter **R**ead
+
+$I1$ & $I2$ have a **anti-dependency** on `R0`.
+
+![](imagesi/paste-90.png){fig-align="center" width="8cm" height="0.7cm"}
+
+*Potential Problem*: If $I2$ writes `R0` before $I1$ reads\
+-\> this doesn't happen in the usual case\
+-\> can occur with out of order execution (**superscalar**)
+
+#### WAW, **W**rite **A**fter **W**rite
+
+$I1$ & $I2$ have a **output dependency** on `R0`.
+
+![](imagesi/paste-91.png){fig-align="center" width="8cm" height="0.9cm"}
+
+This is very **uncommon**, only with badly optimised out of order execution.
+
+### Resource and Data hazard avoidance
+
+**Static Hazard Detection** (compiler)
+
+1.  Place useful instructions between $I1$ and $I2$ , that don't alter the program
+2.  Otherwise stall the pipeline with `NOP`
+
+**Dynamic Hazard Detection** (CPU)
+
+1.  Place useful instructions between $I1$ and $I2$ , that don't alter the program (out-of-order processors)
+2.  Otherwise stall the pipeline using a *pipeline interlock*
+
+### Control Hazards
+
+Occur due to *changes in the program flow* ($\textcolor{orange}{\text{branches/jumps/interrupts/function calls}}$), which change the $PC$ often unpredictably.
+
+![](imagesi/paste-92.png){fig-align="center" width="8cm"}
+
+The hazard occurs, because the CPU doesn't know what to fetch after the branching `BNE`.
+
+#### Control Hazard Avoidance
+
+To avoid a control hazard, the cpu can:
+
+1.  **Stall** the pipeline until it's known what path is taken (CPI goes up!)\
+    ![](imagesi/paste-93.png){width="7cm"}
+2.  **Assume** the pipeline increments normally -\> process after branch -\> **flush** pipeline if wrong\
+    ![](imagesi/paste-94.png){width="7cm"}
+3.  **Predict** which way the branch goes (**flush** if wrong) -\> **Speculative Execution**
+    i.  *prediction on heuristics*: backwards branch is more likely to be taken (loops)
+    ii. *record previous branch prediction*: CPUs have branch prediction HW
+
+#### Branch Prediction
+
+CPUs have a bit that indicate which way the branch previously went. They're assuming it goes the same way next time. This is a good assumption for e.g. `for(i=0;i<100;i++){ }`. Modern CPUs use multiple branch prediction bits and the PC is used as a hash key.
+
+#### Conditional Move Instructions
+
+To avoid frequent flushing of pipelines, a conditional move instruction was introduced, which moves depending on the result of the previous insn.
+
+![](imagesi/paste-95.png){fig-align="center" width="7cm"}
+
+#### Interrupts
+
+-   Tricky since PC changes unpredictably
+-   When interrupt occurs:
+    1.  pipeline needs to be flushed
+    2.  pipeline restarts with ISR code
+-   When interrupt finishes
+    3.  pipeline restarts at the point the program was interrupted
+
+#### Program to reduce control hazards
+
+With modern CPUs and compilers (if no aliasing \[nicht abtasttheorem\] is detected), the difference in performance will be minimal. A technique is the **loop unswitching**. Loop optimisation, should start from the inner to the outer loops.
+
+![](imagesi/paste-96.png){fig-align="center" width="8cm"}
 
 ## Instruction level parallelism
+
+The goal is to reduce
+
+$$
+\text{CPI}<1
+$$
+
+This requires multiple instructions executed at same time. For this multiple **Functional Units** (execution units) are used
+
+![](imagesi/paste-97.png){fig-align="center" width="8cm"}
+
+### VLIW Processor
+
+**V**ery **L**ong **I**nstruction **W**ord processor explicitly state what each execution unit does. Thus the instructions are much longer
+
+![](imagesi/paste-99.png){fig-align="center" width="8cm" height="0.6cm"}
+
+This relies on the compiler and it can also happen that not every functional unit is utilised. For this `NOP`s have to be inserted, the CPI goes up and memory is wasted.
+
+![](imagesi/paste-100.png){fig-align="center" width="8cm" height="0.6cm"}
+
+### Superscalar Processor
+
+This CPU fetches and decodes a standard stream of instructions and dispatches them to the appropriate functional unit.
 
 # Memory Systems and Optimization
 
