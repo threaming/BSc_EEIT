@@ -1679,7 +1679,60 @@ This relies on the compiler and it can also happen that not every functional uni
 
 ### Superscalar Processor
 
-This CPU fetches and decodes a standard stream of instructions and dispatches them to the appropriate functional unit.
+This CPU fetches and decodes a standard stream of instructions and dispatches them to the appropriate functional unit. To make efficient use of this, a *instruction cache* is used. From the $n$ different instructions can be fetched, decoded and dispatched per cycle.
+
+$n$**-way superscalar** $\qquad\text{CPI}=\frac1{n}$
+
+![](images/paste-1.png){fig-align="center" width="6cm"}
+
+#### Data Dependencies
+
+When running several instructions in parallel introduces the issue of data hazards
+
+![](images/paste-3.png){fig-align="center" width="8cm" height="1.5cm"}
+
+-   `R3`: cannot execute $I2$ until $I1$ is finished
+-   `R4`: cannot execute $I3$ before $I2$ is finished
+
+#### Register Renaming
+
+CPUs have additional registers to use in place, which the programmer has no access to. Any followup instructions using the `R4` result become dependent on `R24`.
+
+![](images/paste-4.png){fig-align="center" width="6cm" height="1.1cm"}
+
+#### Tomasulo's Algorithm
+
+Tomasulo's algorithm schedules instructions on superscalar CPUs.\
+It handles RAW, WAR, WAW hazards.\
+It introduces and handles *out-of-order-execution\
+*It uses **reservation stations** (RS) to hold instructions before they are executed
+
+![](images/paste-5.png){fig-align="center" width="9cm"}
+
+1.  While RS is not available: *Stall Pipeline*
+2.  Copy instructions and available operands into RS
+3.  Mark destination register as unavailable
+4.  If RS has all operands and a suitable FU available: issue instruction to FU and free RS
+5.  Copy the result to destination register and any waiting RS
+6.  Mark destination register as available
+
+The **availability**-register states if the operand is available for further processing, or if a operation is performed for it right now. (avoid RAW hazard)
+
+Instructions sit in a RS until a FU is available and all register source operands are known.
+
+WAW & WAR hazards are avoided by copying register values into RS
+
+Reservation stations have a high cost in comparators, needed to compare all results returned from processing units with all stored addresses.
+
+### Multithreading CPU
+
+To maximise FU usage to get the lowest CPI we allow multiple threads to run in parallel, sharing the CPU. For this we need:
+
+-   Two program counters, for each thread one
+-   Two sets of registers, for each thread one
+-   Threads share functional units and reservation stations
+
+This results in better utilisation of the functional units (e.g.: one thread does integer (gcc), the other floating point (simulations) / one thread executes, one thread is waiting for memory)
 
 # Memory Systems and Optimization
 
