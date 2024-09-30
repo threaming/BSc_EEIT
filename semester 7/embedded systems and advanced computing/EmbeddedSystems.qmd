@@ -1736,9 +1736,89 @@ This results in better utilisation of the functional units (e.g.: one thread doe
 
 # Memory Systems and Optimization
 
+Because CPUs increased in speed at a faster rate than DRAM, **Memory Caches** are introduced to mitigate a memory bottleneck.
+
 ## Cache memory systems
 
+![](images/paste-6.png){fig-align="center" width="9cm" height="2.7cm"}
+
+![](images/paste-7.png){fig-align="center" width="8cm"}
+
+-   **L1**-cache: split in insn and data, to mitigate von neumann-bottleneck
+-   **L2**&**L3**-cache: unified data caches for one or several cores
+
+### Average Memory Access Time
+
+The goal of a good memory hierarchy is to keep the total memory cost down whilst still trying to keep the average memory access time fast. This is measured by the *Average Memory Access Time*:
+
+$$
+\begin{aligned}
+\text{Average }&\text{Memory Access Time} \\ & = \text{Hit Time} * \text{Hit Ratio} + \text{Miss Time} * (1 - \text{Hit Ratio}) \\
+& = \text{Hit Time} + \text{Miss Penalty} * (1 - \text{Hit Ratio})
+\end{aligned}
+$$
+
+-   Hit Time: Memory access time for data in cache
+-   Hit Ratio ($\textcolor{orange}{\text{Typically }85-95\%}$) : Proportion of memory access that is cache
+
+$$
+\text{Hit Ratio (aka Hit Rate)}=\frac{\text{Cache Hits}}{\text{Total Memory Requests}}
+$$
+
+### Cache Locality
+
+-   **Temporal** locality: Recently read locations are often re-read *(loops)*
+-   **Spatial** locality: Likely to read memory *close* to previously read location *(iterate over array)*
+
+::: callout-caution
+## Iterating over multi dimensional arrays
+
+When looping over multidimensional arrays, the innermost loop should always loop over data next to each other.
+
+``` c
+/* Good data cache usage */
+double matsum1(const double *mat, unsigned int rows, unsigned int cols) {
+    unsigned int i, j;
+    double total = 0.0;
+    for (j = 0; j < cols; j++)
+        for (i = 0; i < rows; i++)
+            total += mat[j * rows + i];
+    return total;
+}
+
+/* Poor data cache usage */
+double matsum2(const double *mat, unsigned int rows, unsigned int cols) {
+    unsigned int i, j;
+    double total = 0.0;
+    for (i = 0; i < rows; i++)
+        for (j = 0; j < cols; j++)
+            total += mat[j * rows + i];
+    return total;
+}
+```
+:::
+
 ## Cache architectures
+
+### Look Aside
+
+The **Look Aside** cache connects the CPU directly to all memory, and thus requests it from all memory. If the data is in cache, the *acces cycle is terminated*.
+
+![](images/paste-8.png){fig-align="center" width="6cm" height="3.1cm"}
+
+### Look Through
+
+In a **Look Through** configuration, the CPU is only connected to the L1 cache and the L1 cache acts as the master for the next higher memory access. There is *less traffic* on the main system bus, but the hardware is more complicated and it's slower.
+
+![](images/paste-9.png){fig-align="center" width="6cm" height="1.4cm"}
+
+### Multicore Cache Architecture
+
+The stages of **L1/L2/L3**-caches are all *look through*.
+
+**Cache Coherence**: All caches must be kept consistent (The same data spread over several caches/memory locations must stay the same).
+
+![](images/paste-10.png){fig-align="center" width="10cm"}
 
 ## Cache organisation
 
