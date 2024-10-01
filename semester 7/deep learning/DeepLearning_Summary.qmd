@@ -602,7 +602,77 @@ There are further invariances, which can hurt a CNNs performance. CNNs don't do 
 
 ![](imagesi/paste-38.png){fig-align="center" width="7cm"}
 
-## Sequential and Recurrent Networks
+## Recurrent Networks
+
+::: callout-warning
+## Problems of N-gram Model
+
+The issue with N-gram models is, that they're **not flexible**, each additional word means more weights to train. That leads to a fixed input size.
+
+![](images/paste-7.png){fig-align="center" width="8cm" height="2.3cm"}
+:::
+
+To takle this we introduce **Recurrent Networks (RNN)**, based on Bigram models in a recurrent (not recursive) connection.
+
+![](images/paste-8.png){fig-align="center" width="8cm" height="3.1cm"}
+
+A **RNN** cell consists of two Feed Forward (FF) layers, one to compute the next state and one to compute the output.
+
+![](images/paste-9.png){fig-align="center" width="6cm"}
+
+$$
+s_t=\rho((e_t, s_{t-1})W_r+b_r)
+$$
+
+$$
+o_t=\sigma(s_tW_o+b_o)
+$$
+
+*Note*: $s_0$ is typically a zero vector.
+
+### Training RNNs
+
+Because the gradients for $o_t$ depend on $x_t$ and all previous inputs, we **backpropagate through time**. Because we reuse the same block over and over again, the gradient accumulates over time. The size of these iterations can be used as a hyperparameter $\textcolor{orange}{\text{window}_{sz}}$ .
+
+![](images/paste-10.png){fig-align="center" width="8cm"}
+
+### Long Short Term Memory (LSTM)
+
+::: callout-caution
+## Short Term Memory of RNNs
+
+When there is a long sequence of words, we must somehow make shure, that information from the beginning isn't lost through iterating over several blocks.
+
+![](images/paste-11.png){fig-align="center" width="7cm" height="2.5cm"}
+
+The information will slowly fade away over the recurrent convolutions.
+:::
+
+To handle this, we have the **LSTM**-Cell, consisting of three modules
+
+![](images/paste-12.png){fig-align="center" width="10cm" height="4.1cm"}
+
+#### Forget Module
+
+Filters what gets allowed into the LSTM-cell from the last state *(e.g. gender pronouns are coming in* $c_{t-1}$*, a new subject is seen* $x_t$*,* $\rightarrow$ *forget old pronouns).*
+
+Forgetting is handled by a point wise multiplication with a mask, it zeros out part of the cell state.
+
+![](images/paste-13.png){fig-align="center" width="6cm"}
+
+#### Remember Module
+
+We can save information into the previously emptied slots in the cell state. First a point wise multiplication is used to decide what to remember, then this selective memory to the cell state
+
+![](images/paste-14.png){fig-align="center" width="9cm" height="2.2cm"}
+
+**Solution**: Cell state never goes through a fully connected layer $\rightarrow$ No mix-up of information.
+
+#### Output Module
+
+Provides path for short-term memory $h_t$ to temporarily acquire from the long-term cell state.
+
+## Sequential Networks
 
 ## Latent Space
 
@@ -875,6 +945,116 @@ The attention can also be visualised
 
 ![](imagesi/paste-83.png){fig-align="center" width="8cm"}
 
+## Generative- \| Diffusion-Models
+
+In comparison to discriminative models, the generative model doesn't have a clear decision boundary. Therefore a image which shows non-sense, isn't classified into a random class, but shown as very low likely hood on every class.
+
+![](images/Xrmqg.png){fig-align="center" width="8cm"}
+
+### Generative Modeling
+
+Generative models are trained to generate a data distribution $\hat{p}(x)$ from a noise input (uniform, gaussian, ...). The loss is calculated in reference to the actual data distribution of the ground truth dataset.
+
+![](images/paste-16.png){fig-align="center" width="8cm" height="2.8cm"}
+
+**Use Cases**:
+
+-   Text-to-Image Generation, $p(image|text_caption)$
+-   Super Resolution, $p(image|low_res)$
+-   Class-Conditional Generation, $p(image|class_label)$
+
+### Generative Adversarial Network (GAN)
+
+A **GAN** consists of a **Generator** and a **Discriminator** which try to outwork each other. They are trained in the same loop.
+
+#### Training the Discriminator
+
+The Discriminator want's to distinguish the real from the fake samples as good as possible and is trained for that.
+
+![](images/paste-17.png){fig-align="center" width="9cm" height="2.1cm"}
+
+#### Training the Generator
+
+The Generator want's to generate images which are classified as real as possible. The Generator updates it's own weights to generate a more real looking image.
+
+![](images/paste-18.png){fig-align="center" width="9cm" height="2.5cm"}
+
+#### GAN training dynamics
+
+GAN training losses don't typically converge to zero because GANs involve a balance between the two competing networks generator and discriminator.
+
+**Attention**: There can be issues with instability in the training of GANs.
+
+![](images/paste-19.png){fig-align="center" width="8cm"}
+
+::: callout-warning
+## Mode Collapse
+
+A issue arises if the generator figures out a output that looks real, and continues to only show this as it's only output.
+
+![](images/paste-20.png){fig-align="center" width="8cm"}
+:::
+
+### Evaluate GANs
+
+Evaluating GANs can be hard, as we train the discriminator and the generator. A simple way to do it is to **Eyeball**, a human looking at the data and saying if it looks better or not. This isn't very scientific.
+
+### Variational Autoencoder (VAE)
+
+A **VAE** uses the a autoencoder as a basis, but the latent space gets sampled randomly before it's feed back into the decoder.
+
+-   The random sampling should be designed to produce random points in the latent space that are close to the output of the encoder
+-   Nearby points in the latent space should decode similar images
+
+![](images/paste-21.png){fig-align="center" width="8cm"}
+
+Because "random sampling" is non-differentiable, we introduce a point wise multiplication of the encoder output $\sigma$ and a uniform distribution $\varepsilon = N(0,1)$ (**seed**). This will be added to the output $\mu$ of the encoder, giving us the input for the decoder
+
+$$
+z=\mu+\varepsilon \cdot \sigma
+$$
+
+![](images/paste-22.png){fig-align="center" width="8cm"}
+
+It can also be shown as
+
+![](images/paste-25.png){fig-align="center" width="7cm" height="2.2cm"}
+
+#### Latent Space Interpolation
+
+The training with the random sampling forces the latent space towards are Normal distribution.
+
+![](images/paste-23.png){fig-align="center" width="8cm" height="3.4cm"}
+
+Because of that, nearly every point in the latent space has a valid output. This gives us the option of *latent space interpolation*
+
+![](images/paste-24.png){fig-align="center" width="8cm"}
+
+### Hierarchical VAEs
+
+Stacking several VAEs into each other, leads to a deeper encoding of the latent space. This in the end leads to the the network being able to generate images out of noise.
+
+![](images/paste-26.png){fig-align="center" width="9cm"}
+
+### Diffusion Models
+
+A diffusion model is a hierarchical VAE with the following assumptions:
+
+-   All dimensions are the same.
+-   All encoder transitions are known Gaussians centred around their previous input.
+
+![](images/paste-28.png){fig-align="center" width="7cm"}
+
+A diffusion model predicts a clean image from a noisy version of the image and is trained like this
+
+![](images/paste-27.png){fig-align="center" width="8cm"}
+
+#### Conditional Diffusion Models
+
+To incorporate conditional information, to control the data generation we give the *Decoder NN* **context**
+
+![](images/paste-29.png){fig-align="center" width="8cm"}
+
 ## Natural Language {#sec-naturallanguage}
 
 Natural language is a **sequence of words**. Each word is a discrete unit, predicting the next part of the sequence means predicting words. Same applies for individual letters in a letter-sequence.
@@ -984,6 +1164,20 @@ The embedding matrix is then used as a lookup table for all the words. (Example,
 
 ![](imagesi/paste-85.png){fig-align="center" width="8cm"}
 
+#### Semantic Directions
+
+In a trained embedded space, words get ordered by (random) meanings, words with the same meaning are clustered. Therefore related word pairs have same distances
+
+![](images/paste-5.png){fig-align="center" width="8cm" height="3.1cm"}
+
+The **similarity** can be quantified through the cosine similarity
+
+$$
+\cos(\Theta)=\frac{A\cdot B}{||A||\space||B||}=\frac{\sum_{i=1}^nA_i B_i}{\sqrt{\sum_{i=1}^nA_i^2}\sqrt{\sum_{i=1}^nB_i^2}}
+$$
+
+![](images/paste-6.png){fig-align="center" width="5cm"}
+
 ### Transformer
 
 Transformers are based on Encoders and Decoders. The big difference to Autoencoders is, that they, are outputting a different language.
@@ -1017,6 +1211,37 @@ Following the encoder blocks, there are **Decoder Blocks**, these have are very 
 The **Encoder-Decoder Attention** takes the output of the encoder instead of the input words
 
 ![](imagesi/paste-97.png){fig-align="center" width="10cm" height="3.9cm"}
+
+### Sequence-to-Sequence
+
+Because rule based translation (word for word) often don't work, algorithms are trained on **parallel corpora**, documents which are available in several languages (e.g. legal documents of multilingual countries).
+
+To go from one language to another, a sentence meaning must be encoded in on language and decoded in another language. This can be done through **Attention** or a **LSTM-Autoencoder** architecture.
+
+![](images/paste-15.png)
+
+**Applications**: Seq-to-Seq can also be used for Summaries, Chatbots, part of Speech Tagging, Speech Recognition, Speech Generation.
+
+### Machine Translation Evaluation
+
+There are two measures to evaluate how good a translation is:
+
+-   **BLEU**: **B**i-**L**ingual **E**valuation **U**nderstudy, looking for a fraction of words generated that are in a given ground-truth sentence. Favors shorter sentences.
+-   **ROUGE**: **R**ecall-**O**riented **U**nderstudy for **G**isting **E**valuation, looking for a fraction of words in the correct translated sentence, that are in the generated sentence. Favors longer sentences.
+
+This can be combined to the $F_1$-Score:
+
+$$
+F_1=\frac{2}{\frac1{BLEU}+\frac1{ROUGE}}=\frac{2(BLEU\cdot ROUGE)}{BLEU+ROUGE}
+$$
+
+::: callout-warning
+## $F_1$-Score is Dumb
+
+Because the $F_1$-Score can't understand meaning of sentences. Therefore differently translated sentences can be wrongfully punished.
+
+To tackle this Human Evaluation is used.
+:::
 
 ## Audio and Video Synthesis
 
