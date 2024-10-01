@@ -1765,6 +1765,14 @@ $$
 \text{Hit Ratio (aka Hit Rate)}=\frac{\text{Cache Hits}}{\text{Total Memory Requests}}
 $$
 
+::: callout-note
+## Cache Parameters
+
+From the cache parameters it's obvious, that frequent reading from the system memory should be avoided if possible
+
+![](images/paste-11.png){fig-align="center" width="8cm"}
+:::
+
 ### Cache Locality
 
 -   **Temporal** locality: Recently read locations are often re-read *(loops)*
@@ -1820,7 +1828,57 @@ The stages of **L1/L2/L3**-caches are all *look through*.
 
 ![](images/paste-10.png){fig-align="center" width="10cm"}
 
-## Cache organisation
+::: callout-tip
+## Monitoring Tools
+
+To monitor cache acces behaviour tools like
+
+-   **Valgrind** - Finding memory leaks or read from uninitialised memory
+-   **Cachegrind** - Analysis of cache & branch prediction
+
+**Cachegrind**: Uses just in time translation and runs the modified program (slower). It records information to a file which can be analysed afterwards.
+
+``` c
+valgrind --tool=cachegrind -v ls
+```
+
+![](images/paste-12.png)
+:::
+
+### Cache Coherence
+
+-   Chaches store a local copy of main memory, but must be consistent (over all caches)
+-   If both caches have a copy of the same memory location and
+    1.  cache A is modified
+    2.  cache B can be $\textcolor{orange}{\text{updated}}$ or $\textcolor{orange}{\text{invalidated}}$
+        -   if invalidated, the cache is updated when the CPU wants to read the previously cached location
+
+#### Bus Snooping
+
+Each cache monitors all the other caches bus traffic to see if another cache changed.
+
+![](images/paste-13.png){fig-align="center" width="8cm" height="2.9cm"}
+
+**Problem**: This doesn't scale well for many processors and caches.
+
+#### Directory Based Coherence
+
+Directory holds an entry for each memory line to say which caches have a copy. The dirty bit then indicates if the memory block is in a modified state and has to be updated before working with it.
+
+![](images/paste-14.png){fig-align="center" width="8cm"}
+
+## Cache Organisation
+
+-   Cache needs to be **fast**
+-   Need a fast way to determine if a memory location is in cache
+
+If use **LUT**, assume 32-bit addr, 1 bit per LUT-entry: *not feasable*
+
+$$
+2^{32}\cdot 1bit = 4Gbits
+$$
+
+Use **Hashing Techniques** with a cache directory (SRAM).
 
 ## Virtual memory systems
 
