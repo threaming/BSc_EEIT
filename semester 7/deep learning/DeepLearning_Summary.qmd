@@ -852,6 +852,19 @@ To mitigate the *vanishing gradient problem*, we use **Redidual Blocks**
 
 The output of each layer is the identity + some deviation (residual) from it. It allows the gradient to flow through two pathways. **Significantly stabilises training of very deep networks.**
 
+### Dense Connectivity
+
+To reduce redundancy, **dense connectivity** can be used. for this a network with fewer parameters has increased amounts of connections
+
+![](images/paste-32.png){fig-align="center" width="8cm" height="4cm"}
+
+Example:
+
+-   ResNet: 18 layers, 11.7M parameters, 30% validation error
+-   DenseNet: 121 layers, 8M parameters, 25% validation error
+
+[Skipping connections and connecting densely is improving the loss surface (better trainability)](https://www.cs.umd.edu/~tomg/projects/landscapes/)
+
 ### Batch Normalisation
 
 The idea is to stabilise inputs, which should lead to **faster training**. This is done through normalisation of the layers' inputs by re-centring and re-scaling.
@@ -861,6 +874,31 @@ A **normalisation layer** $BN$ is added after a fully connected or a convolution
 ![](imagesi/paste-63.png)
 
 ![](imagesi/paste-64.png){fig-align="left" width="7cm" height="3cm"}
+
+### Neural Architecture Search with Reinforcment Learning
+
+To automate the task of finding optimal network structures, we use **Neural Architecture Search**
+
+-   Specify structure using a configuration string: `[“Filter Width: 5”, “Filter Height: 3”, “Num Filters: 24”]`
+-   Use a RNN **controller** to generate string
+-   Train this architecture (**child network**) to check performance
+-   Use **reinforcement learning** to update the parameters of the controller model
+
+![](images/paste-34.png){fig-align="center" width="7cm"}
+
+The controller RNN has this structure:
+
+![](images/paste-35.png){fig-align="center" width="8cm"}
+
+#### Neural Optimizer Search
+
+Optimizers are also hard to design, many different optimizers exist such as ADAM, RMSProp, ADADelta, Momentum, SGD, ...
+
+We can use the previous method to also search over optimizers.
+
+![](images/paste-36.png){fig-align="center" width="8cm"}
+
+![](images/paste-37.png){fig-align="center" width="9cm" height="4.1cm"}
 
 ### Checkpointing
 
@@ -921,19 +959,44 @@ A powerful visualisation, logging, and monitoring tool designed to be integrated
 
 ## Computer Graphics and Vision
 
+### Deepfakes
+
+1.  Use face detector to identify the face in all frames $\rightarrow$ Crop out and rectify
+2.  Train NN to transform aligned images of person A's to person B's face with **same facial expressions**
+3.  Merge the person B face onto the original person A frame
+    -   Merging incorporates: colour correction, seam blending
+
+![](images/paste-30.png)
+
+#### CycleGAN
+
+To train a network to swap faces (**or any other domain**), we use a CycleGAN. This trains two Autoencoders and a Discriminator to:
+
+1.  Generate a fake image in Domain B
+2.  Check with discriminator if it looks "real"
+3.  Generate a reconstructed image from the fake image into Domain A
+4.  Calculate the loss on how different the reconstructed image is to the original
+
+![](images/paste-31.png)
+
+#### Deepfake detection
+
+There are several ways to detect deepfakes:
+
+-   Train CNNs on real videos + fakes to detect fakes
+-   Look for optical flow aberrations
+-   Look for heart rate aberrations
+-   Look for camera signatures
+
+The issue is, that the deepfakes evolve with every new detection techniques (generator / discriminator!).
+
+But there is a deeper issue, not all deepfakes are bad (parody, human aid, ....). On the other hand, misinformation and propaganda doesn't need deep fakes to be spread. Solutions(?): more human-in-the-loop, better-paid moderators, education, ...
+
 ### Denoising
 
 **Autoencoder** networks can be trained to denoise images. The training is easy, as you just add the noise to original images.
 
 ![](imagesi/paste-51.png){fig-align="center" width="8cm" height="2.3cm"}
-
-### Diffusion Models
-
-A *Diffusion Model* is a denoising autoencoder with fancy math, it's the inverse of adding noise.
-
-![](imagesi/paste-68.png){fig-align="center" width="8cm"}
-
-[Examples](https://colab.research.google.com/github/keras-team/keras-io/blob/master/examples/generative/ipynb/ddim.ipynb)
 
 ### Attention
 
