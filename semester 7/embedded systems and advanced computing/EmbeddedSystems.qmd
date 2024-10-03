@@ -1880,6 +1880,74 @@ $$
 
 Use **Hashing Techniques** with a cache directory (SRAM).
 
+### Direct Mapped (DM) Cache
+
+Cache controllers must quickly determine if memory is cached. For this the (actual) memory address is split into three fields:
+
+| Line Offset Bits = $\log_2(\text{Line Size)}$
+| Line Index Bits = $\log_2(\text{Cache Size})-\log_2(\text{Line Size})$
+| Tag Address Bits = $\text{Address Size Bits}-\log_2(\text{Cache Size})$
+
+![](images/paste-16.png){fig-align="center" width="8cm"}
+
+-   The **Line Index** is used to index the cache and the cache directory.
+-   The **Cache Directory** stores the last cached **Tag Address** and outputs this on addressing with the line index.
+-   The **Line Offset** describes in what part of the line the actual byte is.
+-   A **Hit** occurs when the *requested* tag address matches the *stored* tag address.
+
+::: callout-tip
+## Example
+
+1.  First 8 bytes are cached
+2.  CPU tries to read M\[1011\]
+3.  line: 01, tag: 1
+4.  tag in cache dir: 0 $\rightarrow$ **Miss**
+5.  cache controller loads line 01, with tag 1: M\[1010, 1011\]
+6.  cache directory line 01 is filled with tag: 1
+
+![](images/paste-15.png){fig-align="center" width="8cm"}
+:::
+
+::: callout-caution
+## Cache Thrashing
+
+-   There is a many to one mapping (address $\rightarrow$ line address)
+-   There is only one spot to cache a given memory address
+
+![](images/paste-18.png){fig-align="center" width="7cm" height="3.6cm"}
+:::
+
+### Set-associative Caches
+
+-   There are several choices in cache for a given address
+-   Equivalent to multiple DM caches in parallel
+-   *Reduces* cache thrashing
+
+![](images/paste-17.png){fig-align="center" width="6cm"}
+
+#### 2-Way Set-associative
+
+-   Two DM cahces in parallel
+-   Two choices for a given address
+
+![2-way accociative cache example](images/paste-19.png){fig-align="center" width="6cm"}
+
+#### N-Way Set-associative
+
+-   Provides $N$ choices in cache
+-   When cache line is loaded, cache needs to choose which of $N$-Lines to use:
+    1.  LRU - Least Recently Used
+
+    2.  Random
+
+#### Fully associative cache
+
+-   $N$-Way Set-associative cache for $N$-lines in cache
+-   no restrictions on cache line placement $\rightarrow$ **avoids thrashing**
+-   $N$ DM caches in parallel with one line each
+
+![Fully associative cache example](images/paste-20.png){fig-align="center" width="6cm"}
+
 ## Virtual memory systems
 
 ## Virtual memory systems II
