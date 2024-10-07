@@ -126,6 +126,138 @@ From data **without labels** we can learn the structure of the data itself, ther
 -   Butterfly-Network (Autoencoder)
 -   ...
 
+### Reinforcement Learning
+
+Requires no pre-collected data, it learns from experience by playing a game over and over again. **Agent** wants to choose actions that will give it higher scores
+
+![](images/paste-39.png){fig-align="center" width="7cm"}
+
+::: callout-caution
+## RL Reservations
+
+-   Inefficient with data
+    -   AlphaGo learned from playing 100mio times
+    -   Human Go champion only played 50k times
+-   Sensitive to small perturbations in the environment
+:::
+
+![](images/paste-41.png){fig-align="center" width="7cm"}
+
+#### Markov Decision Process (MDP)
+
+-   States $S$ - set of possible situations in the world
+-   Actions $A$ - set of different actions an agent can take
+-   Transistion function $T(s,a,s')$ - returns **possibility** of transitioning to state $s'$ after taking action $a$ in state $s$
+    -   $T(s,a,s')=P(s_{t+1}=s'|_{s_t=s,a_t=a})$
+-   Reward function $R(s,a,s')$ - returns reward received for transition to state $s'$ after action $a$ on state $s$ is taken
+
+In the *Markov Decision Process* history doesn't matter, only the current state.
+
+![](images/paste-40.png){fig-align="center" width="8cm" height="2.4cm"}
+
+Goal: maximise sum of discounted future rewards $G_t$, "return"
+
+$$
+G_t=R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}+\dots=\sum_{k=0}^\infty \gamma^kR_{t+k+1}
+$$
+
+$\gamma$ is the discount factor - value soon rewards not later ones. **Rewards exponentially decay the later they are received**.
+
+#### Policies
+
+Policy Functions say what action should a agent take in a given state
+
+$$
+\pi:S\rightarrow A
+$$
+
+Output: $\pi(s)=a$ means in state $s$, take action $a$.
+
+**The goal of RL is to learn an optimal policy** $\pi$**, that maximises future cumulative reward**
+
+#### Value Iteration (V-Function)
+
+.
+
+![](images/paste-42.png)
+
+-   **Discrete state spaces** can be represented by a lookup table
+
+-   **Continuous or very large discrete state spaces** will need to be represented by a neural network
+
+#### Q-Function
+
+.
+
+![](images/paste-43.png)
+
+![](images/paste-44.png)
+
+::: callout-note
+## Q-Function in terms of V-Function
+
+$$
+Q^\pi(s,a)=E[R(s,a,s')+\gamma V^\pi(s')]
+$$
+
+$$
+Q^\pi(s,a)=\sum_{s'\in S}P(s'|_{s,a})[R(s,a,s')+\gamma V^\pi(s')]
+$$
+:::
+
+::: callout-tip
+## Learn V\* and Q\*
+
+![](images/paste-45.png){fig-align="center" width="8cm" height="2.6cm"}
+
+**Example:**
+
+$T$ is known as $1/3$ in forward/left/right when stepping forward.
+
+![](images/paste-46.png)
+:::
+
+#### Deep-Q Learning
+
+If the Transition $T$ or Reward $R$ are not known
+
+![](images/paste-47.png){fig-align="center" width="7cm" height="3cm"}
+
+![](images/paste-48.png)
+
+::: callout-warning
+## The limits of tabular learning
+
+The above approach still uses a look up table to determine what action on what field to take. To work with big (continuous environments), we use neural networks as an approximator
+
+![](images/paste-49.png){fig-align="center" width="7cm"}
+
+``` python
+# Weights for Q-Network 
+Q = tf.Variable(tf.random.uniform([16,4],0,0.01)) 
+# Q-value function
+def qVals(inptSt):
+    oneH = tf.one_hot(inptSt,16) 
+    qVals = tf.matmul([oneH],Q) 
+    return qVals
+# argmax over q-values to get estimated best action 
+action = tf.argmax(qVals(st),1)
+```
+
+For training such a network, we replace the Q-values LUT with the Network
+
+``` python
+Q_values = qVals(st) 
+if np.random.rand(1) < epsilon:
+    act = env.action_space.sample()
+else:
+    act = tf.argmax(Q_values) 
+nst, rwd, done, _ = env.step(act) 
+nextQ = qVals(nst)
+loss = tf.reduce_sum(tf.square(Q_values - rwd+gamma*nextQ)) optimizer.apply_gradients(tape.gradient(loss,Q),Q)
+```
+:::
+
 ## Types of Problems
 
 ## Maschine Learning Pipeline
@@ -875,31 +1007,6 @@ A **normalisation layer** $BN$ is added after a fully connected or a convolution
 
 ![](imagesi/paste-64.png){fig-align="left" width="7cm" height="3cm"}
 
-### Neural Architecture Search with Reinforcment Learning
-
-To automate the task of finding optimal network structures, we use **Neural Architecture Search**
-
--   Specify structure using a configuration string: `[“Filter Width: 5”, “Filter Height: 3”, “Num Filters: 24”]`
--   Use a RNN **controller** to generate string
--   Train this architecture (**child network**) to check performance
--   Use **reinforcement learning** to update the parameters of the controller model
-
-![](images/paste-34.png){fig-align="center" width="7cm"}
-
-The controller RNN has this structure:
-
-![](images/paste-35.png){fig-align="center" width="8cm"}
-
-#### Neural Optimizer Search
-
-Optimizers are also hard to design, many different optimizers exist such as ADAM, RMSProp, ADADelta, Momentum, SGD, ...
-
-We can use the previous method to also search over optimizers.
-
-![](images/paste-36.png){fig-align="center" width="8cm"}
-
-![](images/paste-37.png){fig-align="center" width="9cm" height="4.1cm"}
-
 ### Checkpointing
 
 ::: callout-warning
@@ -1331,3 +1438,66 @@ A well studied example of time-series data is [Natural Language](#sec-naturallan
 ## Anomaly Detection
 
 ## Irregular Networks
+
+### Neural Architecture Search with Reinforcment Learning
+
+To automate the task of finding optimal network structures, we use **Neural Architecture Search**
+
+-   Specify structure using a configuration string: `[“Filter Width: 5”, “Filter Height: 3”, “Num Filters: 24”]`
+-   Use a RNN **controller** to generate string
+-   Train this architecture (**child network**) to check performance
+-   Use **reinforcement learning** to update the parameters of the controller model
+
+![](images/paste-34.png){fig-align="center" width="7cm"}
+
+The controller RNN has this structure:
+
+![](images/paste-35.png){fig-align="center" width="8cm"}
+
+#### Neural Optimizer Search
+
+Optimizers are also hard to design, many different optimizers exist such as ADAM, RMSProp, ADADelta, Momentum, SGD, ...
+
+We can use the previous method to also search over optimizers.
+
+![](images/paste-36.png){fig-align="center" width="8cm"}
+
+![](images/paste-37.png){fig-align="center" width="9cm" height="4.1cm"}
+
+## (Energy) Optimized Deep Learning
+
+Deep Learning is extremely power hungry
+
+![](images/paste-38.png){fig-align="center" width="8cm"}
+
+To mitigate this issue, we have to make models more efficient.
+
+**Mid Term**:
+
+-   Prioritizing computationally efficient networks (e.g. [Mobile Net](https://arxiv.org/abs/1704.04861))
+-   Report training time, hardware, and *hyperparameter sensitivity* (for awareness)
+-   Network Pruning
+    1.  Random weight initialization on large network
+    2.  After training cut connections with weights $\approx 0$ (only 10-20% have meaningful weights)
+    3.  Drop (**prune**) 80-90% of connections and re-train from here on
+    4.  $\rightarrow$ increased network speed / decreased power consumption
+    5.  **the network trains well, sometimes even *better* than the full network**
+-   Network Quantization
+    -   Reduce the number of bits representing a number (float32 $\rightarrow$ bfloat16)
+    -   Quantization-aware training to reduce precision to four bits with accuracy losses 2-10%
+-   Tensor Processing Unit
+    -   Special purpose GPU without the graphics part and high throughput at low precision
+    -   Specially designed for specific frameworks (Google TPU $\leftarrow$ TensorFlow)
+    -   Edge versions for inference only
+    -   **TPUs and AI-specialised GPUs are getting more similar**
+
+**Long Term**:
+
+-   More efficient *physical substrates*
+    -   Massive GPU parallelism is powerhungry
+    -   Are there other physical computing devices? (e.g. **optical compute**)
+    -   Neumorphic Computation
+-   "Physical" Networks
+    -   ASIC, or Co-Processor
+    -   Analog Circuits, **memristors**
+    -   $\rightarrow$ 1000s of times more energy efficient
