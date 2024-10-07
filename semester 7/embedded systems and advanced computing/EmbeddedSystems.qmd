@@ -1954,6 +1954,97 @@ Cache controllers must quickly determine if memory is cached. For this the (actu
 
 ## Profiling
 
+To determine the *hotspots* of a program, the code parts which can improve the execution speed the most, we use profiling techniques.
+
+### External Timing
+
+1.  Drive GPIO-Pin **High** at start of function
+2.  Drive GPIO-Pin **Low** at end of function
+3.  Use *Oscilloscope* to measure the time
+
+### Internal Timing
+
+Use integrated clock functions that approximate the time used by the CPU (`#include <time.h>`).
+
+| **Attention**: Poor resolution and no notice of interrupts 
+| $\rightarrow$ average over many iterations
+
+### Subroutine Profiler
+
+Used to find which fucntion takes the most time (Tool: **gprof**).
+
+1.  Compile with profiling enabled
+    a.  `gcc -pg` (profiling flag)
+    b.  Compiler adds extra code to start of every function to count how often it's called
+2.  Run program as usual $\rightarrow$ on exit info & additional timing info gets dumped to file
+3.  Run profiling analysis (**gprof**) to analyse saved info and annotate the C-code
+
+::: callout-caution
+## Flat timing profile
+
+As a result of the analysis, we get a **flat timing profile**, which shows how much time is spent in each function.
+
+If no predominant function (first example) it's harder to determine where to start optimising, where a dominant function ( `func3` second example) gives a better clue.
+
+![](images/paste-21.png){fig-align="center" width="5cm"}
+
+A flat profile comes as a text summary:
+
+![](images/paste-24.png){fig-align="center" width="8cm"}
+:::
+
+### Deterministic Profiler
+
+The compuler adds code at the start and end of functions to read the elapsed time.
+
+**Attention**: This adds alot of additional code.
+
+### Statistical Profiler
+
+Periodic interrupt handle that **samples Program Counter** of the interrupted function and stores this in profiler file. This is simple to implement, but subject to sampling artefacts (missing frequent but very short functions).
+
+### Block Profiler
+
+Used to find which line is executed the most $\rightarrow$$ assume you have to optimise this line.
+
+Tools: **gcov**, **oprofile** (both Linux)
+
+![](images/paste-22.png){fig-align="center" width="8cm"}
+
+::: callout-note
+## Basic Block
+
+A group of statements that are always executed together.
+
+No *flow-changing* statements (e.g. `if`, `for`, ...)
+:::
+
+#### Code Coverage
+
+With *basic block profiling* we can work out the **code coverage**. We can work out how many times code is executed.
+
+This is useful to detect **dead code**.
+
+![](images/paste-23.png){fig-align="center" width="8cm"}
+
+### Just-in-time Profilers
+
+Just-in-Time profilers can perform the analysis dynamically, generating detailed information, but making the program running slower.
+
+Tools: **callgrind** (from *valgrind*)
+
+### Simulators
+
+A accurate simulator of a CPU can give deep insights about **pipeline stalls**, **cache statistics**, **Clock Cycles per Instruction**, and much more.
+
+They are extremely complex and slow and hard to get for modern (e.g. X86) CPUs.
+
+### Hardware Profilers
+
+Modern CPUs contain registers, that store information like **Clock Cycles per Instruction**, **Wrong Branch Predictions**, **Cache Misses**, ...
+
+Tools: **perf** (Linux, X86)
+
 ## Optimisation
 
 ## Optimisation II
