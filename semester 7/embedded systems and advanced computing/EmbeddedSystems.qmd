@@ -1950,8 +1950,6 @@ Cache controllers must quickly determine if memory is cached. For this the (actu
 
 ## Virtual memory systems
 
-## Virtual memory systems II
-
 ## Profiling
 
 To determine the *hotspots* of a program, the code parts which can improve the execution speed the most, we use profiling techniques.
@@ -1966,7 +1964,7 @@ To determine the *hotspots* of a program, the code parts which can improve the e
 
 Use integrated clock functions that approximate the time used by the CPU (`#include <time.h>`).
 
-| **Attention**: Poor resolution and no notice of interrupts 
+| **Attention**: Poor resolution and no notice of interrupts
 | $\rightarrow$ average over many iterations
 
 ### Subroutine Profiler
@@ -2005,7 +2003,7 @@ Periodic interrupt handle that **samples Program Counter** of the interrupted fu
 
 ### Block Profiler
 
-Used to find which line is executed the most $\rightarrow$$ assume you have to optimise this line.
+Used to find which line is executed the most $\rightarrow$\$ assume you have to optimise this line.
 
 Tools: **gcov**, **oprofile** (both Linux)
 
@@ -2047,7 +2045,128 @@ Tools: **perf** (Linux, X86)
 
 ## Optimisation
 
-## Optimisation II
+Optimisation is mainly done by compilers and optimally produce smaller and faster code. Some speed optimisations do tradeoff with size (e.g. loop unrolling).
+
+-   **Avoid** premature optimisation
+-   Use **profiling** tools to find what to optimise first
+-   Use a **better algorithm** (e.g. FFT vs. DFT)
+
+### GCC optimisation levels
+
+GCC has built in optimisation (100's of flags), but there are predefined optimisation levels:
+
+-   `-O1` - enable simple optimisations
+-   `-O2` - enable `-O1` with additional optimisation, *no speed/memory tradeoff*
+-   `-O3` - enable `-O2` with additional optimisation, may make program larger (e.g. loop unrolling)
+-   `-Og` - enables optimisation that do not interfere with debugging
+-   `-Os` - optimise for size, uses `-O2` optimisations that do not increase code size
+-   `-Ofast` - enable `-O3` with additional non standard compliance optimisation
+
+### Aliasing
+
+![](images/paste-25.png){fig-align="center" width="8cm" height="1.9cm"}
+
+**Problem**: If `*pa` and `*pb` point to the same address, the return value should be 0, that's why the compiler has to **play safe**.
+
+**Solution**: Restricted Pointer
+
+![](images/paste-26.png){fig-align="center" width="7cm"}
+
+#### C Aliasing Rules
+
+1.  A pointer to `char` can alias with any other pointer
+2.  Pointers to data types that differ only by qualifier can alias. (e.g. `unsigned int` can alias `int`)
+3.  Pointers to different built-in types do not alias. (`int` and `double`)
+4.  Pointers to aggregate or union types with differing tags do not alias (two separately defined unions)
+5.  Pointers to aggregate or union types which differ only by name may alias (two unions based of the same definition)
+
+### Fast and Loose math
+
+FLoating point is a poor aproximation of real numbers, they are special rational numbers of the form
+
+$$
+\frac{M}{2^N}
+$$
+
+with $M$ and $N$ as integers. Thus numbers such as $0.1$ can't be represented correctly.
+
+![](images/paste-27.png){fig-align="center" width="8cm"}
+
+This operation doesn't give the same result, thus the compiler won't optimise it.
+
+If numeric accuracy is *not important*, this optimisation can be enabled with the `-fast-math` option.
+
+Furthermore, float point arithmetic is non associative, the order matters, because:
+
+![](images/paste-28.png){fig-align="center" width="4cm" height="1.2cm"}
+
+### Assiting the compiler to optimise
+
+**Data Qualifier**:
+
+-   `unsigned` - value never negative
+-   `const` - value never change
+-   `volatile` - value can unpredictably change (shared ISR variable HW registers) $\rightarrow$ useful to tell the compiler not to optimise
+
+``` c
+for (i=0; i<1000; i++){
+    continue;
+}
+// i=1000, would be otpmised away
+// but might be used at other point!
+```
+
+-   `restrict` - pointer not aliased
+
+**Bounds checking**
+
+![](images/paste-29.png){fig-align="center" width="8cm" height="2.4cm"}
+
+## GPU - Graphics Procesing Unit
+
+Originally designed for graphics, including VRAM and many pipelined FUs *(shaders, texture mapping, render output, special functions \[sine/cosine/...\], ray tracers).*
+
+NVIDIA introduced the **GPGPU** - **G**eneral **P**urpose **GPU**, which got popular for AI. It consists of many more cores than a CPU (1000's).
+
+![](images/paste-31.png){fig-align="center" width="8cm"}
+
+![](images/paste-30.png){fig-align="center" width="8cm"}
+
+### Architecture
+
+![](images/paste-32.png){fig-align="center" width="5cm" height="0.7cm"}
+
+Each Core consists of many functional units (typically 32), but have a lot less cache memory than a CPU.
+
+::: callout-note
+## Latency Hiding
+
+Due to the smaller cache size, memory has to be read from main memory more often. To mitigate the introduced latency, **latency hiding** is introduced.
+
+Whenever a thread is waiting for memory, another thread can be run (i.e. multithreading).
+
+This requires less fanc caching, but **fast context switches**. This is achieved by having a set of registers for each thread.
+:::
+
+### SIMT - Single Instruction Multiple Threads
+
+-   Group block of threads together, typically 32. \*(NVIDIA: warp, AMD: wavefront)
+-   Special warp core (NVIDIA: streaming multiprocessor, AMD: SIMD)
+-   Each warp has a shared single instruction pointer
+-   Threads in a warp execute in lock-step
+-   ! Divergent paths are bad for utilisation of the FUs (branching)
+
+![](images/paste-33.png)
+
+-   Latency hiding: If a warp is blocked, another queued warp is executed.
+
+### GPU Programming
+
+Threads are organised as a grid. It is often **faster to recalculate results, than read them from memory.**
+
+-   CUDA - Compute Unified Device Architecture: NVIDIA framework
+-   OpenCL - Open Computing Language: Apple framework, for heterogeneous crossplatform execution (CPUs, GPUs, DSPs, FPGAs)
+-   OpenACC - Open Accelerators: Programming standard for parallel computing on heterogeneous CPU/GPU systems
 
 # Advanced Topics and Future Technologies
 
