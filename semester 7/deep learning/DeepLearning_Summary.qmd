@@ -1433,6 +1433,32 @@ $\textcolor{green}{\text{Deep Learning}}$ **1D CNN**: convolutional layers where
 
 A well studied example of time-series data is [Natural Language](#sec-naturallanguage).
 
+### Video Generation
+
+Video Generation is using generative models, that learn the probability distribution $p(x)$. They are trained on video datasets like *Kinetics, BAIR Robot Pushing, UCF101 Human Actions*.
+
+There are several approaches to video diffusion:
+
+#### 3D U-Net diffusion model
+
+The simplest approach would be to add the time dimension as a additional dimension to the tensors. The issue with that is the exponential **memory increase** and the **inflexibility** for different length clips.
+
+![](images/paste-54.png){fig-align="center" width="8cm"}
+
+#### Vision Transfomer (ViT)
+
+To get more flexibility with clip length, use a vision transformer.
+
+![](images/paste-55.png){fig-align="center" width="8cm"}
+
+#### TimeSformer
+
+Decompose each frame into a sequence of patches
+
+![](images/paste-56.png){fig-align="center" width="8cm"}
+
+![](images/paste-57.png){fig-align="center" width="8cm"}
+
 ## Search using Deep Reinforcment Learning
 
 ## Anomaly Detection
@@ -1463,6 +1489,34 @@ We can use the previous method to also search over optimizers.
 ![](images/paste-36.png){fig-align="center" width="8cm"}
 
 ![](images/paste-37.png){fig-align="center" width="9cm" height="4.1cm"}
+
+### Graph Convolutional Networks
+
+Graph Convolutional Networks work on **unstructured data**.
+
+**Applications**:
+
+-   Molecular Chemistry: Predict molecular properties
+-   Social Network Analysis: Recommender systems for Ads, Events, Products, ...
+-   Commonsense Reasoning for AI: Reasokning through access to a database of common facts, stored as a graph
+
+![Commonreasoning end-to-end](images/paste-50.png){fig-align="center" width="8cm"}
+
+**Structure**: A Graph is used to **summarise** data, but there is **no start/end** point $\rightarrow$ cycles.
+
+Architectures for summarising sequences and trees do:
+
+1.  Pass information along relationships between individual elements
+
+![](images/paste-51.png){fig-align="center" width="8cm"}
+
+2.  Aggregating per-element information into a global description of the structure
+
+![](images/paste-52.png){fig-align="center" width="8cm" height="3.7cm"}
+
+![](images/paste-53.png){fig-align="center" width="8cm"}
+
+**Attention**: Just as with RvNNs, batching for MPNNs is very difficult, Cannot pack multiple graphs with different structure into the same big batch tensor. *(use librarys: [Deep Graph Library](https://www.dgl.ai/), [Pytorch Geometric](https://pytorch-geometric.readthedocs.io/en/latest/))*
 
 ## (Energy) Optimized Deep Learning
 
