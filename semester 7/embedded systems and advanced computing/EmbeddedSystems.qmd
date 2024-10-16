@@ -1948,7 +1948,150 @@ Cache controllers must quickly determine if memory is cached. For this the (actu
 
 ![Fully associative cache example](images/paste-20.png){fig-align="center" width="6cm"}
 
-## Virtual memory systems
+## Virtual Memory Systems
+
+If we work with data that can't fit into RAM anymore, we use a *virtual memory system*. The system uses the Harddisk as a higher level cache. The CPU is working with a virtual address, which has to be translated to a physical address.
+
+**Virtual Memory acts like a cache for DRAM in the Hard Disk\
+**- cache: 8-64 byte lines\
+- VM: 4kB/4MB pages\
+- VM: Has horrendous miss penalty (better with SSD)\
+- VM creates illusion that CPU has more memory
+
+Advantages of Virtual Memory Systems:
+
+-   Coexistence of multiple programs with separate address spaces with protection from each other
+-   Better system security: Accessing invalid pages (e.g. device registers) generates page fault (Segmentation Violation)
+-   Simpler program loading (All processes can start at address 0)
+-   Faster program startup, since pages are loaded on demand
+-   Extension of the address space of a running process
+-   Retirement of DRAM pages that have memory faults
+
+### MMU - Memory Management Unit
+
+![](images/paste-34.png){fig-align="center" width="8cm"}
+
+-   MMU translates VA (virtual addr) $\rightarrow$ PA (physical addr)
+-   MMU generates a page fault exception if VA is not in DRAM
+-   Page fault exception is handled by OS $\rightarrow$ *paging*
+
+### Virtual Addresses / Page Tables
+
+![Page Table (left) and Hierarchical Page Table (right)](images/paste-36.png){fig-align="center" width="9cm"}
+
+Virtual Addresses (VA) are split into a Virtual Page Number (VPN) and a Page Offset. VPN is used to page the Physical Page Number (PPN).
+
+VPN consist of 48 bits and if we'd address 39 bit addresses, we'd need a lookup table of size
+
+$$
+\frac{2^{48}\cdot 39\text{ bits}}{8}=1248\text{ TB}
+$$
+
+Through the use of pages (4 KB) the size can be reduced to
+
+$$
+\frac{2^{48}\cdot39\text{ bits}}{4\cdot 2^{10}\cdot 8}= 312\text{ GB}
+$$
+
+or $312$ MB with 4 MB pages.
+
+These pages are still really big, that's why we use **Hierarchical Page Tables**:
+
+-   Page tables and page directories stored in DRAM (can be paged to disk)
+-   Reduces page table memory
+-   Perform page table walk to get final addr
+
+### TLB - Translation Lookaside Buffer
+
+-   Special cache to avoid cache table walks
+-   Some CPUs doe page table walks in HW $\rightarrow$ most in SW
+    -   It's not done very often (Amdahl's Rule)
+-   Page table walk follows pointers to find PPN from VPN\
+    ![](images/paste-35.png)
+-   TLB is fully associative (no restrictions where a addr can be stored (penalty is to big if it's not in cache)
+
+### TLB and Caches
+
+Normally TLB look ups are only performed if there is a cache miss on L1 cache.
+
+![](images/paste-37.png)
+
+#### VIVT
+
+**V**irtual **I**ndex **V**irtual **T**ag
+
+-   L1 Cache
+-   Translation only occur for cache miss
+-   Has aliasing problem: multiple VA $\rightarrow$ PA
+
+#### PIPT
+
+**P**hysical **I**ndex **P**hysical **T**ag
+
+-   L2 Cache
+
+-   Uses translated PPN addresses
+
+#### VIPT
+
+**V**irtual **I**ndex **P**hysical **T**ag
+
+Do the addr translation and cache look up in parallel, that way the PA is ready if there is a cache miss.
+
+![](images/paste-38.png){fig-align="center" width="8cm"}
+
+This is implemented with 3 SRAMs in parallel
+
+![](images/paste-39.png){fig-align="center" width="8cm" height="4.3cm"}
+
+### Virtual Memory Paging (swapping)
+
+![](images/paste-40.png){fig-align="center" width="8cm"}
+
+### VM Page Table Attributes
+
+![](images/paste-41.png){fig-align="center" width="7cm" height="1.7cm"}
+
+-   **Presence** - Set if page resident in DRAM
+    -   page fault exception if try to read a page if bit not set
+-   **Modified** - Indicates page written (dirty)
+    -   needs to be written to disk
+-   **Reference** - Set if page accessed
+    -   OS uses LRU (least recently used) algorithm to determine if page should be in DRAM
+
+Security improving Attributes:
+
+-   **Read** **Only** - Page fault exception if you try to write to page
+-   **Execute** - Indicates page contains instructions
+-   **Owner** - Indicates a page that can only be accessed by OS kernel
+
+### IOMMU
+
+MMU for IO devices (e.g. mapping GPU memory to physical addr space)
+
+### Multiple virtual addr spaces
+
+In a multitasking system, each process has its own page table and the CPU selects the current page table using a page table register.
+
+![](images/paste-42.png){fig-align="center" width="6cm"}
+
+## Processor Modes
+
+Different CPU modes with different privileges maintain system security.
+
+![](images/paste-43.png){fig-align="center" width="8cm"}
+
+### Kernel Mode
+
+-   Unrestricted access to hardware, page tables, CPU registers, and privileged instructions
+
+-   Entered when interrupt occurs, the previous processor mode is restored when the ISR executes a return-from-interrupt instruction
+
+### User Mode
+
+-   Used by applications so they cannot directly access hardware devices or memory belonging to other tasks
+
+-   The application must make a system call to access the hardware
 
 ## Profiling
 
