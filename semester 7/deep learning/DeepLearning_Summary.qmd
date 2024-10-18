@@ -1064,7 +1064,7 @@ A powerful visualisation, logging, and monitoring tool designed to be integrated
 
 # Deep Learning Problems, Models & Research
 
-## Computer Graphics and Vision
+## Computer Graphics
 
 ### Deepfakes
 
@@ -1114,6 +1114,58 @@ With attention we can transfer information from the input to the output. We pass
 The attention can also be visualised
 
 ![](imagesi/paste-83.png){fig-align="center" width="8cm"}
+
+## Computer Vision \| 3D Reconstruction
+
+### Application:
+
+-   Medical Imaging and Sensing (e.g. Spectral Photon-Counting CT)
+
+![](images/paste-58.png){fig-align="center" width="8cm"}
+
+-   Agriculture (e.g. Plant Scanning)
+
+Challenges: Harsh lighting conditions, Small plant features, SFM unstable down the whole row, Leaves (occlusion, movement), Scans from both sides must be matched
+
+![](images/paste-59.png){fig-align="center" width="7cm"}
+
+### 3D Reconstruction Classical
+
+#### Analytical / Iterative
+
+1.  Generate a random scene and get a projection of this scene
+2.  Compare artificial projection to the actual scan
+3.  Adjust the scene to better fit the actual scan
+4.  Go back to 1. - iterate till artificial and actual scan look the same
+
+![](images/paste-60.png){fig-align="center" width="8cm" height="2.1cm"}
+
+#### Stereo Matching
+
+![](images/paste-61.png){fig-align="center" width="8cm"}
+
+#### Gaussian Splatting
+
+![](images/paste-64.png){fig-align="center" width="8cm" height="3.8cm"}
+
+#### Shape-Radiance Amiguity
+
+![](images/paste-65.png){fig-align="center" width="7cm"}
+
+### Differentiable rendering (NeRF)
+
+-   Inputs: Set of aligned images
+-   Render images using differentiable model
+-   Update model from different viewpoints until convergence
+-   Very flexible models to allow view of dependent colous
+
+![](images/paste-62.png){fig-align="center" width="8cm"}
+
+**Radiance Field**: Network gives a radiance field at intermediate points over a ray. THese points are integrated and compared to the image pixel to a corresponding image. $\rightarrow$ optimize network so that these results are right.
+
+Ask the model: Give me the radiance field at intermediate points on a ray.
+
+![](images/paste-63.png){fig-align="center" width="8cm" height="3.7cm"}
 
 ## Generative- \| Diffusion-Models
 
@@ -1294,7 +1346,7 @@ Self-attention computes the output vector $r_i$ for each word via a weighted ave
 
 ![](imagesi/paste-82.png){width="7cm"}
 
-For the [**example**](https://jalammar.github.io/illustrated-transformer/)***Machines*** we get the 3 vectors:
+For the [**example**](https://jalammar.github.io/illustrated-transformer/) ***Machines*** we get the 3 vectors:
 
 ![](imagesi/paste-88.png){fig-align="center" width="5cm"}
 
@@ -1458,10 +1510,6 @@ Decompose each frame into a sequence of patches
 ![](images/paste-56.png){fig-align="center" width="8cm"}
 
 ![](images/paste-57.png){fig-align="center" width="8cm"}
-
-## Search using Deep Reinforcment Learning
-
-## Anomaly Detection
 
 ## Irregular Networks
 

@@ -2315,6 +2315,75 @@ Threads are organised as a grid. It is often **faster to recalculate results, th
 
 ## Computer exploits
 
+Typical computer exploits are based on reading protected memory through a side channel.
+
+### Side Channel
+
+The Side Channel is the central part of computer exploits and utilises the fact that a cached memory location is faster to read.
+
+1.  Prepare side channel: allocate a probe array and ensure it's not cached *(by reading lots of other memory)*
+2.  Fool the CPU to read a protected memory location *(e.g. kernel)* and use the result as an index into the probe array
+
+![](images/paste-44.png){fig-align="center" width="8cm" height="4.3cm"}
+
+### Meltdown
+
+Relies on a flaw with out of order execution.
+
+::: callout-caution
+## Page Fault Exception
+
+When we try to access protected memory through `Z=*ptr;` a page fault exception occurs, because access is not allowed.
+
+**Meltdown** works around that with utilising a signal handler.
+:::
+
+1.  Set up a signal handler to capture page fault exception otherwise the OS aborts the program
+2.  Prepare probe array
+3.  Read from protected memory location
+
+``` c
+Z = *ptr; // Some CPUs take a long time to check page permissions (pipelining)
+y = probe_array(Z*64); // in the meantime this insn is already executing and loading the `Z` part into cache
+```
+
+4.  Through timing analysis on accessing the probe array, the value of `Z` can be figured out
+
+Meltdown can be avoided by:
+
+-   Clearing cache on page fault (slow)
+-   Disable cache (very slow)
+-   Disable out of order execution (slow)
+-   Randomize timing \[apple\]
+-   Only map a few of the kernel pages in the virtual memory space (e.g. at least the interrupt vectors)
+
+### Spectre
+
+Relies on a flaw with speculative execution. The attacker needs to find a special function that runs with privileges in the kernel or web server. This function must have the form of
+
+``` c
+char attack (int x, char *probe_array){
+    char y=0;
+    if (x<array_size)
+        y = probe_array[array[x]*64]; // 64 must be int >= 64
+    return y;
+}
+```
+
+1.  Prepare branch predictor by calling `x<array_size` repeatedly
+2.  Ensure probe array is not cached
+3.  Call attack function with value of x outside of array bounds
+4.  Use memory timing to infer secret value
+
+![](images/paste-45.png){fig-align="center" width="3cm" height="6.6cm"}
+
+Spectre can be avoided by:
+
+-   Disable cache (really slow)
+-   Disable speculative execution (slow)
+-   Randomize timing
+-   Use compiler to avoid generating code that can be exploited
+
 ## Instruction set architecture problems
 
 ## The ARM Cortex A-15
