@@ -42,7 +42,7 @@ chribel-fontfamily:
 
 # How to work code
 
-Remember that software engineering is 50-70% maintenance. Because modern machines heavily rely on microcontrollers there is great demand.
+Remember that software engineering is 50-70% maintenance. Because modern machines heavily rely on microcontrollers there is great demand.sol
 
 ![](imagesi/paste-3.png){fig-align="center" width="30%"}
 
@@ -138,13 +138,15 @@ How to make designs **flexible**, as requirements change all the time (Agile).
 
 ### Single Responsibility Principle (SRP)
 
-*"A module should only have a single responibility. It should only have one reason to change"*
+*"A module should only have a single responsibility. It should only have one reason to change"*
 
 Instead of `ADC_read` which handles the ADC reading, averaging and the setting of the new goal, we breack it up into a module `ADC_HAL` which handles the ADC reading and averaging and the module `new_goal_reader` which just handles the setting of the new goal.
 
 -   A module does **one thing** and does it **well**
 -   Use good names, reveal intent
 -   Don't access numerous data structures and globals
+-   If the high level requirement changes, it only affects a single module
+-   "Hide design decisions"
 
 ### Open-Closed Principle (OCP)
 
@@ -154,6 +156,7 @@ The `new_goal_reader` doesn't have to be modified in case of a hardware change. 
 
 -   Changes through adding code instead of modifying
 -   aka USB standard: Plug-n-Play, no hardware change needed
+-   Abstraction of the connection
 -   OOP use "interface" or "abstract class"
 -   C use "header files" or "function pointers"
 
@@ -163,6 +166,9 @@ The `new_goal_reader` doesn't have to be modified in case of a hardware change. 
 
 `TIVA ADC HAL` is perfectly substitutable with its base type of the `ADC HAL` interface.
 
+-   Exchanged modules behave the same way, no matter of the subtype
+-   Under the hood might do stuff differently but leads to the same output
+
 ### Interface Segregation Principle (ISP)
 
 *"Clients should not be forced to depend on functions that they do not use"*
@@ -171,6 +177,7 @@ The interface `ADC HAL` is defined on the needs of `new_goal_reader` (the client
 
 -   Write "small" interfaces
 -   Allows to limit dependencies
+-   Seperating concerns
 
 ### Dependecy inversion Principle (DIP)
 
@@ -858,32 +865,57 @@ FreeRTOS needs: 5-10KB ROM, RAM: 236bytes (scheduler), 76bytes + storage size (q
 ::: callout-warning
 ## Premature optimization is the root of all evil.
 
-Don't optimize before you know your constraints.
+-   Don't optimize before you know your constraints.
+
+-   Don't waste time optimizing things that won't help.
+
+-   Don't add complexity you don't need
 :::
 
 ![](imagesi/paste-41.png)
 
 ### Choose
 
-#### Get the memory map
+#### Get the memory map (static)
 
 ``` cpp
-set(CMAKE_EXE_LINKER_FLAGS) {
-    ...
-    -Xlinker
-    -Map=${SMAKE_CURRENT_BINARY_DIR}/%
-    ...
-}
+// add this to CMake
+set(CMAKE_EXE_LINKER_FLAGS
+    "-T\"${SCRIPTS_DIR}/link.ld\" \
+    -Xlinker -Map=${CMAKE_CURRENT_BINARY_DIR}/%
+    ")
 
 // output
 ... 
 .text 0x00000470 0x280 accl_manager.c.obj
-      0x00000470 acclInit
-      0x00000488 acclProcess
+      0x00000470       acclInit
+      0x00000488       acclProcess
 ...
+.data 0x2000005c 0x4   __atexit_dummy
+      0x20000060 0x4   __atexit_recursive_mutex
+...
+.bss 0x2000081c 0x10 accl_manager.c.obj
+...
+    
 ```
 
 The distance between two functions equals their size (mostly).
+
+-   **.text** - my code, vector table plus constants
+
+-   **.data** - initialized variables and counts for RAM and FLASH *(linker allocates data in FLASH which is then copied from ROM to RAM on startup*
+
+-   **.bss** - uninitialized data in RAM *(initialized with zero on startup)*
+
+::: callout-important
+## Dynamic Allocation Analysis
+
+Dynamically allocated memory is difficult to analyse statically and dynamic analysis is really hard on embedded systems.
+
+Usually measure the dynamic memory allocation with FreeRTOS macros `traceMALLOC`and `traceFREE`. They keep track on the allocated memory.
+
+**Most important**: Detect Memory Leaks! (MALLOC but no FREE)
+:::
 
 #### Use `objdump -d` to disassemble executable
 
@@ -903,6 +935,13 @@ The distance between two functions equals their size (mostly).
 
 ### Change
 
+-   Reduce RAM requirements by removing *concurrency*
+-   Trade *time* for *space*
+-   Increase *coupling* by sharing data
+-   Add structural or computational *complexity* to allow reusing limited memory
+-   Turn off unused peripherals (energy)
+-   Use lower clock rates or put MCU to sleep (energy)
+
 #### Flyweight pattern
 
 Task refers to same immutable data over and over again
@@ -911,7 +950,7 @@ Task refers to same immutable data over and over again
 
 #### Memory Pool pattern
 
-Prebuilt datapool for mutable data $\rightarrow$ Control over size
+Prebuilt datapool for mutable data $\rightarrow$ Control over size and avoids memory fragmentation
 
 ![](imagesi/paste-43.png){fig-align="center" width="7cm"}
 
@@ -955,12 +994,15 @@ gcc –O3 <your file>.c
 -   Task notifications instead of queues
 -   Limit scope of local variables
 -   **Reduce Overhead** through removing layers
+-   Reduce sampling rate
 
 Engineering in the face of uncertainty:
 
-1.  Use margins (e.g. RAM 200%-300%)
-2.  Estimate early
-3.  Check often
+1.  Use large margins (e.g. RAM 200%-300%)
+2.  Establish resource budgets for major elements
+3.  Estimate resource usage for each element early
+4.  Track resource use against budget (e.g. dashboard)
+5.  Finish with 20%-50% margin for future growth
 
 ### Performance
 
