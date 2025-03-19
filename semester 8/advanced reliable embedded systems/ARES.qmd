@@ -40,5 +40,407 @@ chribel-fontfamily:
     options: "scaled=0.95"  # for code blocks
 ---
 
-# How to work code
+# Safety, Risiko Management
 
+::: callout-important
+## Safety \| Safety-Critical
+
+**Safety** is defined as preventing harm to humans/environment, while **safety-critical systems** ensure this property.
+:::
+
+::: callout-important
+## Risk \| Safety-Integrity
+
+**Risk** is a measure of the likelihood, and the consequences, of a hazardous event.
+
+**Safety-integrity** is a measure of the likelihood of the safety system correctly performing its task.
+:::
+
+## Terms
+
+-   **Hazard**: A situation in which there is actual or potential danger for people or environment.
+-   **Accident**: Unintended event harming people or environment.
+-   **Incident**: Unintended event which does not harm, but has the potential to do so.
+-   **Risk**: Likelihood of hazard occurrence, and the likely consequences. $\text{Risk} = \text{Severity} \times \text{Probability}$
+-   **Fault**: Defect in system. Can be **random** or **systematic.**
+-   **Error**: Deviation from the required operation of the system.
+-   **System Failure**: Occures when system fails to perform its required function.
+-   **Casualities** (Kausalitäten): The presence of a fault *may* lead to an error, which *may* lead to a system failure, which *may* lead to an accident.
+
+## Requirements
+
+Requirements give a system the properties of **integrity and dependability**.
+
+This demands: (1) **Safety**, (2) **Reliability**, (3) **Availability**, (4) **Maintainability**.
+
+::: callout-warning
+## Conflicts
+
+In general, the various requirements to a system are conflicting among themselves.
+:::
+
+### Process (Iterative!)
+
+1.  Identification of hazards associated with the system
+2.  Classification the hazards
+3.  Determination of methods to deal with hazards
+4.  Assignment of reliability and availability requirements
+5.  Determination of safety integrity level
+6.  Specification of development method appropriate to integrity level
+
+## Verification, Validation & Certification (V&V&C)
+
+-   **Verification**: Confirms system meets specifications
+-   **Validation**: Ensures fitness for intended purpose
+-   **Certification**: Obtains regulatory approval through evidence documentation
+-   Key distinction example: Medical device passing lab tests (verification) but failing clinical trials (validation)
+
+## Hazard & Risk Analysis
+
+-   **Hazard identification** methods:
+    -   *FMEA* *(Failure mode and effects analysis)*: Analyzes component failure effects on ultimate consequences.\
+        ![](images/paste-1.png)
+    -   *HAZOP (Hazard and operability studies)*: Uses guidewords to detect operational deviations.\
+        ![](images/paste-2.png)
+    -   *ETA (Event tree analysis)*: Model effects from starting point forward to determine possible consequences.\
+        ![](images/paste-3.png)
+    -   *FTA (Fault tree analysis)*: Identify hazards and determine their possible causes.\
+        ![](images/paste-4.png)
+
+## Risk Analysis
+
+-   **Risk classification** combines severity (catastrophic/negligible) and frequency (frequent/incredible). Risks are categorized as intolerable (I) to negligible (IV).
+
+$$
+\text{Risk} = \text{Severity} \times \text{Probability}
+$$
+
+![](images/paste-5.png){fig-align="center" width="7cm"}
+
+### Severity of Hazardous Event
+
+![](images/paste-6.png){fig-align="center" width="8cm"}
+
+### Frequency of Hazardous Event
+
+![](images/paste-7.png){fig-align="center" width="8cm" height="3cm"}
+
+### Risk Classification
+
+![](images/paste-8.png){fig-align="center" width="8cm"}
+
+### Integrity Classification
+
+**ALARP-Rule**: Class II & III is only acceptable if it is **A**s **L**ow **A**s **R**easonably **P**racticable
+
+Risk can be reduces by safety features. Achieved reduction depends upon integrity of these features.
+
+Safety integrity is how likely a safety system is to perform its job correctly, under all conditions, and for the required time.
+
+#### Safety Integrity Levels (SIL)
+
+![](images/paste-9.png){fig-align="center" width="8cm"}
+
+### Hardware Integrity
+
+**Hardware integrity** is that part of the safety integrity relating to dangerous *random* hardware failures.
+
+### Systematic Integrity
+
+**Systematic integrity** is that part of the safety integrity relating to dangerous *systematic* failures.
+
+### Software Integrity
+
+**Software integrity** is that part of the safety integrity relating to dangerous *software* failures.
+
+## Achieving Safety Integrity
+
+The process involves iterative design stages and layered fault mitigation strategies to meet safety-critical system requirements.
+
+### Core Design Process
+
+1.  **Abstraction**: Identify essential system properties
+2.  **Decomposition**: Break systems into analyzable components
+3.  **Elaboration**: Add implementation details
+4.  **Decision**: Select optimal design alternatives
+
+### Fault Mitigation Strategies
+
+Four complementary approaches:
+
+1.  **Avoidance**: Prevent faults during design phase
+2.  **Removal**: Eliminate faults through testing/reviews
+3.  **Detection**: Identify faults during operation
+4.  **Tolerance**: Maintain functionality despite faults
+
+### Fault Characteristics
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Category} & \textbf{Types} & \textbf{Examples} \\
+\hline
+Nature & Random (HW) vs Systematic & $\alpha$-particle errors vs spec bugs \\
+\hline
+Duration & Permanent/Transient/Intermittent & Broken chip vs cosmic rays \\
+\hline
+Extent & Localized vs Global & Single sensor vs power failure \\
+\hline
+\end{tabular}
+\end{table}
+
+**Hardware Fault Tolerance:**
+
+-   **Static** (TMR/NMR): Mask faults via majority voting (3-5 modules)
+-   **Dynamic**: Detect & switch to backups
+-   **Hybrid**: Combine masking + reconfiguration
+
+**Software Fault Tolerance:**
+
+-   **N-version Programming**: Parallel diverse implementations (Airbus/Shuttle)
+-   **Recovery Blocks**: Fallback modules with acceptance tests
+-   **Information**: Additional data (parity / checksum)
+-   **Temporal**: Repeat calculations
+
+### Key Challenges
+
+-   Common-mode failures require **diversity** in:
+    -   Implementation methods
+    -   Programming languages
+    -   Hardware platforms
+-   **Systematic faults (spec/design errors)** are harder to mitigate than random HW faults
+-   No single technique provides complete protection
+
+**Critical Insight**: Achieving safety integrity requires combining multiple fault mitigation strategies through iterative design refinement, as perfect fault elimination is impossible in complex systems.
+
+**Detection**: Functional checking, Consistency checking, Signal comparison, Checking pairs, Information redundancy, Instruction monitoring, Loopback testing, Watchdog timers, Bus monitoring, Power supply monitoring
+
+## Fault Tolerance
+
+-   **Redundancy strategies**:
+
+    -   *TMR (Triple Modular Redundancy):* Voting systems mask faults via majority logic (3 modules)
+
+        ![](images/paste-15.png)
+
+        ![](images/paste-16.png)
+
+        ![](images/paste-17.png)
+
+    -   *NMR*: Voting systems mask faults via majority logic (3-5 modules). Allows for $\frac{N-1}{2}$ modules to fail\
+        ![](images/paste-18.png)
+
+    -   *Dynamic redundancy*: Switches to backup modules after fault detection.\
+        ![](images/paste-19.png)
+
+    -   *Self checking pair*: The outputs are compared and give indication of failure\
+        ![](images/paste-20.png)
+
+-   **Diversity**: Combines different implementations/languages to avoid common-mode failures.
+
+-   **Software fault tolerance**: Uses *N-version programming* (parallel implementations) or *recovery blocks* (fallback modules with acceptance tests).
+
+## Reliability
+
+::: callout-note
+## Reliability
+
+Reliability $R$ is the probability of a component or system functioning correctly over time $R(t)$. Describing a statistical behaviour of a component or system.
+
+Given: Period of time, set of operating conditions.
+
+$$
+R(t)=\frac{n(t)}{N}
+$$
+
+with $n(t)$ number of working elements, and $N$ number of original elements.
+:::
+
+### Unreliability
+
+Probability $Q(t)$ that a system will **not** function over a given period of time. $Q(t)+R(t)=1$
+
+$$
+Q(t)=\frac{n_f(t)}{N}=1-R(t)
+$$
+
+with $n_f(t)$ number of failed components at time $t$.
+
+### Failure Rate
+
+The rate $z(t)$ at which a device fails
+
+$$
+z(t)=\frac{1}{n(t)}\cdot\underbrace{\frac{dn_f(t)}{dt}}_{Failures}
+$$
+
+![](images/paste-21.png){fig-align="center" width="7cm"}
+
+For a constant **failure rate** $z(t)=\lambda$ the probability of a system working correctly decreases exponentially
+
+$$R(t)=e^{-\lambda t}$$
+
+### Time-Variant Failure Rates
+
+Software failures which are systematic and correctable the failure rate decreases with time. **Weibull** distribution
+
+$$
+R(t)=e^{-\left(\frac{t}{\eta}\right)^\beta}
+$$
+
+![](images/paste-24.png){fig-align="center" width="6cm"}
+
+## Mean Times
+
+### Mean Time to Failure
+
+Expected time before first failure
+
+$$
+MTTF=\int_{0}^{\infty}R(t)dt=\frac{1}{\lambda}
+$$
+
+::: callout-caution
+## Reliability
+
+With $\lambda=0.001$ failure/h $MTTF=1000h$.
+
+But at $t=1000h$ the reliability is only $R(t)\approx0.37$ (chance for running at 1000h mark is 37%)
+:::
+
+### Mean Time to Repair
+
+Time to repair given by repairability $\mu$
+
+$$
+MTTR=\frac{1}{\mu}
+$$
+
+### Mean Time Between Failures
+
+$$
+MTBF=MTTF+MTTR
+$$
+
+### Failure in Time
+
+Number of failures expected in $1\times10^9h$ of cumulative operation hours
+
+$$
+FIT=1\times10^9\cdot\frac{1}{MTBF}
+$$
+
+## Reliability Modelling
+
+### Series Systems
+
+Failure of **any** **component fails**
+
+$$
+R(t)=R_1(t)\cdot R_2(t)\cdots R_N(t)=\prod_{i=1}^N R_i(t)
+$$
+
+$$
+\lambda=\lambda_1+\lambda_2+\cdots+\lambda_N=\sum_{i=1}^N\lambda_i
+$$
+
+### Parallel Systems
+
+System operational as long as **one component is functioning**
+
+$$
+R(t)=1-Q(t)=1-\prod_{i=1}^N(1-R_i(t))
+$$
+
+### Redundancy
+
+![](images/paste-25.png)
+
+# 
+
+![](images/paste-26.png)
+
+![](images/paste-27.png)
+
+![](images/paste-28.png)
+
+::: callout-warning
+## Reliability Prediction
+
+There is extensive (usually MIL std.) literature but often with lots of unknown variables.
+:::
+
+::: callout-important
+## Reliability Assessment
+
+How to proof that a system fails less then once in $1 \times 10^9$ hour (i.e. $\approx$ 100 000 year) of operation?
+
+Trust the development techniques.
+:::
+
+## Software Safety
+
+Common faults:
+
+Coding faults, logical errors within calculations, numeric under- and overflows, stack under- and overflows, range under- and overflows (arrays!), uninitialised variables, unintended side effects, truncation by casts, rounding effects, memory leaks, ...
+
+### Capablity Maturity Model
+
+![](images/paste-29.png){fig-align="center" width="6cm"}
+
+*LOC: Lines of Code*
+
+### Formal Methods
+
+Apply mathematically rigorous techniques for the specification development and verification of the software and hardware systems.
+
+![](images/paste-30.png){fig-align="center" width="7cm" height="2.6cm"}
+
+### Frama-C
+
+-   Frama-C is an open source framework
+-   core to read C files and build abstract syntax trees
+-   set of plug-ins to do static analysis and to annotate syntax trees
+-   plug-ins can collaborate, i.e. use another plug-in
+-   plug-ins programmend in OCaml language
+-   major plug-ins: EVA & WP
+-   ACSL (ANSI/ISO C Specification Lanugage) for annotations by C comments /\* \@ ... \*/
+
+### Evolved Value Analysis (EVA)
+
+Computes variation domains for variables
+
+![](images/paste-31.png)
+
+### Weakest Precondition (WP)
+
+Proofing certain properties
+
+![](images/paste-32.png)
+
+# Methoden, Prozesse, Zuverlässigkeit
+
+# Formale Methoden - Frama
+
+# "Rauswurf"
+
+# Block Cypher
+
+# ECC and Encryption Modes
+
+# Hash Functions
+
+# Key Distribution
+
+# Reliability
+
+# Vulnerability
+
+# Boot
+
+# Memory
+
+# Execution
+
+# Fault Handling
