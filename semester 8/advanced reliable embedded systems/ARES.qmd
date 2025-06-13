@@ -893,7 +893,7 @@ Um die Verschlüsselung zu knacken, müsste Oskar (the bad guy) '$g^a ~\text{mod
 
 ### Elgamal Encryption Scheme
 
-Erweiterung von DHKE $\rightarrow$ Ähnlicher Ablauf wie bei DHKE, einfach wird ein neuen private Key für jeden Block generiert! Dies **verdoppelt** die Sende-Bandbreite, dafür können die Schlüssel vorgerechnet werden (Im Beispiel auf Alice bezogen)!
+Erweiterung von DHKE $\rightarrow$ Ähnlicher Ablauf wie bei DHKE, einfach wird ein neuen private Key für jeden Block generiert! Dies **verdoppelt** die benötigte Sende-Bandbreite, dafür können die Schlüssel vorgerechnet werden (Im Beispiel auf Alice bezogen)!
 
 ![](images/crypto/image-21.png){width="8cm" fig-align="center"}
 
@@ -1030,10 +1030,10 @@ Die Schlüssel anhand RSA generieren!
 
 ```{=latex}
 {\small\begin{description}[parsep=2mm,labelsep=2pt,labelwidth=8pt]
-  \item[\textbf{Bob} erzeugt die Signatur] "Verschlüsselt" die Nachricht ${\color{OliveGreen}\textbf{x}}$ **mit** dem **private Key** ${\color{BrickRed}\mathbf{d}}$ \\
+  \item[\textbf{Bob} erzeugt die Signatur] "Verschlüsselt" die Nachricht ${\color{OliveGreen}\textbf{x}}$ \texti{mit} dem \textit{private Key} ${\color{BrickRed}\mathbf{d}}$ \\
                     ${\color{OliveGreen}\mathbf{s}}=\text{sign}_{\color{BrickRed}K_{Priv}}({\color{OliveGreen}\textbf{x}})={\color{OliveGreen}\textbf{x}}^{\color{BrickRed}\textbf{d}} ~\text{mod}~ {\color{OliveGreen}\textbf{n}}$ \\
                     Anhängen der Signatur ${\color{OliveGreen}\textbf{s}}$ an die verschlüsselte Nachricht ${\color{OliveGreen}\textbf{x}}$
-  \item[\textbf{Alice} verifiziert die Signatur] **Entschlüsselt** die Signatur **mit** Bob's **öffentlichen Key** (${\color{OliveGreen}\textbf{n}}$,${\color{OliveGreen}\textbf{e}}$) \\
+  \item[\textbf{Alice} verifiziert die Signatur] \textit{Entschlüsselt} die Signatur \textit{mit} Bob's \textit{öffentlichen Key} (${\color{OliveGreen}\textbf{n}}$,${\color{OliveGreen}\textbf{e}}$) \\
   ${\color{OliveGreen}\mathbf{x}}'=\text{verif}_{\color{OliveGreen}K_{Pub}}({\color{OliveGreen}\textbf{s}})={\color{OliveGreen}\textbf{s}}^{\color{OliveGreen}\textbf{e}} ~\text{mod}~ {\color{OliveGreen}\textbf{n}}$
   \end{description}}
 ```
@@ -1126,14 +1126,494 @@ Bit's werden mit jeder Iteration verstrichen (ein Bit besteht aus hunderten Bits
 }
 ```
 
+# Security
+
+::: callout-note
+## Cybersecurity
+
+-   Increased connectivity and complexity
+-   Missing Awareness
+-   Basics mostly not implemented
+
+**Issues**: IP stealing, clones / HW stealing, re-purposing / Loss of Data / Affected production time, customer, ... / Damaged equipment / Killing people / Reputation damaged
+
+**HW mitigation**: MCU security features / Software-only security / HW security (bsp. TPM) / Secure storage / Dedicated security IC / HW security module (supply chain) / Mitigation for side-channel attacks
+:::
+
+**Control through Supplier Hack**: Hack a supplier and then control their products (John Deere, IP-cameras, Viasat terminal on wind turbines)
+
+**Physical Access**: Mitigation through Security mesh (card terminals) -\> if case broken -\> circuit broken / Fake microcontrollers with possible back door or HW limitations (schindler STM32) / Direct memory read out (ThingDust)
+
+**Spoofing**: Overload sensors to report wrong values, wrong times -\> robust sensor computations
+
 # Reliability
+
+::: callout-important
+## Pillars of Dependability
+
+-   Availability
+-   Reliability
+-   Safety
+-   Security
+
+## Information Security: CIA
+
+-   **Confidentiality**: How is information protected
+-   **Integrity**: What could compromise the system, life-cycle
+-   **Availability**: What could take the system down
+
+## Cyber-Security Terms
+
+-   **Attack Vector**: path to compromise a system
+-   **Attack Surface**: End goal of the attack vector
+-   **Threat Actor**: source with malicious intent
+-   **Attacker**: individual performing malicious act in real time
+-   **Vulnerability**: Weakness that can be exploited
+:::
+
+::: callout-note
+## Attack Vectors
+
+Weak Credentials / Phishing Attacks / Malware / Driver Vulnerabilities / Brute Force Attacks / Distributed Denial of Service (DDoS) / Social Engineering / Bus Sniffing / Memory Readout / Malicious Update / Buffer Overflow / Signal Jamming / Power Analysis / Electromagnetic Analysis
+:::
+
+## Stuxnet - How to kill a centrifuge
+
+![](images/paste-43.png)
+
+![](images/paste-44.png)
+
+1.  **Infection**: Computer with USB stick and stolen certificate
+2.  **Search**: Siemens SCADA -\> Re-incetion -\> Propagation
+3.  **Update**: from infection source
+4.  **Compromise**: through *zero day* vulnerability of printer
+5.  **Control** target after getting information -\> take control
+6.  **Deceive**: False feedback and **Destroy** through spinning
 
 # Vulnerability
 
-# Boot
+::: callout-note
+## Binary Exploitation
 
-# Memory
+-   **Buffer Overflow**: Writing more data to a buffer than it can hold -\> overwrite data -\> crash / take control
+-   **Memory Corruption**: Write memory in unintended way -\> crash / take control
+-   **Return Address Modification**: Overwrite function return address to redirect program flow
+-   **Code Injection**: Malicous Code to crash / take control
+-   **Format String Vulnerability**: Use Stdlib functions like `printf()` to read and write target memory
+:::
 
-# Execution
+## Attack Vector: Format String Vulnerability
 
-# Fault Handling
+Format string vulnerabilities occur when user input is passed directly as the format string to printf-family functions, allowing attackers to read from and write to arbitrary memory locations through format specifiers.
+
+### Reading Memory at Specific Positions
+
+Attackers can use positional parameters to read specific stack locations:
+
+``` c
+// Vulnerable code
+char buffer[100];
+int secret = 0xdeadbeef;
+fgets(buffer, sizeof(buffer), stdin);
+printf(buffer);  // Vulnerable call
+```
+
+**Attack Examples:** - `%x` - Read next stack value as hex - `%7$x` - Read 7th argument position as hex\
+- `%10$s` - Read 10th position as string pointer - `%2$llx` - Read 2nd position as 64-bit hex
+
+**Example Attack:**
+
+``` c
+// If buffer contains "%6$x", it might leak the secret variable
+// Input: "%6$x" 
+// Output: "deadbeef" (leaking the secret value)
+```
+
+### Writing Memory at Specific Positions
+
+The `%n` specifier writes the number of characters printed so far to a memory address:
+
+``` c
+// Vulnerable code with pointer on stack
+char buffer[100];
+char *target = (char*)0x08048000;  // Target address
+fgets(buffer, sizeof(buffer), stdin);
+printf(buffer);
+```
+
+**Write Techniques:** - `%n` - Write 4-byte integer - `%hn` - Write 2-byte short - `%hhn` - Write 1-byte char - `%ln` - Write long integer
+
+**Example Attack:**
+
+``` c
+// To write value 1337 to address pointed by 6th stack position:
+// Input: "%1337c%6$n"
+// This prints 1337 characters, then writes 1337 to address at position 6
+
+// For precise control, attackers often split writes:
+// Input: "%300c%6$hhn%37c%7$hhn" 
+// Writes 300 to first byte, 337 to second byte of target address
+```
+
+**Advanced Write-What-Where:** Attackers can control both the value written and the target address by placing addresses on the stack and using positional parameters to reference them, enabling arbitrary code execution through techniques like GOT overwrites or return address modification.
+
+The vulnerability's power lies in printf treating user input as instructions rather than data, breaking the fundamental security principle of data/code separation.
+
+::: callout-important
+## Attack Vector: Read and write specific address
+
+-   1: Plant the Target Address Place the target memory address (e.g., `0x01020304`) at the beginning of your format string input as raw bytes: `\x04\x03\x02\x01`
+
+-   2: Find Format String Position Use test input like `"AAAA_%x_%x_%x_%x"` to determine which stack position contains your format string (look for `41414141` in output)
+
+-   3: Stack Walk to Planted Address Use the appropriate number of `%x` format specifiers to advance printf's argument pointer through stack positions until it reaches the location containing your planted address
+
+-   4: Execute Memory Operation
+
+-   **For Reading**: Use `%s` to read memory starting at your planted address
+
+-   **For Writing**: Use `%n` to write the current character count to your planted address
+
+**Example Complete Attack:**
+
+``` c
+// To write value 500 to address 0x01020304:
+user_input = "\x04\x03\x02\x01%x%x%x%0496x%n"
+//           ^target addr  ^walk to it ^pad to 500 chars ^write 500
+```
+
+**Key Insight:** The vulnerability exploits the fact that your malicious format string gets stored on the stack, allowing you to plant controlled addresses that `printf` will later interpret as legitimate arguments during its sequential argument processing.
+:::
+
+::: callout-tip
+## Countermeasures
+
+Outputting user data through
+
+``` c
+printf("s%", user_input)
+```
+
+converts the input data into a string and no string string format vulnerability is possible.
+
+**Attention**: Buffer overflow is still possible, NULL termination (\\x00) might truncate the output
+:::
+
+# Attack Vector: Binaries
+
+## Binary File Formats
+
+-   Used by debugging tools: **ELF/DWARF**: Standard executable format with debug information (*.axf, .elf* files)
+-   **S-Record**: Motorola text format with type, address, data, and checksum (.*s19*, *.sx*)
+-   **Intel Hex**: Text format with similar structure (.*hex*)
+-   **Binary**: Raw memory content with optional offset (.*bin*)
+-   **UF2**: Format for USB Mass Storage Device bootloaders
+
+## Memory Operations and Debugging
+
+## Flash Security Features
+
+**Protection Mechanisms:**
+
+-   Special configuration bits read during MCU boot to enable read-out protection
+-   Mass-erase protection for intellectual property security
+-   Designed as protection rather than true security features
+-   Careful bit combinations required to avoid accidental device bricking
+
+**Kinetis Flash Configuration:**
+
+``` c
+Flash_Config = {
+    0xFFFFFFFF, / * backdoor key * / 
+    0xFFFFFFFF, / * backdoor key * / 
+    0xFFFFFFFF, / * NV Protection * /
+    ((0xffff)<<16) / * reserved (2 bytes) * / 
+    / * flash option register byte (FOPT), RM page 177: * / 
+    | (0b1<<13) / * FAST_INIT: 0: slow, 1: fast * / 
+    | (0b11<<11) / * reserved * /
+    | (0b1<<10) / * NMI: 0: disabled, 1: enabled * / 
+    | (0b1<<9) / * EZPORT: 0: disabled, 1: enabled * /
+    | (0b1<<8) / * LPBoot: 0 low power boot; 1 normal boot * / 
+    / * flash security byte (FSEC), RM page 640: * /
+    | (0b11<<6) / * 11 backdoor key access disabled; 00,01,10: enabled * / 
+    | (0b11<<4) / * 11,00,01: mass erase enabled, 10: disabled * / 
+    | (0b11<<2) / * 11: factory access granted, 00,01,10 denied * / 
+    | (0b10<<0) / * 10: unsecure, 11,00,01: secure * / //-> bricked if mass erase is disabled
+};
+```
+
+## Backdoor Access System
+
+-   64-bit backdoor key stored in flash configuration
+-   Application can request user input for key verification
+-   Successful authentication temporarily disables flash security until reboot
+-   Connect through debugger **without reset**
+-   **Critical Warning**: Unknown backdoor key with disabled mass-erase results in permanently bricked device
+
+## Reverse Engineering with Ghidra
+
+**NSA's Open-Source Tool:**
+
+-   Eclipse-based reverse engineering suite for analyzing compiled binaries
+-   Provides disassembly, decompilation, and annotation capabilities
+-   Can analyze both debug-enabled and stripped binaries
+
+**Analysis Workflow:**
+
+1.  Import binary files into Ghidra project
+2.  Set appropriate CPU architecture (ARM Thumb)
+3.  Navigate from vector table to ResetISR() and main()
+4.  Use debug-enabled versions as blueprints for understanding stripped binaries
+
+# Attack Vector: Memory
+
+## Memory Protection Motivations
+
+-   **Security Risks**: IP and key stealing, reverse engineering, malicious code execution
+-   **Runtime Errors**: Stack overflow, dangling pointers, buffer overflows
+-   **System Integrity**: Configuration modification, virus code execution, supply chain attacks
+-   **Development Concerns**: Commissioning/production issues, bootloader security, trusted vs non-trusted partitioning, supply chain control (# of units)
+
+## Protection Concepts
+
+**Internal Firmware Protection:**
+
+-   Flash security features (Kinetis, STM32, etc.)
+-   Execute-only code regions (deprecated on Kinetis -\> cpu muss lesen, aber es darf nicht gelesen werden **CPU glitch**)
+-   Secure and non-secure domains (ARM Cortex-M33 TrustZone)
+
+**External Memory Protection:**
+
+-   Secure external flash memory
+-   Secure elements for cryptographic operations
+-   Encrypted external bus protocols (CAN, UART, I2C)
+-   Tamper detection and destruction mechanisms
+
+## MMU vs MPU Architecture
+
+**MMU (Memory Management Unit) - ARM Cortex-A:**
+
+![](images/paste-45.png)
+
+-   **Required for Linux operating systems**
+-   Provides virtual memory with on-demand paging
+-   Maps program addresses into separate physical memory areas
+-   Supports complex memory management with file system integration
+
+**MPU (Memory Protection Unit) - ARM Cortex-M:**
+
+![](images/paste-46.png)
+
+-   Limited functionality due to limited silicon area
+-   Limited number of configurable regions (8-16 depending on variant)
+-   Access permissions (R/W/X) based on privilege levels (**privileged**/**unprivileged**)
+-   Hardfault at memory access violation
+-   Can only be configured by privileged code
+
+![](images/paste-48.png){fig-align="center" width="6cm"}
+
+## ARM Cortex-M MPU Evolution
+
+![](images/paste-49.png)
+
+**ARMv7-M (PMSAv7) Limitations:**
+
+-   Up to 8 regions (M0+/M3/M4) or 16 regions (M7)
+-   Restrictive power-of-two region sizes (minimum 32 bytes)
+-   Strict 32-byte alignment requirements
+-   Limited flexibility for real-world applications
+
+**ARMv8-M (PMSAv8) Improvements:**
+
+-   More flexible region numbers: 0, 4, 8, 12, or 16 regions
+-   Start + end addressing instead of start + 2\^n bytes
+-   Memory Attribute Indirection Register (MAIR) for shared attributes
+-   Banked register sets for Secure and Non-Secure modes
+
+## Security Applications
+
+**MPU-Enabled Protection Mechanisms:**
+
+-   **Code Integrity Protection (CIP)**: Prevents code injection by making code regions non-writable
+-   **Data Execution Prevention (DEP)**: Marks data regions (stack/heap) as non-executable
+-   **Stack Guard (SG)**: Creates red zones at stack boundaries to detect overflows
+-   **Kernel Memory Isolation (KMI)**: Prevents unprivileged code from accessing kernel space
+-   **User Task Memory Isolation (TMI)**: Isolates tasks from each other's memory
+-   **Peripherals Isolation (PI)**: Restricts peripheral access based on privileges
+
+## Implementation Challenges
+
+-   Optional ARM feature that may not be implemented by all vendors
+-   RTOS adoption has faced integration challenges
+-   Overhead in code size and RAM usage due to alignment gaps
+-   Complexity with DMA operations, vector tables, and privilege escalation
+-   Insufficient protection against sophisticated hacker attempts
+
+# Attack Vector: Debugger
+
+-   **Intellectual Property Theft**: Extracting proprietary code and algorithms
+-   **Product Cloning**: Creating unauthorized copies of embedded devices
+-   **Reverse Engineering**: Understanding system functionality and vulnerabilities
+-   **Custom Firmware Installation**: Modifying device behavior through unauthorized code
+
+**Attack Scenarios:**
+
+-   **Use Case 1**: Debugging crashed or halted applications for legitimate troubleshooting
+-   **Use Case 2**: Malicious reverse engineering of production devices
+-   **Attach Operations**: Inspecting target systems without reprogramming, using existing firmware
+
+## Debug Interface Vulnerabilities
+
+-   **SWD (Serial Wire Debug)**: Uses Clock and DataInOut pins
+-   **JTAG**: Requires DataIn, DataOut, Clock, and Select pins
+-   **Reset Line**: Allows debugger to halt device execution immediately after reset
+
+**Debug Capabilities:**
+
+-   **With Debug Information**: Full source-level debugging with symbol mapping
+-   **Without Debug Information**: Assembly-level debugging still possible
+-   **VS Code Integration**: Toggle between source and disassembly views for analysis
+
+## Countermeasures and Protection Strategies
+
+### Flash Security Implementation:
+
+-   Configure flash security with or without mass erase capability
+-   Prevent unauthorized firmware reading and modification
+
+### Debug Authentication:
+
+-   Password-based protection for debug access
+-   Requires valid credentials before allowing debugger connection
+
+### Hardware-Level Protection:
+
+-   **Disabled Debug Block**: Use MCU fuses to permanently disable debugging
+-   **PCB Design**: Remove debug pins/headers from production boards
+-   **Pin Obfuscation**: Hide or disguise debug connection points
+
+### Debug Pin Muxing Defense
+
+**Implementation Strategy:**
+
+-   Reconfigure debug pins as GPIO or disconnect them in firmware
+-   Execute muxing code in startup sequence before main application
+-   Implement backdoor access for legitimate debugging needs
+
+**Attack Window Limitations:**
+
+-   **Defender Advantage**: Debug pins disabled after reset sequence
+-   **Attacker Challenge**: Must halt device within small time window
+-   **Advanced Attacks**: May require voltage glitching or reset manipulation
+
+# Glitching & Fault Injection
+
+**Attack Principle:** Glitching exploits the fact that digital devices require stable operating conditions to function correctly. When these requirements aren't met, devices may fail in predictable ways that can be exploited.
+
+**Common Fault Injection Methods:**
+
+-   **Voltage Glitching**: Temporarily altering the supply voltage
+-   **Clock Manipulation**: Changing timing of system clock signals
+-   **Electromagnetic Pulses**: Localized high-intensity electromagnetic interference
+-   **Optical Attacks**: Exposing silicon die to specific light wavelengths
+-   **Temperature Attacks**: Operating devices outside thermal specifications
+
+**Exploitation Outcomes:**
+
+-   Instruction skipping or incorrect execution
+-   Failed data fetch or write-back operations
+-   Incorrect instruction decode
+-   Bypassing security checks
+
+## Attack Parameters and Timing
+
+**Critical Timing Controls:**
+
+-   **Offset**: Delay from trigger signal to glitch execution (\~8.3 ns precision)
+-   **Repeat**: Duration of the glitch pulse (\~8.3 ns precision)
+-   **Jitter**: Asynchronous timing variation up to \~200 ns
+
+![](images/paste-50.png)
+
+**Optimization Challenges:**
+
+-   Glitches too short produce no effect
+-   Glitches too long cause system crashes or resets
+-   Only narrow parameter bands yield successful attacks
+-   Results can be inconsistent, requiring patience and repeated attempts
+
+# Side-Channel: Power Analysis
+
+![](images/paste-51.png){fig-align="center" width="5cm" height="1.5cm"}
+
+-   Measure power consumption during code execution using ADC sampling
+-   Trigger signals synchronize measurements with specific code execution points
+-   Python Jupyter Notebooks provide interactive analysis environment
+
+## Power Consumption Patterns
+
+Different CPU operations exhibit distinct power signatures:
+
+**Multiplication Operations:**
+
+``` c
+volatile long int A = 0x2BAA;
+A *= 2;  // Repeated 20 times
+```
+
+Assembly shows simple left-shift operations (`lsls r3, r3, #1`) with predictable power patterns.
+
+**Division Operations:**
+
+``` c
+A /= 3;  // More complex
+```
+
+Division requires significantly more computational resources and produces heavier power consumption compared to multiplication.
+
+**Loop vs Unrolled Code:**
+
+Both approaches show different power signatures despite identical mathematical operations
+
+-   **Unrolled**: 20 individual multiplication statements
+-   **Loop**: `for(i=0; i<20; i++) A*=2;` with loop overhead
+
+![20 Mul (blau) / Mul Loop (Rot)](images/paste-52.png)
+
+**Attack Results:**
+
+Character-by-character analysis reveals correct password characters by comparing power trace differences:
+
+![](images/paste-53.png)
+
+## Laboratory Implementation
+
+**Hardware Setup:**
+
+-   ChipWhisperer-Nano platform with on-board STM32F0 target
+-   ARES_PowerAnalysis Jupyter Notebook environment
+-   Power measurement capabilities synchronized with code execution
+-   Interactive parameter adjustment and trace visualization
+
+**Practical Exercises:**
+
+1.  **Power Measurement**: Analyze consumption patterns for different operations
+2.  **Trace Capture**: Record and visualize power signatures using `capture_trace()` function
+3.  **Password Attack**: Implement automated password guessing via power analysis
+4.  **Countermeasure Analysis**: Explore what makes attacks successful and potential defenses
+
+## Security Implications
+
+**Attack Effectiveness:** Power analysis can reveal:
+
+-   Cryptographic operations (AES implementations have distinct signatures)
+-   Secret data through differential power analysis
+-   Program execution flow and timing information
+-   Authentication bypass opportunities
+
+**Key Vulnerabilities:**
+
+-   Early termination in comparison loops
+-   Data-dependent power consumption
+-   Insufficient power consumption randomization
+-   Predictable execution patterns
